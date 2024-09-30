@@ -8,7 +8,16 @@ module milktea.milktea {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires static lombok;
+    requires java.desktop;
+    requires java.sql;
+    requires mysql.connector.j;
+    requires org.slf4j;
 
-    opens milktea.milktea to javafx.fxml;
-    exports milktea.milktea;
+
+//    opens milktea.milktea.GUI to javafx.fxml;
+    opens milktea.milktea.DTO to javafx.base;
+//    opens milktea.milktea.BUS to javafx.base;
+    exports milktea.milktea.DTO;
+//    exports milktea.milktea.GUI;
 }
