@@ -23,4 +23,15 @@ public class Employee_BUS {
         return Employee_DAO.updateStatus(id,status);
     }
 
+    public static boolean checkInvalidUsername(String username) {
+        return Employee_DAO.checkInvalidUsername(username);
+    }
+
+    public static boolean checkLogin(String username,String password) {
+        return Employee_DAO.checkLogin(username,password);
+    }
+
+    public static Employee getEmployeeByUsername(String username) {
+        return Employee_DAO.getEmployee(username);
+    }
 }

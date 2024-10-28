@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Gender;
 import milktea.milktea.DTO.Role;
 import milktea.milktea.DTO.Status;
@@ -11,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
 
+@Slf4j
 public class Connect {
 
     private static final String DATABASE = "milktea";
@@ -26,6 +28,15 @@ public class Connect {
             return true;
         } catch (SQLException e) {
             System.out.println("Connection to the "+ name + "database failed: " + e.getMessage());
+            return false;
+        }
+    }
+        public static boolean openConnection() {
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL+DATABASE, DATABASE_USER, DATABASE_PASSWORD);
+            return true;
+        } catch (SQLException e) {
+            log.error("Connection failed: ", e);
             return false;
         }
     }
@@ -72,10 +83,11 @@ public void loadSQLFile(String filePath) {
 
         // Read the SQL script
         InputStream is = getClass().getResourceAsStream(filePath);
+        assert is != null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
         // Use ";" as a delimiter for each request
-        String line = "";
+        String line;
         StringBuilder sb = new StringBuilder();
         while((line = reader.readLine()) != null) {
             // Ignore SQL comments
@@ -95,7 +107,7 @@ public void loadSQLFile(String filePath) {
         // Close the statement
         stmt.close();
     } catch (IOException | SQLException e) {
-        System.out.println(e);
+        log.error(String.valueOf(e));
     } finally {
         closeConnection();
     }
@@ -111,7 +123,7 @@ public void loadSQLFile(String filePath) {
         public static Role getRole(String role) {
         return switch (role) {
             case "ADMIN" -> Role.ADMIN;
-            case "STAFF" -> Role.MANAGER;
+            case "MANAGER" -> Role.MANAGER;
             case "EMPLOYEE" -> Role.EMPLOYEE;
             default -> null;
         };
@@ -120,15 +132,6 @@ public void loadSQLFile(String filePath) {
         return switch (status) {
             case "ACTIVE" -> Status.ACTIVE;
             case "INACTIVE" -> Status.INACTIVE;
-            default -> null;
-        };
-    }
-    public Status getStatutorily(String status){
-        return switch (status) {
-            case "ACTIVE" -> Status.ACTIVE;
-            case "INACTIVE" -> Status.INACTIVE;
-            case "DISPOSED" -> Status.DISPOSED;
-            case "OUTDATED" -> Status.OUTDATED;
             default -> null;
         };
     }

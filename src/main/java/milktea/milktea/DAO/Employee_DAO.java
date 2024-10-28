@@ -1,8 +1,6 @@
 package milktea.milktea.DAO;
 
 import milktea.milktea.DTO.Employee;
-import milktea.milktea.DTO.Gender;
-import milktea.milktea.DTO.Role;
 import milktea.milktea.DTO.Status;
 
 import java.sql.PreparedStatement;
@@ -138,4 +136,82 @@ public static boolean updateStatus(String id, Status status) {
     }
     return result;
     }
+
+    public static boolean checkInvalidUsername(String username) {
+        boolean result = false;
+        if (openConnection()) {
+            try {
+                String sql = "Select * from employee where username = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, username);
+
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    result = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
+    }
+
+    public static boolean checkLogin(String username, String password) {
+        boolean result = false;
+        if (openConnection()) {
+            try {
+                String sql = "Select * from employee where username = ? and password = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, username);
+                stmt.setString(2, password);
+
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    result = true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
+    }
+
+public static Employee getEmployee(String username) {
+    Employee employee = null;
+    if (openConnection("Employee")) {
+        try {
+            String sql = "SELECT emp.id, per.firstName, per.lastName, per.gender, per.phoneNumber, emp.username, emp.password, emp.role, emp.status " +
+                         "FROM employee emp " +
+                         "JOIN person per ON emp.id = per.id " +
+                         "WHERE emp.username = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                employee = Employee.builder()
+                        .id(rs.getString("id"))
+                        .firstName(rs.getString("firstName"))
+                        .lastName(rs.getString("lastName"))
+                        .gender(getGender(rs.getString("gender")))
+                        .phoneNumber(rs.getString("phoneNumber"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .role(getRole(rs.getString("role")))
+                        .status(getStatus(rs.getString("status")))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+    return employee;
+}
 }

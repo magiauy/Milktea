@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1328.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.AdminMain">
+   <children>
+      <Pane layoutY="-8.0" prefHeight="862.0" prefWidth="200.0" style="-fx-background-color: #fccfd4;" styleClass="item-border" stylesheets="@../../../css/style.css">
+         <children>
+            <Button fx:id="btnEmployee" layoutY="187.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-font-size: 24; -fx-border-color: black; -fx-border-width: 1 0 1 0;" styleClass="custom-button" stylesheets="@../../../css/style.css" text="Nhân Viên">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial" size="27.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="180.0" fitWidth="180.0" layoutX="10.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../icon/logo.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="21.0" layoutY="797.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../icon/logout.256x256.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Button layoutX="51.0" layoutY="792.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="129.0" style="-fx-background-color: null;" text="Đăng Xuất">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="userNameLabel" layoutX="14.0" layoutY="14.0" text="Label">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnStatistic" layoutY="247.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-font-size: 24; -fx-border-color: black; -fx-border-width: 0 0 1 0;" styleClass="custom-button" stylesheets="@../../../css/style.css" text="Thống kê">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Arial" size="27.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="mainPane" layoutX="200.0" layoutY="-2.0" prefHeight="839.0" prefWidth="1130.0" />
+   </children>
+</AnchorPane>

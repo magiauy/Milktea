@@ -1,7 +1,6 @@
 package milktea.milktea.DTO;
 
 import org.junit.jupiter.api.Test;
-import milktea.milktea.DTO.Gender;
 
 import java.math.BigDecimal;
 

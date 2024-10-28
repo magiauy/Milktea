@@ -3,7 +3,6 @@ package milktea.milktea.BUS;
 import milktea.milktea.DAO.Customer_DAO;
 import milktea.milktea.DTO.Customer;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Customer_BUS {
@@ -19,5 +18,11 @@ public class Customer_BUS {
         return Customer_DAO.editCustomer(customer);
     }
 
+    public static boolean checkAvailablePhone(String phone, String id) {
+        return Customer_DAO.checkAvailablePhone(phone,id);
+    }
+    public static String autoId(){
+        return Customer_DAO.autoId();
+    }
 
 }

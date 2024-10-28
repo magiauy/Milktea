@@ -20,6 +20,8 @@ public class Ingredient_DAO extends Connect{
                     Ingredient ingredient = Ingredient.builder()
                             .id(rs.getString("ingredientId"))
                             .name(rs.getString("ingredientName"))
+                            .quantity(rs.getFloat("quantity"))
+                            .price(rs.getBigDecimal("price"))
                             .unit(getUnit(rs.getString("unit")))
                             .status(getStatus(rs.getString("status")))
                             .build();
@@ -38,12 +40,14 @@ public class Ingredient_DAO extends Connect{
         boolean result = false;
         try{
             if(openConnection("Ingredient")){
-                String sql = "Insert into ingredient values(?,?,?,?)";
+                String sql = "Insert into ingredient values(?,?,?,?,?,?)";
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 stmt.setString(1,ingredient.getId());
                 stmt.setString(2,ingredient.getName());
-                stmt.setString(3,ingredient.getUnit().toString());
-                stmt.setString(4,ingredient.getStatus().toString());
+                stmt.setBigDecimal(3,ingredient.getPrice());
+                stmt.setFloat(4,ingredient.getQuantity());
+                stmt.setString(5,ingredient.getUnit().toString());
+                stmt.setString(6,ingredient.getStatus().toString());
                 if(stmt.executeUpdate()>=1){
                     result = true;
                 }
@@ -59,12 +63,14 @@ public class Ingredient_DAO extends Connect{
         boolean result = false;
         try{
             if(openConnection("Ingredient")){
-                String sql = "Update ingredient set name = ?, unit = ?, status = ? where id = ?";
+                String sql = "Update ingredient set name = ?, unit = ?, status = ?, price = ?, quantity = ? where id = ?";
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 stmt.setString(1,ingredient.getName());
                 stmt.setString(2,ingredient.getUnit().toString());
                 stmt.setString(3,ingredient.getStatus().toString());
-                stmt.setString(4,ingredient.getId());
+                stmt.setBigDecimal(4,ingredient.getPrice());
+                stmt.setFloat(5,ingredient.getQuantity());
+                stmt.setString(6,ingredient.getId());
                 if(stmt.executeUpdate()>=1){
                     result = true;
                 }

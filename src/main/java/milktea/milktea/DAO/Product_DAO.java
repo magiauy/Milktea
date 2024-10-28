@@ -22,6 +22,7 @@ public class Product_DAO extends Connect {
                 while (rs.next()) {
                     Product product = Product.builder()
                             .productId(rs.getString("productId"))
+                            .recipeId(rs.getString("recipeId"))
                             .name(rs.getString("name"))
                             .categoryId(rs.getString("categoryId"))
                             .price(rs.getBigDecimal("price"))
@@ -42,15 +43,16 @@ public class Product_DAO extends Connect {
         boolean result = false;
         if (openConnection("Product")) {
             try {
-                String sql = "Insert into product values(?,?,?,?,?)";
+                String sql = "Insert into product values(?,?,?,?,?,?)";
 
                 PreparedStatement stmt = connection.prepareStatement(sql);
 
                 stmt.setString(1, product.getProductId());
-                stmt.setString(2, product.getName());
-                stmt.setString(3, product.getCategoryId());
-                stmt.setBigDecimal(4, product.getPrice());
-                stmt.setString(5, product.getStatus().toString());
+                stmt.setString(2,product.getRecipeId());
+                stmt.setString(3, product.getName());
+                stmt.setString(4, product.getCategoryId());
+                stmt.setBigDecimal(5, product.getPrice());
+                stmt.setString(6, product.getStatus().toString());
 
                 if (stmt.executeUpdate() >= 1) {
                     result = true;
@@ -69,14 +71,15 @@ public class Product_DAO extends Connect {
         boolean result = false;
         if (openConnection("Product")) {
             try {
-                String sql = "Update product set name = ?, categoryId = ?, price = ? where productId = ?";
+                String sql = "Update product set name = ?, categoryId = ?, price = ?, recipeId = ? where productId = ?";
 
                 PreparedStatement stmt = connection.prepareStatement(sql);
 
                 stmt.setString(1, product.getName());
                 stmt.setString(2, product.getCategoryId());
                 stmt.setBigDecimal(3, product.getPrice());
-                stmt.setString(4, product.getProductId());
+                stmt.setString(4, product.getRecipeId());
+                stmt.setString(5, product.getProductId());
 
                 if (stmt.executeUpdate() >= 1) {
                     result = true;

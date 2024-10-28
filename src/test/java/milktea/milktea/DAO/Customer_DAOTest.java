@@ -17,10 +17,6 @@ class Customer_DAOTest {
         assertNotNull(firstCustomer.toString()); // Ensure toString() is not null
         System.out.println(firstCustomer);
     }
-    @Test
-    void TestLogger(){
-        Logger logger = LoggerFactory.getLogger(Customer_DAOTest.class);
-        logger.info("Test Logger");
-    }
+
 
 }

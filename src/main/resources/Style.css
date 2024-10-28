@@ -1,0 +1,15 @@
+.error {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+.valid {
+    -fx-border-color: green;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+.default {
+    -fx-border-color: none;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}

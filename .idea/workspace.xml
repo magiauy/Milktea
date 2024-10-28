@@ -5,80 +5,85 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="909ee63f-1597-44ad-9330-ee67f36c4850" name="Changes" comment="Create">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Category_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Customer_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Employee_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/GoodsReceiptDetail_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/GoodsReceipt_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Ingredient_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/InventoryReportDetail_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/InventoryReport_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Inventory_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/InvoiceDetail_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Invoice_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Product_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/PromotionProgram_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Promotion_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Provider_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/WasteReportDetail_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/WasteReport_BUS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/package-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Category_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Connect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Customer_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Employee_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/GoodsReceiptDetail_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/GoodsReceipt_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Ingredient_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/InventoryReportDetail_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/InventoryReport_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Inventory_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/InvoiceDetail_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Invoice_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Product_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/PromotionProgram_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Promotion_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Provider_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/WasteReportDetail_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/WasteReport_DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/package-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Customer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Gender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/GoodsReceipt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/GoodsReceiptDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Ingredient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Inventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/InventoryReport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/InventoryReportDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Invoice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/InvoiceDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Promotion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/PromotionProgram.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Provider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Unit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/WasteReport.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/WasteReportDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/package-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/package-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/DAO/milktea.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/milktea/milktea/DAO/ConnectTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/milktea/milktea/DAO/Customer_DAOTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/milktea/milktea/DTO/CustomerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/RecipeDetail_DAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Recipe_BUS.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/RecipeDetail_DAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Recipe_DAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Recipe.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/RecipeDetail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/AdminMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/CustomerGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/CustomerGUI_Add.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/CustomerGUI_Edit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/EmployeeGUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/EmployeeMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/Login_Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ManagerMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/Util/UI_Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/Edit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/Male User.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/Plus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/Refresh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/Trash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/brand_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/keyt.256x256.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/logout.256x256.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icon/logout.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Edit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Plus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Refresh.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/Trash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/brand_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/keyt.256x256.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/logout.256x256.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/logout.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Admin_Main.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/CustomerGUI_Add.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/CustomerGUI_Edit.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Customer_GUI.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Employee_GUI.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Employee_Main.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/LoginGUI.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/fe196183-4be0-4d5f-98b9-03d59b4cc187.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/fe196183-4be0-4d5f-98b9-03d59b4cc187.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Customer_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Customer_BUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Employee_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Employee_BUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/InventoryReportDetail_BUS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/InventoryReport_BUS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Inventory_BUS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/WasteReportDetail_BUS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/WasteReport_BUS.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Connect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Connect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Customer_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Customer_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Employee_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Employee_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Ingredient_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Ingredient_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/InventoryReportDetail_DAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/InventoryReport_DAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Inventory_DAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/InvoiceDetail_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/InvoiceDetail_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Product_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Product_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/WasteReportDetail_DAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/WasteReport_DAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Ingredient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Inventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/InventoryReport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/InventoryReportDetail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/WasteReport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/WasteReportDetail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/milktea/milktea/DAO/Customer_DAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/milktea/milktea/DAO/Customer_DAOTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/milktea/milktea/DTO/CustomerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/milktea/milktea/DTO/CustomerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,8 +96,9 @@
         <option value="package-info" />
         <option value="Enum" />
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -120,37 +126,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.ConnectTest.checkExistTable.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CustomerTest.EqualsAndHashCode.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CustomerTest.builder.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.Customer_DAOTest.TestLogger.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.Customer_DAOTest.getAllCustomer.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.App.executor": "Run",
+    "JUnit.ConnectTest.checkExistTable.executor": "Run",
+    "JUnit.CustomerTest.EqualsAndHashCode.executor": "Run",
+    "JUnit.CustomerTest.builder.executor": "Run",
+    "JUnit.Customer_DAOTest.TestLogger.executor": "Run",
+    "JUnit.Customer_DAOTest.getAllCustomer.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "database.data.extractors.current.export.id": "HTML-Groovy.html.groovy",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/IT_K22/Milktea/src/main/java/milktea/milktea/GUI",
+    "last_opened_file_path": "D:/IT_K22/KTPM/SwingHotelJava",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.35681185",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;MySQL&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "MySQL"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IT_K22\Milktea\src\main\resources\icon" />
+      <recent name="D:\IT_K22\Milktea\src\main\resources" />
+      <recent name="D:\IT_K22\Milktea\src\main\resources\css" />
+      <recent name="D:\IT_K22\Milktea\src\main\resources\img" />
+      <recent name="D:\IT_K22\Milktea\src\main\resources\milktea\milktea\GUI" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -163,19 +185,18 @@
       <recent name="milktea.milktea.DTO" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Customer_DAOTest.TestLogger">
-    <configuration name="ConnectTest.checkExistTable" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../zulu21.32.17-ca-fx-jdk21.0.2-win_x64" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="milktea.milktea.GUI.App" />
       <module name="Milktea" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="milktea.milktea.DAO.Customer_DAOTest" />
+          <option name="PATTERN" value="milktea.milktea.GUI.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="milktea.milktea.DAO" />
-      <option name="MAIN_CLASS_NAME" value="milktea.milktea.DAO.ConnectTest" />
-      <option name="METHOD_NAME" value="checkExistTable" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -244,21 +265,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="JUnit.Customer_DAOTest.getAllCustomer" />
+      <item itemvalue="JUnit.Customer_DAOTest.TestLogger" />
+      <item itemvalue="JUnit.CustomerTest.builder" />
+      <item itemvalue="JUnit.CustomerTest.EqualsAndHashCode" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.Customer_DAOTest.TestLogger" />
-        <item itemvalue="JUnit.Customer_DAOTest.getAllCustomer" />
-        <item itemvalue="JUnit.ConnectTest.checkExistTable" />
+        <item itemvalue="Application.App" />
         <item itemvalue="JUnit.CustomerTest.EqualsAndHashCode" />
         <item itemvalue="JUnit.CustomerTest.builder" />
+        <item itemvalue="JUnit.Customer_DAOTest.TestLogger" />
+        <item itemvalue="JUnit.Customer_DAOTest.getAllCustomer" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -277,7 +305,49 @@
       <workItem from="1727631711100" duration="615000" />
       <workItem from="1727664376399" duration="4202000" />
       <workItem from="1727677310517" duration="4441000" />
-      <workItem from="1727693435326" duration="1341000" />
+      <workItem from="1727693435326" duration="1581000" />
+      <workItem from="1727788044849" duration="4320000" />
+      <workItem from="1727831424742" duration="2209000" />
+      <workItem from="1727834530130" duration="4169000" />
+      <workItem from="1727852266625" duration="1927000" />
+      <workItem from="1727857980692" duration="631000" />
+      <workItem from="1727860776911" duration="17000" />
+      <workItem from="1727958461905" duration="678000" />
+      <workItem from="1727978214945" duration="657000" />
+      <workItem from="1727985657061" duration="301000" />
+      <workItem from="1728053178008" duration="5794000" />
+      <workItem from="1728097712987" duration="595000" />
+      <workItem from="1728106294289" duration="59000" />
+      <workItem from="1728124874240" duration="4457000" />
+      <workItem from="1728152403005" duration="8000" />
+      <workItem from="1728184679749" duration="6158000" />
+      <workItem from="1728260339305" duration="9074000" />
+      <workItem from="1728282056216" duration="302000" />
+      <workItem from="1728282403062" duration="67000" />
+      <workItem from="1728283157325" duration="711000" />
+      <workItem from="1728457586081" duration="698000" />
+      <workItem from="1728571866889" duration="598000" />
+      <workItem from="1728588270975" duration="63000" />
+      <workItem from="1728632947422" duration="6219000" />
+      <workItem from="1728707834455" duration="1207000" />
+      <workItem from="1728789472086" duration="1020000" />
+      <workItem from="1728798815867" duration="610000" />
+      <workItem from="1728914082802" duration="264000" />
+      <workItem from="1728915872887" duration="20000" />
+      <workItem from="1728963376615" duration="672000" />
+      <workItem from="1729012752860" duration="18000" />
+      <workItem from="1729048103555" duration="665000" />
+      <workItem from="1729062181398" duration="3941000" />
+      <workItem from="1729102482945" duration="62000" />
+      <workItem from="1729129581357" duration="566000" />
+      <workItem from="1729154883360" duration="1317000" />
+      <workItem from="1729273963380" duration="609000" />
+      <workItem from="1729308819653" duration="1332000" />
+      <workItem from="1729393342507" duration="648000" />
+      <workItem from="1729821122461" duration="6193000" />
+      <workItem from="1729842854861" duration="8916000" />
+      <workItem from="1729931955296" duration="3762000" />
+      <workItem from="1729956918320" duration="856000" />
     </task>
     <task id="LOCAL-00001" summary="Create">
       <option name="closed" value="true" />
@@ -315,5 +385,25 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create" />
     <option name="LAST_COMMIT_MESSAGE" value="Create" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/Login_Controller.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Employee_DAO.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

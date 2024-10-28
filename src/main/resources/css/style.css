@@ -1,0 +1,45 @@
+.item-border{
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+/* CSS for the custom button */
+.custom-button {
+    -fx-background-color: null;
+    -fx-text-fill: black; /* Màu chữ */
+    -fx-font-size: 14px; /* Cỡ chữ */
+    -fx-font-weight: bold; /* Chữ đậm */
+    -fx-padding: 5px 10px; /* Khoảng cách giữa nút và nội dung */
+    -fx-border-color: black; /* Màu viền */
+    -fx-border-width: 1 0 0 0;
+}
+.custom-button:hover {
+    -fx-background-color: lightgray;
+}
+.table-view {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+}
+
+.table-view .column-header {
+    -fx-background-color: #e6e6e6;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #d9d9d9;
+    -fx-text-fill: #333;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.custom-table-cell {
+    -fx-padding: 10px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}

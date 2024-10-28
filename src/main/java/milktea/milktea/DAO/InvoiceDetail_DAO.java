@@ -1,15 +1,18 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.InvoiceDetail;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+@Slf4j
 public class InvoiceDetail_DAO extends Connect{
     public static ArrayList<InvoiceDetail> getAllInvoiceDetail() {
-        ArrayList<InvoiceDetail> list = new ArrayList<InvoiceDetail>();
+        ArrayList<InvoiceDetail> list = new ArrayList<>();
         if (openConnection("InvoiceDetail")) {
             try {
                 String sql = "Select * from InvoiceDetail";
@@ -24,8 +27,8 @@ public class InvoiceDetail_DAO extends Connect{
                             .totalPrice(rs.getBigDecimal("totalPrice"))
                             .build();
                 }
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (SQLException e) {
+                log.error("e: ", e);
             } finally {
                 closeConnection();
             }
@@ -48,8 +51,8 @@ public class InvoiceDetail_DAO extends Connect{
                         result = true;
                     }
                 }
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (SQLException e) {
+                log.error("e: ", e);
             } finally {
                 closeConnection();
             }

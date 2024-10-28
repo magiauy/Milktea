@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="318.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.CustomerGUI_Edit">
+   <children>
+      <Label layoutX="9.0" layoutY="14.0" prefHeight="47.0" prefWidth="390.0" text="Sửa thông tin khách hàng">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="88.0" prefWidth="69.0" text="Mã KH: ">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtID" disable="true" editable="false" layoutX="131.0" layoutY="88.0" prefHeight="25.0" prefWidth="205.0" />
+      <Label layoutX="35.0" layoutY="121.0" prefWidth="69.0" text="Họ đệm:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtFirstName" layoutX="131.0" layoutY="121.0" prefHeight="25.0" prefWidth="205.0" />
+      <Label layoutX="35.0" layoutY="154.0" prefWidth="69.0" text="Tên :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtLastName" layoutX="131.0" layoutY="154.0" prefHeight="25.0" prefWidth="205.0" />
+      <Label layoutX="35.0" layoutY="187.0" prefHeight="26.0" prefWidth="76.0" text="Giới tính :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbGender" layoutX="131.0" layoutY="188.0" prefHeight="25.0" prefWidth="205.0" promptText="Chọn giới tính" />
+      <Label layoutX="35.0" layoutY="223.0" prefWidth="69.0" text="SĐT :">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPhone" layoutX="131.0" layoutY="224.0" prefHeight="25.0" prefWidth="205.0" />
+      <Button fx:id="btnSave" layoutX="186.0" layoutY="267.0" mnemonicParsing="false" text="Lưu" />
+   </children>
+</AnchorPane>

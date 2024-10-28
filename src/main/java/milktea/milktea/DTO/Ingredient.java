@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 public class Ingredient {
     private String id; // Mã nguyên liệu
     private String name; // Tên nguyên liệu
+    private BigDecimal price; // Giá
+    private float quantity; // Số lượng
     private Unit unit; // Đơn vị tính
     private Status status; // Trạng thái
 }

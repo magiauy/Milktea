@@ -1,8 +1,8 @@
 package milktea.milktea.DAO;
 
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Customer;
-import milktea.milktea.DTO.Gender;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 
+@Slf4j
 public class Customer_DAO extends Connect {
     public static ArrayList<Customer> getAllCustomer(){
         ArrayList<Customer> arrCustomer = new ArrayList<>();
@@ -72,8 +73,7 @@ public class Customer_DAO extends Connect {
                 }
 
             }catch(SQLException e){
-
-                System.out.println(e);
+                log.error("e: ", e);
             }finally{
                 closeConnection();
             }
@@ -98,7 +98,7 @@ public class Customer_DAO extends Connect {
 
             }catch(SQLException e){
                 e.printStackTrace();
-                System.out.println(e);
+                log.error("e: ", e);
             }finally{
                 closeConnection();
             }
@@ -128,12 +128,54 @@ public class Customer_DAO extends Connect {
                         result = true;
                     }
                 }catch (SQLException e){
-                    System.out.println(e);
+                    log.error("e: ", e);
                 }finally {
                     closeConnection();
                 }
                 }
                 return result;
+    }
+
+public static boolean checkAvailablePhone(String phone,String id) {
+        boolean result = false;
+        if (openConnection("Customer")) {
+            try {
+                String sql = "Select * from person where phoneNumber = ? and id != ?";
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, phone);
+                stmt.setString(2, id);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    result = true;
+                }
+            } catch (SQLException e) {
+                log.error("e: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
+    }
+    public static String autoId(){
+        String id = "KH000";
+        if(openConnection("Customer")){
+            try{
+                String sql = "Select id from customer order by id desc limit 1";
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                if(rs.next()){
+                    id = rs.getString("id");
+                    int num = Integer.parseInt(id.substring(3));
+                    num++;
+                    id = "KH" + String.format("%03d",num);
+                }
+            }catch(SQLException e){
+                log.error("e: ", e);
+            }finally{
+                closeConnection();
+            }
+        }
+        return id;
     }
 
 }

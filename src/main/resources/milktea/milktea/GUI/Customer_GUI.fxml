@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="839.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.CustomerGUI">
+   <children>
+      <Pane layoutX="7.0" layoutY="12.0" prefHeight="816.0" prefWidth="1103.0" style="-fx-background-color: #fccfd4; -fx-border-color: black; -fx-border-radius: 5px;">
+         <children>
+            <Label layoutX="325.0" layoutY="14.0" text="Danh sách khách hàng">
+               <font>
+                  <Font name="System Bold" size="43.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableMain" layoutX="12.0" layoutY="119.0" prefHeight="676.0" prefWidth="1079.0" stylesheets="@../../../css/style.css">
+              <columns>
+                <TableColumn fx:id="colID" prefWidth="75.0" text="Mã KH " />
+                <TableColumn fx:id="colFirstName" prefWidth="359.0" text="Họ đệm" />
+                  <TableColumn fx:id="colLastName" prefWidth="204.0" text="Tên " />
+                  <TableColumn fx:id="colGender" prefWidth="119.0" text="Giới tính" />
+                  <TableColumn fx:id="colPhone" prefWidth="188.0" text="SĐT" />
+                  <TableColumn fx:id="colPoint" prefWidth="133.0" text="Điểm tích luỹ " />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <TextField fx:id="txtSearch" layoutX="14.0" layoutY="86.0" prefHeight="25.0" prefWidth="210.0" />
+            <Button fx:id="btnSearch" layoutX="223.0" layoutY="86.0" mnemonicParsing="false" text="Search" />
+            <ImageView fx:id="btnAdd" fitHeight="42.0" fitWidth="42.0" layoutX="1041.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../icon/Plus.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="btnEdit" fitHeight="42.0" fitWidth="42.0" layoutX="991.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../icon/Edit.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
