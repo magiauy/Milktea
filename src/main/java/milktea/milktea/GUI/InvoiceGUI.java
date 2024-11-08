@@ -741,6 +741,10 @@ public class InvoiceGUI {
                 }
             }
         });
+        btnAdvanceSearchInvoice.setOnAction(event -> {
+            HashMap<String, String> search = new HashMap<>();
+            //TODO: Add advanced search
+        });
     }
     public void loadTableInvoice(){
         colInvoiceId.setCellValueFactory(new PropertyValueFactory<>("invoiceId"));
