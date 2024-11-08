@@ -5,11 +5,9 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Customer;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 
@@ -56,11 +54,6 @@ public class Customer_DAO extends Connect {
         String sql2 = "Insert into customer values(?,?)";
         return executeUpdate(sql1, customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getGender().toString(), customer.getPhoneNumber()) &&
                executeUpdate(sql2, customer.getId(), customer.getPoint());
-    }
-
-    public static boolean updatePoint(String id, BigDecimal point) {
-        String sql = "Update customer set point = ? where id = ?";
-        return executeUpdate(sql, point, id);
     }
 
     public static boolean editCustomer(@NonNull Customer customer) {

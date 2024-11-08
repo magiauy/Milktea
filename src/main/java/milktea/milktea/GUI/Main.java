@@ -43,7 +43,7 @@ public class Main {
     private Button btnStatistic = new Button();
     @FXML
     private Button btnEmployee = new Button();
-
+    static boolean isLoaded = false;
     HashMap<Button, Integer> buttonHashMap = new LinkedHashMap<>();
 
     @FXML
@@ -57,15 +57,18 @@ public class Main {
     }
 
     private void loadLocalDate() {
-        Product_BUS.getLocalProductData();
-        Customer_BUS.getLocalData();
-        Invoice_BUS.getLocalData();
-        InvoiceDetail_BUS.getLocalData();
-        Promotion_BUS.getLocalData();
-        PromotionProgram_BUS.getLocalData();
-        Category_BUS.getLocalData();
-        Ingredient_BUS.getLocalData();
-        Recipe_BUS.getLocalData();
+        if (!isLoaded) {
+            Product_BUS.getLocalProductData();
+            Customer_BUS.getLocalData();
+            Invoice_BUS.getLocalData();
+            InvoiceDetail_BUS.getLocalData();
+            Promotion_BUS.getLocalData();
+            PromotionProgram_BUS.getLocalData();
+            Category_BUS.getLocalData();
+            Ingredient_BUS.getLocalData();
+            Recipe_BUS.getLocalData();
+            isLoaded = true;
+        }
 
     }
 
@@ -151,7 +154,7 @@ public class Main {
             }
         }
     }
-    public boolean checkRolePermission(int permission,int bitPosition){
+    public static boolean checkRolePermission(int permission,int bitPosition){
         return (permission & (1<<bitPosition)) != 0;
     }
     public void formatButton(Button button){

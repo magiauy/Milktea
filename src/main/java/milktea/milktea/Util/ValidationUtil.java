@@ -136,4 +136,13 @@ public class ValidationUtil {
         return false;
     }
 
+    public static boolean isNotPrice(TextField textField){
+        if (!textField.getText().matches("^[0-9]+(\\.[0-9]{1,2})?$")) {
+            showErrorAlert("Giá tiền không hợp lệ");
+            textField.requestFocus();
+            return true;
+        }
+        return false;
+    }
+
 }

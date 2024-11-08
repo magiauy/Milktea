@@ -199,37 +199,37 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtInvoiceEmployeeId" layoutX="39.0" layoutY="98.0" />
+                        <TextField fx:id="txtInvoiceEmployeeId" editable="false" layoutX="39.0" layoutY="98.0" />
                         <Label layoutX="247.0" layoutY="73.0" text="Mã Khách Hàng">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtInvoiceCustomerId" layoutX="247.0" layoutY="98.0" />
+                        <TextField fx:id="txtInvoiceCustomerId" editable="false" layoutX="247.0" layoutY="98.0" />
                         <Label layoutX="40.0" layoutY="133.0" text="Mã Khuyến Mãi">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtInvoicePromotionId" layoutX="40.0" layoutY="158.0" />
+                        <TextField fx:id="txtInvoicePromotionId" editable="false" layoutX="40.0" layoutY="158.0" />
                         <Label layoutX="248.0" layoutY="133.0" text="Ngày Lập">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtInvoiceIssueDate" layoutX="248.0" layoutY="158.0" />
+                        <TextField fx:id="txtInvoiceIssueDate" editable="false" layoutX="248.0" layoutY="158.0" />
                         <Label layoutX="40.0" layoutY="196.0" text="Chiết Khấu">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtInvoiceDiscount" layoutX="40.0" layoutY="221.0" />
+                        <TextField fx:id="txtInvoiceDiscount" editable="false" layoutX="40.0" layoutY="221.0" />
                         <Label layoutX="248.0" layoutY="196.0" text="Tổng Tiền">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtInvoiceTotal" layoutX="248.0" layoutY="221.0" />
+                        <TextField fx:id="txtInvoiceTotal" editable="false" layoutX="248.0" layoutY="221.0" />
                         <Button fx:id="btnClearInvoice" layoutX="197.0" layoutY="722.0" mnemonicParsing="false" text="Clear" />
                      </children>
                   </Pane>

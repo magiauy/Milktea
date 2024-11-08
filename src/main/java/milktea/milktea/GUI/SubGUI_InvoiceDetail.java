@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import ch.qos.logback.core.status.StatusUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -9,6 +10,7 @@ import javafx.stage.Stage;
 import milktea.milktea.BUS.Product_BUS;
 import milktea.milktea.DTO.InvoiceDetail;
 import milktea.milktea.DTO.Product;
+import milktea.milktea.DTO.Status;
 import milktea.milktea.DTO.TempInvoiceDetail;
 import milktea.milktea.Util.ValidationUtil;
 
@@ -77,13 +79,13 @@ public class SubGUI_InvoiceDetail {
     public void setupCpTopping() {
         if (!InvoiceGUI.isEditable||topping.isEmpty()){
             Product_BUS.getAllProduct().forEach(product -> {
-                if (product.getCategoryId().equals("C005")) {
+                if (product.getCategoryId().equals("C005")&&product.getStatus().equals(Status.ACTIVE)) {
                     cbTopping.getItems().add(product);
                 }
             });
         }else {
             Product_BUS.getAllProduct().forEach(product -> {
-                    if (product.getCategoryId().equals("C005") && !topping.containsKey(product.getProductId())) {
+                    if (product.getCategoryId().equals("C005") && !topping.containsKey(product.getProductId()) &&product.getStatus().equals(Status.ACTIVE)) {
                         cbTopping.getItems().add(product);
                 }
             });

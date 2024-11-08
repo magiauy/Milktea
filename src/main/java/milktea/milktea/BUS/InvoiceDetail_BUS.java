@@ -1,5 +1,6 @@
 package milktea.milktea.BUS;
 
+import lombok.NonNull;
 import milktea.milktea.DAO.InvoiceDetail_DAO;
 import milktea.milktea.DTO.InvoiceDetail;
 
@@ -26,4 +27,16 @@ public class InvoiceDetail_BUS {
         return arr;
     }
 
+    public static void addInvoiceDetailLocal(@NonNull ArrayList<InvoiceDetail> newInvoiceDetails) {
+        arrInvoiceDetail.addAll(newInvoiceDetails);
+    }
+
+    public static boolean checkProductExist(String productId){
+        for (InvoiceDetail invoiceDetail : arrInvoiceDetail){
+            if (Objects.equals(invoiceDetail.getProductId(), productId)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

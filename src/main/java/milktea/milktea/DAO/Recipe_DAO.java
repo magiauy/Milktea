@@ -2,7 +2,6 @@ package milktea.milktea.DAO;
 
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Recipe;
-import milktea.milktea.DTO.Unit;
 
 import java.util.ArrayList;
 @Slf4j
@@ -35,6 +34,7 @@ public class Recipe_DAO extends Connect {
         return result;
     }
 
+
     public static boolean addRecipe(Recipe recipe) {
         boolean result = false;
         if (Connect.openConnection("Recipe")) {
@@ -63,7 +63,7 @@ public class Recipe_DAO extends Connect {
 
     public static boolean editRecipe(Recipe recipe) {
         boolean result = false;
-        if (Connect.openConnection("Recipe")) {
+        if (Connect.openConnection()) {
             try {
                 String sql = "Update recipe set quantity = ?, unit = ? where productId = ? and ingredientId = ?";
 
@@ -73,6 +73,53 @@ public class Recipe_DAO extends Connect {
                 stmt.setString(2, recipe.getUnit().toString());
                 stmt.setString(3, recipe.getProductId());
                 stmt.setString(4, recipe.getIngredientId());
+
+                if (stmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+
+            } catch (Exception e) {
+                log.error("Error: ", e);
+            } finally {
+                Connect.closeConnection();
+            }
+        }
+        return result;
+    }
+
+    public static boolean deleteRecipe(String productId, String ingredientId) {
+        boolean result = false;
+        if (Connect.openConnection()) {
+            try {
+                String sql = "Delete from recipe where productId = ? and ingredientId = ?";
+
+                var stmt = Connect.connection.prepareStatement(sql);
+
+                stmt.setString(1, productId);
+                stmt.setString(2, ingredientId);
+
+                if (stmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+
+            } catch (Exception e) {
+                log.error("Error: ", e);
+            } finally {
+                Connect.closeConnection();
+            }
+        }
+        return result;
+    }
+
+    public static boolean deleteRecipeByProductID(String productId) {
+        boolean result = false;
+        if (Connect.openConnection()) {
+            try {
+                String sql = "Delete from recipe where productId = ?";
+
+                var stmt = Connect.connection.prepareStatement(sql);
+
+                stmt.setString(1, productId);
 
                 if (stmt.executeUpdate() >= 1) {
                     result = true;

@@ -24,5 +24,10 @@ public class Ingredient {
         this.unit = ingredient.unit;
         this.status = ingredient.status;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
 

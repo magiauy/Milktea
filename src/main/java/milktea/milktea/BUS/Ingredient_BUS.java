@@ -7,14 +7,19 @@ import milktea.milktea.DTO.Recipe;
 import milktea.milktea.Util.CalUnitUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Ingredient_BUS {
 
-    private static ArrayList<Ingredient> arrIngredients = new ArrayList<Ingredient>();
+    private static ArrayList<Ingredient> arrIngredients = new ArrayList<>();
+    private static final HashMap<String, Ingredient> tempArrIngredients = new HashMap<>();
 
     public static void getLocalData() {
         arrIngredients = Ingredient_DAO.getAllIngredient();
+        for (Ingredient ingredient : arrIngredients) {
+            tempArrIngredients.put(ingredient.getId(), ingredient);
+        }
     }
 
     public static ArrayList<Ingredient> getAllIngredient() {
@@ -29,7 +34,13 @@ public class Ingredient_BUS {
         return Ingredient_DAO.editIngredient(ingredient);
     }
 
+    public static String getIngredientNameById(String id) {
+        return tempArrIngredients.get(id).getName();
+    }
     public static Ingredient getIngredientById(HashMap<String,Ingredient> tempArrIngredients,String id) {
+        return tempArrIngredients.get(id);
+    }
+    public static Ingredient getIngredientById(String id) {
         return tempArrIngredients.get(id);
     }
 
@@ -41,6 +52,18 @@ public class Ingredient_BUS {
         }
         return clonedList;
     }
+    public static ArrayList<Ingredient> deepCloneIngredient() {
+        return deepCloneIngredient(arrIngredients);
+    }
+    public static ArrayList<Ingredient> getIngredientsExcludeIds(ArrayList<Recipe> recipes) {
+    ArrayList<Ingredient> ingredients = deepCloneIngredient();
+    Set<String> recipeIngredientIds = recipes.stream()
+        .map(Recipe::getIngredientId)
+        .collect(Collectors.toSet());
+
+    ingredients.removeIf(ingredient -> recipeIngredientIds.contains(ingredient.getId()));
+    return ingredients;
+}
 
     public static boolean updateIngredient(ArrayList<InvoiceDetail> arrInvoiceDetail) {
     // Create a map for quick lookup of ingredients by their IDs

@@ -41,4 +41,13 @@ public class Category_BUS {
         }
         return null;
     }
+
+    public static Category getCategoryById(String categoryId) {
+        for (Category category : arrCategory) {
+            if (category.getId().equals(categoryId)) {
+                return category;
+            }
+        }
+        return null;
+    }
 }

@@ -3,6 +3,7 @@
   <component name="EntryPointsManager">
     <writeAnnotations>
       <writeAnnotation name="javafx.fxml.FXML" />
+      <writeAnnotation name="lombok.Getter" />
     </writeAnnotations>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />

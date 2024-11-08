@@ -1,6 +1,5 @@
 package milktea.milktea.GUI;
 
-import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -117,9 +116,7 @@ public class InvoiceGUI {
         setupButton();
         productPane.setContent(createListProduct());
         productPane.setPadding(new Insets(10, 10, 10, 10)); // top, right, bottom, left
-        tabInvoice.setOnSelectionChanged( event -> {
-            tabInvoiceInit();
-        });
+        tabInvoice.setOnSelectionChanged( event -> tabInvoiceInit());
     }
 
     public void setupButton(){
@@ -156,8 +153,22 @@ public class InvoiceGUI {
     }
 
     private void clear(ActionEvent actionEvent) {
-        // TODO clear all fields
-        earnPoint(Customer_BUS.getCustomerById(txtCustomerId.getText()));
+        txtProductSearch.clear();
+        txtPromotion.clear();
+        txtDiscount.clear();
+        txtCurrentPoint.clear();
+        txtCustomerId.clear();
+        txtCustomerName.clear();
+        txtEmployeeId.clear();
+        txtEmployeeName.clear();
+        txtInvoiceId.clear();
+        invoiceDetail.clear();
+        invoiceDetailPane.setContent(createListInvoiceDetail());
+        arrProducts.clear();
+        arrProducts.addAll(Recipe_BUS.updateProductQuantity(Product_BUS.getAllProduct(), invoiceDetail, false));
+        productPane.setContent(createListProduct());
+        initialize();
+
     }
 
     private void btnPromotionPicker(ActionEvent actionEvent) {
@@ -283,13 +294,18 @@ public class InvoiceGUI {
                         invoice.setDiscount(discount);
                     }
 
-                    if (Invoice_BUS.addInvoice(invoice) && InvoiceDetail_BUS.addInvoiceDetail(arrInvoiceDetail)) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Thông báo");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Thêm hóa đơn thành công");
-                        alert.showAndWait();
-                        earnPoint(Customer_BUS.getCustomerById(txtCustomerId.getText()));
+                    if (Invoice_BUS.addInvoice(invoice) && InvoiceDetail_BUS.addInvoiceDetail(arrInvoiceDetail) && Ingredient_BUS.updateIngredient(arrInvoiceDetail)) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Thông báo");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Thêm hóa đơn thành công");
+                            alert.showAndWait();
+                            Invoice_BUS.addInvoiceLocal(invoice);
+                            InvoiceDetail_BUS.addInvoiceDetailLocal(arrInvoiceDetail);
+                            earnPoint(Customer_BUS.getCustomerById(txtCustomerId.getText()));
+                        clear(new ActionEvent());
+
+
                     } else {
                         //Remove if add invoice fail
                         Invoice_BUS.removeInvoice(invoiceId);
@@ -327,39 +343,41 @@ public class InvoiceGUI {
         container.setVgap(5);
         ArrayList<GridPane> items = new ArrayList<>();
         for (Product product : arrProducts) {
-            if (product.getCategoryId().equals("C005")) {
-                continue;
-            }
-            // Create Label for product code and name
-            Label productCodeAndNameLabel = new Label(product.getProductId() + " : " + product.getName());
+            if (product.getStatus().equals(Status.ACTIVE)){
+                if (product.getCategoryId().equals("C005")) {
+                    continue;
+                }
+                // Create Label for product code and name
+                Label productCodeAndNameLabel = new Label(product.getProductId() + " : " + product.getName());
 
-            // Create Label for product price
+                // Create Label for product price
 //            Label priceLabel = new Label(product.getPrice().setScale(0, RoundingMode.HALF_UP) + " VND"+"                        "+"SL: "+product.getQuantity());
-            String formattedPriceLabel = String.format("%-7s VND                        SL: %-5d",
-                    product.getPrice().setScale(0, RoundingMode.HALF_UP),
-                    product.getQuantity());
-            Label priceLabel = new Label(formattedPriceLabel);
-            VBox leftPanel = new VBox();
-            leftPanel.getChildren().addAll(productCodeAndNameLabel, new Text("-------------------------------------"), priceLabel);
-            GridPane item = new GridPane();
-            item.add(leftPanel, 0, 0);
-            item.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
-            item.getStyleClass().add("item-border");
-            BooleanProperty selected = new SimpleBooleanProperty(false);
-            item.setUserData(selected);
+                String formattedPriceLabel = String.format("%-7s VND                        SL: %-5d",
+                        product.getPrice().setScale(0, RoundingMode.HALF_UP),
+                        product.getQuantity());
+                Label priceLabel = new Label(formattedPriceLabel);
+                VBox leftPanel = new VBox();
+                leftPanel.getChildren().addAll(productCodeAndNameLabel, new Text("-------------------------------------"), priceLabel);
+                GridPane item = new GridPane();
+                item.add(leftPanel, 0, 0);
+                item.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+                item.getStyleClass().add("item-border");
+                BooleanProperty selected = new SimpleBooleanProperty(false);
+                item.setUserData(selected);
 
-            item.setOnMouseClicked(e -> {
-            if (currentlySelectedItem != null) {
-                currentlySelectedItem.setStyle("-fx-border-radius: 5px; -fx-border-color: black; -fx-border-width: 1px;");
+                item.setOnMouseClicked(e -> {
+                    if (currentlySelectedItem != null) {
+                        currentlySelectedItem.setStyle("-fx-border-radius: 5px; -fx-border-color: black; -fx-border-width: 1px;");
+                    }
+                    selected.set(true);
+                    if (selected.get()) {
+                        item.setStyle("-fx-border-radius: 5px; -fx-border-color: red; -fx-border-width: 3px;");
+                        currentlySelectedItem = item;
+                        selectedProduct = product;
+                    }
+                });
+                items.add(item);
             }
-            selected.set(true);
-            if (selected.get()) {
-                item.setStyle("-fx-border-radius: 5px; -fx-border-color: red; -fx-border-width: 3px;");
-                currentlySelectedItem = item;
-                selectedProduct = product;
-            }
-            });
-            items.add(item);
         }
 
 
@@ -579,6 +597,7 @@ public class InvoiceGUI {
 
     public void checkPointCustomer(){
         if (txtCustomerId.getText().equals(Customer_BUS.getAllCustomer().getFirst().getId())){
+            txtCurrentPoint.setText("0");
             txtCurrentPoint.setDisable(true);
             chbPoint.setDisable(true);
         }else {
@@ -661,7 +680,6 @@ public class InvoiceGUI {
         Customer_BUS.editCustomer(customer);
     }
 
-    //Todo: Tab danh sách hóa đơn
     @FXML
     TableView<Invoice> tblInvoice;
     @FXML
@@ -742,8 +760,9 @@ public class InvoiceGUI {
             }
         });
         btnAdvanceSearchInvoice.setOnAction(event -> {
-            HashMap<String, String> search = new HashMap<>();
+//            HashMap<String, String> search = new HashMap<>();
             //TODO: Add advanced search
+
         });
     }
     public void loadTableInvoice(){
@@ -783,4 +802,5 @@ public class InvoiceGUI {
         tblInvoiceDetail.refresh();
 
     }
+
 }

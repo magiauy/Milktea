@@ -70,7 +70,7 @@ public class Product_DAO extends Connect {
         boolean result = false;
         if (openConnection("Product")) {
             try {
-                String sql = "Update product set name = ?, categoryId = ?, price = ?, where productId = ?";
+                String sql = "Update product set name = ?, categoryId = ?, price = ? where productId = ?";
 
                 PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -121,36 +121,32 @@ public class Product_DAO extends Connect {
         return product;
     }
 
-    public static Product getProductById(String key) {
-        Product product = null;
+
+    public static boolean deleteProduct(String productId) {
+        boolean result = false;
         if (openConnection("Product")) {
             try {
-                String sql = "Select * " +
-                        "from product " +
-                        "where productId = ?";
+                String sql = "Delete from product where productId = ?";
 
                 PreparedStatement stmt = connection.prepareStatement(sql);
-                stmt.setString(1, key);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    product = Product.builder()
-                            .productId(rs.getString("productId"))
-                            .name(rs.getString("name"))
-                            .categoryId(rs.getString("categoryId"))
-                            .price(rs.getBigDecimal("price"))
-                            .status(getStatus(rs.getString("status")))
-                            .build();
+
+                stmt.setString(1, productId);
+
+                if (stmt.executeUpdate() >= 1) {
+                    result = true;
                 }
+
             } catch (SQLException e) {
                 log.error("Error: ", e);
             } finally {
                 closeConnection();
             }
         }
-        return product;
+        return result;
     }
 
-    public boolean changeStatusProduct(String productId, Status status) {
+
+    public static boolean changeStatusProduct(String productId, Status status) {
         boolean result = false;
         if (openConnection("Product")) {
             try {

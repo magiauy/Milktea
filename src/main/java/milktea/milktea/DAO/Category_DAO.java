@@ -55,7 +55,6 @@ public class Category_DAO extends Connect{
 
                 }catch(SQLException e){
                 log.error("Error: ", e);
-                System.out.println(e);
             }finally{
         closeConnection();
             }

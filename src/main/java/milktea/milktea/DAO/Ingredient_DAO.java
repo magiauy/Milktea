@@ -62,7 +62,7 @@ public class Ingredient_DAO extends Connect{
     public static boolean editIngredient(Ingredient ingredient){
         boolean result = false;
         try{
-            if(openConnection("Ingredient")){
+            if(openConnection()){
                 String sql = "Update ingredient set name = ?, unit = ?, status = ?, quantity = ? where id = ?";
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 stmt.setString(1,ingredient.getName());
