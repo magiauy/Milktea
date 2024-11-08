@@ -4,20 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.BUS.Customer_BUS;
 import milktea.milktea.DTO.Customer;
+import milktea.milktea.Util.UI_Util;
+import milktea.milktea.Util.ValidationUtil;
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
-
+import java.util.ArrayList;
+@Slf4j
 public class CustomerGUI {
     @FXML
     private ImageView btnAdd;
@@ -43,50 +41,34 @@ public class CustomerGUI {
     private TableColumn<Customer, String> colPoint;
 
     public static Customer selectedCustomer = null;
+    public static boolean isEditable = false;
     public void initialize() {
         btnAdd.setOnMouseClicked(this::btnAdd);
         btnEdit.setOnMouseClicked(this::btnEdit);
         btnSearch.setOnAction(this::btnSearch);
+
         initTable();
 
     }
     public void btnAdd(MouseEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("CustomerGUI_Add.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setTitle("Add Customer");
-            stage.setScene(scene);
-            stage.setOnHidden(e -> {
-                initTable();
-            });
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        isEditable = false;
+        UI_Util.openStage("CustomerSubGUI.fxml", () -> {
+            ObservableList<Customer> updatedData = FXCollections.observableList(Customer_BUS.getAllCustomer());
+            tableMain.setItems(updatedData);
+            tableMain.refresh();
+        });
     }
     public void btnEdit(MouseEvent event){
+        isEditable = true;
         if(tableMain.getSelectionModel().getSelectedItem() != null){
             selectedCustomer = tableMain.getSelectionModel().getSelectedItem();
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("CustomerGUI_Edit.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = new Stage();
-                stage.setTitle("Edit Customer");
-                stage.setScene(scene);
-                stage.setOnHidden(e -> {
-                    initTable();
-                });
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            UI_Util.openStage("CustomerSubGUI.fxml",() -> {
+                ObservableList<Customer> updatedData = FXCollections.observableList(Customer_BUS.getAllCustomer());
+                tableMain.setItems(updatedData);
+                tableMain.refresh();
+            });
         }else {
-            errorAlert("Please select a customer");
+            ValidationUtil.showErrorAlert("Please select a customer");
         }
     }
     public void btnSearch(ActionEvent event){
@@ -102,20 +84,8 @@ public class CustomerGUI {
         ObservableList<Customer> data = FXCollections.observableList(Customer_BUS.getAllCustomer());
         tableMain.setItems(data);
     }
-    public void errorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    public void infoAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
 
 }
+

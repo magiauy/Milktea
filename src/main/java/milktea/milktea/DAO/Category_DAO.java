@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Category;
 
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+@Slf4j
 public class Category_DAO extends Connect{
     public static ArrayList<Category> getAllCategory(){
         ArrayList<Category> arrCategory = new ArrayList<>();
@@ -29,7 +31,7 @@ public class Category_DAO extends Connect{
                     }
 
                 }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
         closeConnection();
             }
@@ -52,7 +54,7 @@ public class Category_DAO extends Connect{
                     }
 
                 }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
                 System.out.println(e);
             }finally{
         closeConnection();
@@ -76,8 +78,7 @@ public class Category_DAO extends Connect{
         }
 
         }catch(SQLException e){
-            e.printStackTrace();
-            System.out.println(e);
+            log.error("Error: ", e);
         }finally{
             closeConnection();
         }

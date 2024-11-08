@@ -5,8 +5,14 @@ import milktea.milktea.DTO.GoodsReceiptDetail;
 
 import java.util.ArrayList;
 public class GoodsReceiptDetail_BUS {
-    public static ArrayList<GoodsReceiptDetail> getAllGoodsReceiptDetail() {
-        return GoodsReceiptDetail_DAO.getAllGoodsReceiptDetail();
+
+    private static ArrayList<GoodsReceiptDetail> arrGoodsReceiptDetail = new ArrayList<>();
+
+    public static void getLocalData() {
+        arrGoodsReceiptDetail = GoodsReceiptDetail_DAO.getAllGoodsReceiptDetail();
+    }
+        public static ArrayList<GoodsReceiptDetail> getAllGoodsReceiptDetail() {
+        return arrGoodsReceiptDetail;
     }
 
     public static boolean addGoodsReceiptDetail(ArrayList<GoodsReceiptDetail> goodsReceiptDetails) {

@@ -26,6 +26,7 @@ public class InvoiceDetail_DAO extends Connect{
                             .unitPrice(rs.getBigDecimal("unitPrice"))
                             .totalPrice(rs.getBigDecimal("totalPrice"))
                             .build();
+                    list.add(invoiceDetail);
                 }
             } catch (SQLException e) {
                 log.error("e: ", e);
@@ -58,5 +59,23 @@ public class InvoiceDetail_DAO extends Connect{
             }
         }
         return result;
+    }
+
+    public static void removeInvoiceDetail(String invoiceId) {
+        try {
+            String checkSql = "SELECT COUNT(*) FROM invoicedetail WHERE invoiceId = ?";
+            PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+            checkStmt.setString(1, invoiceId);
+            ResultSet rs = checkStmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                String sql = "DELETE FROM invoicedetail WHERE invoiceId = ?";
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, invoiceId);
+            }
+        } catch (SQLException e) {
+            log.error("Error: ", e);
+        } finally {
+            closeConnection();
+        }
     }
 }

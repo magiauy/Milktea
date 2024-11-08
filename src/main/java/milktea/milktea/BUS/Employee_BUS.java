@@ -5,10 +5,15 @@ import milktea.milktea.DTO.Employee;
 import milktea.milktea.DTO.Status;
 
 import java.util.ArrayList;
-
 public class Employee_BUS {
+
+    private static ArrayList<Employee> arrEmployee = new ArrayList<>();
+
+    public static void getLocalData() {
+        arrEmployee = Employee_DAO.getAllEmployee();
+    }
     public static ArrayList<Employee> getAllEmployee() {
-        return Employee_DAO.getAllEmployee();
+        return arrEmployee;
     }
 
     public static boolean addEmployee(Employee employee) {
@@ -24,14 +29,29 @@ public class Employee_BUS {
     }
 
     public static boolean checkInvalidUsername(String username) {
-        return Employee_DAO.checkInvalidUsername(username);
+        for (Employee employee : arrEmployee) {
+            if (employee.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean checkLogin(String username,String password) {
-        return Employee_DAO.checkLogin(username,password);
+        for (Employee employee : arrEmployee) {
+            if (employee.getUsername().equals(username) && employee.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static Employee getEmployeeByUsername(String username) {
-        return Employee_DAO.getEmployee(username);
+        for (Employee employee : arrEmployee) {
+            if (employee.getUsername().equals(username)) {
+                return employee;
+            }
+        }
+        return null;
     }
 }

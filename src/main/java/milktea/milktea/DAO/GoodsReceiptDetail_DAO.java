@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.GoodsReceiptDetail;
 
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+@Slf4j
 public class GoodsReceiptDetail_DAO extends Connect{
     public static ArrayList<GoodsReceiptDetail> getAllGoodsReceiptDetail(){
         ArrayList<GoodsReceiptDetail> arrGoodsReceiptDetail = new ArrayList<>();
@@ -29,7 +31,7 @@ public class GoodsReceiptDetail_DAO extends Connect{
                     arrGoodsReceiptDetail.add(goodsReceiptDetail);
                 }
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("e: ", e);
             }finally{
                 closeConnection();
             }
@@ -57,7 +59,7 @@ public class GoodsReceiptDetail_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("e: ", e);
             }finally{
                 closeConnection();
             }

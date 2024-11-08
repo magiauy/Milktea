@@ -20,8 +20,8 @@
                   <Font name="Arial Bold" size="28.0" />
                </font>
             </Label>
-            <TextField fx:id="txtUsername" layoutX="78.0" layoutY="143.0" onKeyPressed="#tab" promptText="Username" />
-            <Button fx:id="btnLogin" layoutX="116.0" layoutY="237.0" mnemonicParsing="false" onKeyPressed="#loginenter" style="-fx-background-color: #fccfd4;" text="Login" textFill="WHITE">
+            <TextField fx:id="txtUsername" layoutX="78.0" layoutY="143.0" promptText="Username" />
+            <Button fx:id="btnLogin" layoutX="116.0" layoutY="237.0" mnemonicParsing="false" style="-fx-background-color: #fccfd4;" text="Login" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -29,7 +29,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <PasswordField fx:id="txtPassword" layoutX="78.0" layoutY="184.0" onKeyPressed="#enter" promptText="Password" />
+            <PasswordField fx:id="txtPassword" layoutX="78.0" layoutY="184.0" promptText="Password" />
             <ImageView fitHeight="25.0" fitWidth="21.0" layoutX="48.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../img/Male_User.png" />

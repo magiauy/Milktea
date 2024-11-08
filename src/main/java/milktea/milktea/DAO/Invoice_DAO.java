@@ -1,10 +1,11 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Invoice;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+@Slf4j
 public class Invoice_DAO extends Connect{
     public static ArrayList<Invoice> getAllInvoice(){
         ArrayList<Invoice> arrInvoice = new ArrayList<>();
@@ -28,7 +29,7 @@ public class Invoice_DAO extends Connect{
                     arrInvoice.add(invoice);
                 }
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
@@ -56,11 +57,33 @@ public class Invoice_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
         }
         return result;
     }
+
+    public static void removeInvoice(String id) {
+        if (openConnection()) {
+            try {
+                String checkSql = "SELECT COUNT(*) FROM invoice WHERE invoiceId = ?";
+                PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+                checkStmt.setString(1, id);
+                ResultSet rs = checkStmt.executeQuery();
+                while (rs.next() && rs.getInt(1) > 0) {
+                    String sql = "DELETE FROM invoice WHERE invoiceId = ?";
+                    PreparedStatement stmt = connection.prepareStatement(sql);
+                    stmt.setString(1, id);
+                    stmt.executeUpdate();
+                }
+            } catch (SQLException e) {
+                log.error("Error: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+    }
+
 }

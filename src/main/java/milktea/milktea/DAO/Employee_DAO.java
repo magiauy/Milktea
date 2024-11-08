@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Employee;
 import milktea.milktea.DTO.Status;
 
@@ -8,13 +9,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
+@Slf4j
 public class Employee_DAO extends Connect {
     public static ArrayList<Employee> getAllEmployee() {
         ArrayList<Employee> arrEmployee = new ArrayList<>();
         if (openConnection("Employee")) {
             try {
-                String sql = "Select emp.id , per.firstName, per.lastName, per.gender, per.phoneNumber , emp.username, emp.password, emp.role , emp.status " +
+                String sql = "Select emp.id , per.firstName, per.lastName, per.gender, per.phoneNumber , emp.username, emp.password, emp.roleId , emp.status " +
                         "from employee emp " +
                         "join person per on emp.id = per.id";
 
@@ -29,13 +30,13 @@ public class Employee_DAO extends Connect {
                             .phoneNumber(rs.getString("phoneNumber"))
                             .username(rs.getString("username"))
                             .password(rs.getString("password"))
-                            .role(getRole(rs.getString("role")))
+                            .role(rs.getString("roleId"))
                             .status(getStatus(rs.getString("status")))
                             .build();
                     arrEmployee.add(employee);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 closeConnection();
             }
@@ -63,14 +64,14 @@ public class Employee_DAO extends Connect {
                 stmt2.setString(1, employee.getId());
                 stmt2.setString(2, employee.getUsername());
                 stmt2.setString(3, employee.getPassword());
-                stmt2.setString(4, employee.getRole().toString());
+                stmt2.setString(4, employee.getRole());
                 stmt2.setString(5, employee.getStatus().toString());
 
                 if (stmt.executeUpdate() >= 1 && stmt2.executeUpdate() >= 1) {
                     result = true;
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 closeConnection();
             }
@@ -83,7 +84,7 @@ public static boolean editEmployee(Employee employee) {
     if (openConnection("Employee")) {
         try {
             String sql = "Update person set firstName = ?, lastName = ?, gender = ?, phoneNumber = ? where id = ?";
-            String sql2 = "Update employee set username = ?, password = ?, role = ?, status = ? where id = ?";
+            String sql2 = "Update employee set username = ?, password = ?, roleId = ?, status = ? where id = ?";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             PreparedStatement stmt2 = connection.prepareStatement(sql2);
@@ -96,7 +97,7 @@ public static boolean editEmployee(Employee employee) {
 
             stmt2.setString(1, employee.getUsername());
             stmt2.setString(2, employee.getPassword());
-            stmt2.setString(3, employee.getRole().toString());
+            stmt2.setString(3, employee.getRole());
             stmt2.setString(4, employee.getStatus().toString());
             stmt2.setString(5, employee.getId());
 
@@ -104,7 +105,7 @@ public static boolean editEmployee(Employee employee) {
                 result = true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Error: ", e);
         } finally {
             closeConnection();
         }
@@ -128,7 +129,7 @@ public static boolean updateStatus(String id, Status status) {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Error: ", e);
         } finally {
             closeConnection();
 
@@ -137,81 +138,4 @@ public static boolean updateStatus(String id, Status status) {
     return result;
     }
 
-    public static boolean checkInvalidUsername(String username) {
-        boolean result = false;
-        if (openConnection()) {
-            try {
-                String sql = "Select * from employee where username = ?";
-
-                PreparedStatement stmt = connection.prepareStatement(sql);
-                stmt.setString(1, username);
-
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    result = true;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                closeConnection();
-            }
-        }
-        return result;
-    }
-
-    public static boolean checkLogin(String username, String password) {
-        boolean result = false;
-        if (openConnection()) {
-            try {
-                String sql = "Select * from employee where username = ? and password = ?";
-
-                PreparedStatement stmt = connection.prepareStatement(sql);
-                stmt.setString(1, username);
-                stmt.setString(2, password);
-
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    result = true;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                closeConnection();
-            }
-        }
-        return result;
-    }
-
-public static Employee getEmployee(String username) {
-    Employee employee = null;
-    if (openConnection("Employee")) {
-        try {
-            String sql = "SELECT emp.id, per.firstName, per.lastName, per.gender, per.phoneNumber, emp.username, emp.password, emp.role, emp.status " +
-                         "FROM employee emp " +
-                         "JOIN person per ON emp.id = per.id " +
-                         "WHERE emp.username = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                employee = Employee.builder()
-                        .id(rs.getString("id"))
-                        .firstName(rs.getString("firstName"))
-                        .lastName(rs.getString("lastName"))
-                        .gender(getGender(rs.getString("gender")))
-                        .phoneNumber(rs.getString("phoneNumber"))
-                        .username(rs.getString("username"))
-                        .password(rs.getString("password"))
-                        .role(getRole(rs.getString("role")))
-                        .status(getStatus(rs.getString("status")))
-                        .build();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-    }
-    return employee;
-}
 }

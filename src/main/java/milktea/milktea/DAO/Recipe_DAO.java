@@ -1,10 +1,12 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Recipe;
+import milktea.milktea.DTO.Unit;
 
 import java.util.ArrayList;
-
-public class Recipe_DAO {
+@Slf4j
+public class Recipe_DAO extends Connect {
 
     public static ArrayList<Recipe> getRecipes() {
         ArrayList<Recipe> result = new ArrayList<>();
@@ -17,13 +19,15 @@ public class Recipe_DAO {
                 var rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     var recipe = Recipe.builder()
-                            .id(rs.getString("id"))
-                            .name(rs.getString("name"))
+                            .productId(rs.getString("productId"))
+                            .ingredientId(rs.getString("ingredientId"))
+                            .quantity(rs.getDouble("quantity"))
+                            .unit(getUnit(rs.getString("unit")))
                             .build();
                     result.add(recipe);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 Connect.closeConnection();
             }
@@ -35,19 +39,21 @@ public class Recipe_DAO {
         boolean result = false;
         if (Connect.openConnection("Recipe")) {
             try {
-                String sql = "Insert into recipe values(?,?)";
+                String sql = "Insert into recipe values(?,?,?,?)";
 
                 var stmt = Connect.connection.prepareStatement(sql);
 
-                stmt.setString(1, recipe.getId());
-                stmt.setString(2, recipe.getName());
+                stmt.setString(1, recipe.getProductId());
+                stmt.setString(2, recipe.getIngredientId());
+                stmt.setDouble(3, recipe.getQuantity());
+                stmt.setString(4, recipe.getUnit().toString());
 
                 if (stmt.executeUpdate() >= 1) {
                     result = true;
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 Connect.closeConnection();
             }
@@ -59,19 +65,21 @@ public class Recipe_DAO {
         boolean result = false;
         if (Connect.openConnection("Recipe")) {
             try {
-                String sql = "Update recipe set name = ? where id = ?";
+                String sql = "Update recipe set quantity = ?, unit = ? where productId = ? and ingredientId = ?";
 
                 var stmt = Connect.connection.prepareStatement(sql);
 
-                stmt.setString(1, recipe.getName());
-                stmt.setString(2, recipe.getId());
+                stmt.setDouble(1, recipe.getQuantity());
+                stmt.setString(2, recipe.getUnit().toString());
+                stmt.setString(3, recipe.getProductId());
+                stmt.setString(4, recipe.getIngredientId());
 
                 if (stmt.executeUpdate() >= 1) {
                     result = true;
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 Connect.closeConnection();
             }

@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Promotion;
 
 import java.sql.PreparedStatement;
@@ -7,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+@Slf4j
 public class Promotion_DAO extends Connect{
     public static ArrayList<Promotion> getAllPromotion(){
         ArrayList<Promotion> arrPromotion = new ArrayList<>();
@@ -28,7 +29,7 @@ public class Promotion_DAO extends Connect{
                     arrPromotion.add(promotion);
                 }
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
@@ -53,7 +54,7 @@ public class Promotion_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
@@ -77,7 +78,7 @@ public class Promotion_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }

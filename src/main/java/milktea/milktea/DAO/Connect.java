@@ -1,8 +1,8 @@
 package milktea.milktea.DAO;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Gender;
-import milktea.milktea.DTO.Role;
 import milktea.milktea.DTO.Status;
 import milktea.milktea.DTO.Unit;
 
@@ -112,7 +112,7 @@ public void loadSQLFile(String filePath) {
         closeConnection();
     }
 }
-    public static Gender getGender(String gender){
+    public static Gender getGender(@NonNull String gender){
         if(gender.equals("MALE")){
             return Gender.MALE;
         } else if (gender.equals("FEMALE")) {
@@ -120,28 +120,42 @@ public void loadSQLFile(String filePath) {
         }
         return Gender.OTHER;
     }
-        public static Role getRole(String role) {
-        return switch (role) {
-            case "ADMIN" -> Role.ADMIN;
-            case "MANAGER" -> Role.MANAGER;
-            case "EMPLOYEE" -> Role.EMPLOYEE;
-            default -> null;
-        };
-    }
-    public static Status getStatus(String status) {
+
+    @NonNull
+    public static Status getStatus(@NonNull String status) {
         return switch (status) {
             case "ACTIVE" -> Status.ACTIVE;
             case "INACTIVE" -> Status.INACTIVE;
-            default -> null;
+            default -> throw new IllegalStateException("Unexpected value: " + status);
         };
     }
-    public static Unit getUnit(String unit) {
+
+    @NonNull
+    public static Unit getUnit(@NonNull String unit) {
         return switch (unit) {
             case "KILOGRAM" -> Unit.KILOGRAM;
             case "GRAM" -> Unit.GRAM;
             case "LITER" -> Unit.LITER;
             case "MILLILITER" -> Unit.MILLILITER;
-            default -> null;
+            default -> throw new IllegalStateException("Unexpected value: " + unit);
         };
+    }
+
+    @SuppressWarnings("SqlSourceToSinkFlow")
+    protected static boolean executeUpdate(String sql, Object... params) {
+        boolean result = false;
+        if (openConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                for (int i = 0; i < params.length; i++) {
+                    stmt.setObject(i + 1, params[i]);
+                }
+                result = stmt.executeUpdate() >= 1;
+            } catch (SQLException e) {
+                log.error("Error: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
     }
 }

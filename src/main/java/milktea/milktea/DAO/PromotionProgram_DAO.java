@@ -1,10 +1,11 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.PromotionProgram;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+@Slf4j
 public class PromotionProgram_DAO extends Connect{
     public static ArrayList<PromotionProgram> getAllPromotionProgram(){
         ArrayList<PromotionProgram> arrPromotionProgram = new ArrayList<>();
@@ -17,15 +18,15 @@ public class PromotionProgram_DAO extends Connect{
                 ResultSet rs = stmt.executeQuery(sql);
                 while(rs.next()){
                     PromotionProgram promotionProgram = PromotionProgram.builder()
-                            .promotionProgramId(rs.getString("promotionId"))
-                            .name(rs.getString("promotionName"))
+                            .promotionProgramId(rs.getString("promotionProgramId"))
+                            .name(rs.getString("name"))
                             .startDate(rs.getDate("startDate").toLocalDate())
                             .endDate(rs.getDate("endDate").toLocalDate())
                             .build();
                     arrPromotionProgram.add(promotionProgram);
                 }
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
@@ -49,7 +50,7 @@ public class PromotionProgram_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
@@ -74,7 +75,7 @@ public class PromotionProgram_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }

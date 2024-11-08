@@ -1148,7 +1148,7 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
     </schema>
     <schema id="326" parent="1" name="milktea">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-10-11.08:05:01</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-11-07.15:19:33</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <schema id="327" parent="1" name="mysql">
@@ -1249,7 +1249,7 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
-    <table id="355" parent="326" name="recipedetail">
+    <table id="355" parent="326" name="role">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_general_ci</CollationName>
     </table>
@@ -1279,7 +1279,7 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
     </column>
     <column id="361" parent="342" name="point">
       <Position>2</Position>
-      <StoredType>decimal(20,3 digit)|0s</StoredType>
+      <StoredType>decimal(20)|0s</StoredType>
     </column>
     <foreign-key id="362" parent="342" name="FK_customer_person">
       <ColNames>id</ColNames>
@@ -1303,9 +1303,9 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
       <Position>3</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="367" parent="343" name="role">
+    <column id="367" parent="343" name="roleId">
       <Position>4</Position>
-      <StoredType>enum(&apos;ADMIN&apos;, &apos;MANAGER&apos;, &apos;EMPLOYEE&apos;)|0e</StoredType>
+      <StoredType>varchar(10)|0s</StoredType>
     </column>
     <column id="368" parent="343" name="status">
       <Position>5</Position>
@@ -1316,467 +1316,476 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
       <RefColNames>id</RefColNames>
       <RefTableName>person</RefTableName>
     </foreign-key>
-    <index id="370" parent="343" name="id">
+    <foreign-key id="370" parent="343" name="FK_employee_role">
+      <ColNames>roleId</ColNames>
+      <RefColNames>roleId</RefColNames>
+      <RefTableName>role</RefTableName>
+    </foreign-key>
+    <index id="371" parent="343" name="id">
       <ColNames>id</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="371" parent="344" name="id">
+    <index id="372" parent="343" name="roleId">
+      <ColNames>roleId</ColNames>
+      <Type>btree</Type>
+    </index>
+    <column id="373" parent="344" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="372" parent="344" name="providerId">
+    <column id="374" parent="344" name="providerId">
       <Position>2</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="373" parent="344" name="employeeId">
+    <column id="375" parent="344" name="employeeId">
       <Position>3</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="374" parent="344" name="date">
+    <column id="376" parent="344" name="date">
       <Position>4</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="375" parent="344" name="total">
+    <column id="377" parent="344" name="total">
       <Position>5</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
-    <foreign-key id="376" parent="344" name="FK_goodsreceipt_provider">
+    <foreign-key id="378" parent="344" name="FK_goodsreceipt_provider">
       <ColNames>providerId</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>provider</RefTableName>
     </foreign-key>
-    <foreign-key id="377" parent="344" name="FK_goodsreceipt_employee">
+    <foreign-key id="379" parent="344" name="FK_goodsreceipt_employee">
       <ColNames>employeeId</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>employee</RefTableName>
     </foreign-key>
-    <index id="378" parent="344" name="PRIMARY">
+    <index id="380" parent="344" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="379" parent="344" name="providerId">
+    <index id="381" parent="344" name="providerId">
       <ColNames>providerId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="380" parent="344" name="employeeId">
+    <index id="382" parent="344" name="employeeId">
       <ColNames>employeeId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="381" parent="344" name="PRIMARY">
+    <key id="383" parent="344" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="382" parent="345" name="goodsReceiptId">
+    <column id="384" parent="345" name="goodsReceiptId">
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="383" parent="345" name="ingredientId">
+    <column id="385" parent="345" name="ingredientId">
       <Position>2</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="384" parent="345" name="quantity">
+    <column id="386" parent="345" name="quantity">
       <Position>3</Position>
       <StoredType>double|0s</StoredType>
     </column>
-    <column id="385" parent="345" name="price">
+    <column id="387" parent="345" name="price">
       <Position>4</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
-    <column id="386" parent="345" name="total">
+    <column id="388" parent="345" name="total">
       <Position>5</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
-    <foreign-key id="387" parent="345" name="FK_goodsreceiptdetail_goodsreceipt">
+    <foreign-key id="389" parent="345" name="FK_goodsreceiptdetail_goodsreceipt">
       <ColNames>goodsReceiptId</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>goodsreceipt</RefTableName>
     </foreign-key>
-    <foreign-key id="388" parent="345" name="FK_goodsreceiptdetail_ingredient">
+    <foreign-key id="390" parent="345" name="FK_goodsreceiptdetail_ingredient">
       <ColNames>ingredientId</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>ingredient</RefTableName>
     </foreign-key>
-    <index id="389" parent="345" name="goodsReceiptId">
+    <index id="391" parent="345" name="goodsReceiptId">
       <ColNames>goodsReceiptId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="390" parent="345" name="ingredientId">
+    <index id="392" parent="345" name="ingredientId">
       <ColNames>ingredientId</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="391" parent="346" name="id">
+    <column id="393" parent="346" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="392" parent="346" name="name">
+    <column id="394" parent="346" name="name">
       <Position>2</Position>
-      <StoredType>decimal(20,6 digit)|0s</StoredType>
+      <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="393" parent="346" name="price">
+    <column id="395" parent="346" name="quantity">
       <Position>3</Position>
       <StoredType>float|0s</StoredType>
     </column>
-    <column id="394" parent="346" name="quantity">
+    <column id="396" parent="346" name="unit">
       <Position>4</Position>
-      <StoredType>float|0s</StoredType>
-    </column>
-    <column id="395" parent="346" name="unit">
-      <Position>5</Position>
       <StoredType>enum(&apos;GRAM&apos;, &apos;KILOGRAM&apos;, &apos;LITER&apos;, &apos;MILLILITER&apos;)|0e</StoredType>
     </column>
-    <column id="396" parent="346" name="status">
-      <Position>6</Position>
+    <column id="397" parent="346" name="status">
+      <Position>5</Position>
       <StoredType>enum(&apos;ACTIVE&apos;, &apos;INACTIVE&apos;)|0e</StoredType>
     </column>
-    <index id="397" parent="346" name="PRIMARY">
+    <index id="398" parent="346" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="398" parent="346" name="PRIMARY">
+    <key id="399" parent="346" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="399" parent="347" name="invoiceId">
+    <column id="400" parent="347" name="invoiceId">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="400" parent="347" name="employeeId">
+    <column id="401" parent="347" name="employeeId">
       <Position>2</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="401" parent="347" name="customerId">
+    <column id="402" parent="347" name="customerId">
       <Position>3</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="402" parent="347" name="promotionId">
+    <column id="403" parent="347" name="promotionId">
       <Position>4</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="403" parent="347" name="issueDate">
+    <column id="404" parent="347" name="issueDate">
       <Position>5</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="404" parent="347" name="discount">
+    <column id="405" parent="347" name="discount">
       <Position>6</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
-    <column id="405" parent="347" name="total">
+    <column id="406" parent="347" name="total">
       <Position>7</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
-    <foreign-key id="406" parent="347" name="FK_invoice_employee">
+    <foreign-key id="407" parent="347" name="FK_invoice_person">
       <ColNames>employeeId</ColNames>
       <RefColNames>id</RefColNames>
-      <RefTableName>employee</RefTableName>
+      <RefTableName>person</RefTableName>
     </foreign-key>
-    <foreign-key id="407" parent="347" name="FK_invoice_customer">
+    <foreign-key id="408" parent="347" name="FK_invoice_person_2">
       <ColNames>customerId</ColNames>
       <RefColNames>id</RefColNames>
-      <RefTableName>customer</RefTableName>
+      <RefTableName>person</RefTableName>
     </foreign-key>
-    <foreign-key id="408" parent="347" name="FK_invoice_promotion">
+    <foreign-key id="409" parent="347" name="FK_invoice_promotion">
       <ColNames>promotionId</ColNames>
-      <RefColNames>promotionProgramId</RefColNames>
+      <RefColNames>promotionId</RefColNames>
       <RefTableName>promotion</RefTableName>
     </foreign-key>
-    <index id="409" parent="347" name="PRIMARY">
+    <index id="410" parent="347" name="PRIMARY">
       <ColNames>invoiceId</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="410" parent="347" name="employeeId">
+    <index id="411" parent="347" name="employeeId">
       <ColNames>employeeId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="411" parent="347" name="customerId">
+    <index id="412" parent="347" name="customerId">
       <ColNames>customerId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="412" parent="347" name="promotionId">
+    <index id="413" parent="347" name="promotionId">
       <ColNames>promotionId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="413" parent="347" name="PRIMARY">
+    <key id="414" parent="347" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="414" parent="348" name="invoiceId">
+    <column id="415" parent="348" name="invoiceId">
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="415" parent="348" name="productId">
+    <column id="416" parent="348" name="productId">
       <Position>2</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="416" parent="348" name="quantity">
+    <column id="417" parent="348" name="quantity">
       <Position>3</Position>
       <StoredType>int(11)|0s</StoredType>
     </column>
-    <column id="417" parent="348" name="unitPrice">
+    <column id="418" parent="348" name="unitPrice">
       <Position>4</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
-    <column id="418" parent="348" name="totalPrice">
+    <column id="419" parent="348" name="totalPrice">
       <Position>5</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
-    <foreign-key id="419" parent="348" name="FK_invoicedetail_invoice">
+    <foreign-key id="420" parent="348" name="FK_invoicedetail_invoice">
       <ColNames>invoiceId</ColNames>
       <RefColNames>invoiceId</RefColNames>
       <RefTableName>invoice</RefTableName>
     </foreign-key>
-    <foreign-key id="420" parent="348" name="FK_invoicedetail_product">
+    <foreign-key id="421" parent="348" name="FK_invoicedetail_product">
       <ColNames>productId</ColNames>
       <RefColNames>productId</RefColNames>
       <RefTableName>product</RefTableName>
     </foreign-key>
-    <index id="421" parent="348" name="invoiceId">
+    <index id="422" parent="348" name="invoiceId">
       <ColNames>invoiceId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="422" parent="348" name="productId">
+    <index id="423" parent="348" name="productId">
       <ColNames>productId</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="423" parent="349" name="id">
+    <column id="424" parent="349" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="424" parent="349" name="firstName">
+    <column id="425" parent="349" name="firstName">
       <Position>2</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="425" parent="349" name="lastName">
+    <column id="426" parent="349" name="lastName">
       <Position>3</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="426" parent="349" name="gender">
+    <column id="427" parent="349" name="gender">
       <Position>4</Position>
       <StoredType>enum(&apos;MALE&apos;, &apos;FEMALE&apos;, &apos;OTHER&apos;)|0e</StoredType>
     </column>
-    <column id="427" parent="349" name="phoneNumber">
+    <column id="428" parent="349" name="phoneNumber">
       <Position>5</Position>
       <StoredType>varchar(15)|0s</StoredType>
     </column>
-    <index id="428" parent="349" name="PRIMARY">
+    <index id="429" parent="349" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="429" parent="349" name="PRIMARY">
+    <key id="430" parent="349" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="430" parent="350" name="productId">
+    <column id="431" parent="350" name="productId">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="431" parent="350" name="recipeId">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StoredType>varchar(10)|0s</StoredType>
-    </column>
     <column id="432" parent="350" name="name">
-      <Position>3</Position>
+      <Position>2</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
     <column id="433" parent="350" name="categoryId">
-      <Position>4</Position>
+      <Position>3</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
     <column id="434" parent="350" name="price">
-      <Position>5</Position>
+      <Position>4</Position>
       <StoredType>decimal(20,6 digit)|0s</StoredType>
     </column>
     <column id="435" parent="350" name="Status">
-      <Position>6</Position>
+      <DefaultExpression>&apos;ACTIVE&apos;</DefaultExpression>
+      <Position>5</Position>
       <StoredType>enum(&apos;ACTIVE&apos;, &apos;INACTIVE&apos;)|0e</StoredType>
     </column>
-    <foreign-key id="436" parent="350" name="FK_product_recipe">
-      <ColNames>recipeId</ColNames>
-      <RefColNames>id</RefColNames>
-      <RefTableName>recipe</RefTableName>
-    </foreign-key>
-    <foreign-key id="437" parent="350" name="FK_product_category">
+    <foreign-key id="436" parent="350" name="FK_product_category">
       <ColNames>categoryId</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>category</RefTableName>
     </foreign-key>
-    <index id="438" parent="350" name="PRIMARY">
+    <index id="437" parent="350" name="PRIMARY">
       <ColNames>productId</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="439" parent="350" name="recipeId">
-      <ColNames>recipeId</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="440" parent="350" name="categoryId">
+    <index id="438" parent="350" name="categoryId">
       <ColNames>categoryId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="441" parent="350" name="PRIMARY">
+    <key id="439" parent="350" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="442" parent="351" name="promotionProgramId">
+    <column id="440" parent="351" name="promotionProgramId">
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="443" parent="351" name="promotionId">
+    <column id="441" parent="351" name="promotionId">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="444" parent="351" name="discount">
+    <column id="442" parent="351" name="discount">
       <Position>3</Position>
-      <StoredType>decimal(20,6 digit)|0s</StoredType>
+      <StoredType>decimal(20)|0s</StoredType>
     </column>
-    <column id="445" parent="351" name="minimumPrice">
+    <column id="443" parent="351" name="minimumPrice">
       <Position>4</Position>
-      <StoredType>decimal(20,6 digit)|0s</StoredType>
+      <StoredType>decimal(20)|0s</StoredType>
     </column>
-    <foreign-key id="446" parent="351" name="FK_promotion_promotionprogram">
+    <foreign-key id="444" parent="351" name="FK_promotion_promotionprogram">
       <ColNames>promotionProgramId</ColNames>
       <RefColNames>promotionProgramId</RefColNames>
       <RefTableName>promotionprogram</RefTableName>
     </foreign-key>
-    <index id="447" parent="351" name="PRIMARY">
+    <index id="445" parent="351" name="PRIMARY">
       <ColNames>promotionId</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="448" parent="351" name="promotionProgramId">
+    <index id="446" parent="351" name="promotionProgramId">
       <ColNames>promotionProgramId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="449" parent="351" name="PRIMARY">
+    <key id="447" parent="351" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="450" parent="352" name="promotionProgramId">
+    <column id="448" parent="352" name="promotionProgramId">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="451" parent="352" name="name">
+    <column id="449" parent="352" name="name">
       <Position>2</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="452" parent="352" name="startDate">
+    <column id="450" parent="352" name="startDate">
       <Position>3</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <column id="453" parent="352" name="endDate">
+    <column id="451" parent="352" name="endDate">
       <Position>4</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <index id="454" parent="352" name="PRIMARY">
+    <index id="452" parent="352" name="PRIMARY">
       <ColNames>promotionProgramId</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="455" parent="352" name="PRIMARY">
+    <key id="453" parent="352" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="456" parent="353" name="id">
+    <column id="454" parent="353" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <column id="457" parent="353" name="name">
+    <column id="455" parent="353" name="name">
       <Position>2</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="458" parent="353" name="address">
+    <column id="456" parent="353" name="address">
       <Position>3</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="459" parent="353" name="phone">
+    <column id="457" parent="353" name="phone">
       <Position>4</Position>
       <StoredType>varchar(15)|0s</StoredType>
     </column>
-    <column id="460" parent="353" name="email">
+    <column id="458" parent="353" name="email">
       <Position>5</Position>
       <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <index id="461" parent="353" name="PRIMARY">
+    <index id="459" parent="353" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="462" parent="353" name="PRIMARY">
+    <key id="460" parent="353" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="463" parent="354" name="id">
+    <column id="461" parent="354" name="productId">
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>varchar(15)|0s</StoredType>
     </column>
-    <column id="464" parent="354" name="name">
+    <column id="462" parent="354" name="ingredientId">
+      <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(50)|0s</StoredType>
+      <StoredType>varchar(10)|0s</StoredType>
     </column>
-    <index id="465" parent="354" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="466" parent="354" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
-    </key>
-    <column id="467" parent="355" name="recipeId">
-      <Position>1</Position>
-      <StoredType>varchar(50)|0s</StoredType>
-    </column>
-    <column id="468" parent="355" name="ingredientId">
-      <Position>2</Position>
-      <StoredType>varchar(50)|0s</StoredType>
-    </column>
-    <column id="469" parent="355" name="quantity">
+    <column id="463" parent="354" name="quantity">
       <Position>3</Position>
-      <StoredType>float|0s</StoredType>
+      <StoredType>double|0s</StoredType>
     </column>
-    <column id="470" parent="355" name="unit">
+    <column id="464" parent="354" name="unit">
       <Position>4</Position>
       <StoredType>enum(&apos;GRAM&apos;, &apos;KILOGRAM&apos;, &apos;LITER&apos;, &apos;MILLILITER&apos;)|0e</StoredType>
     </column>
-    <foreign-key id="471" parent="355" name="FK_recipedetail_recipe">
-      <ColNames>recipeId</ColNames>
-      <RefColNames>id</RefColNames>
-      <RefTableName>recipe</RefTableName>
+    <foreign-key id="465" parent="354" name="FK_recipe_product">
+      <ColNames>productId</ColNames>
+      <RefColNames>productId</RefColNames>
+      <RefTableName>product</RefTableName>
     </foreign-key>
-    <foreign-key id="472" parent="355" name="FK_recipedetail_ingredient">
+    <foreign-key id="466" parent="354" name="FK_recipe_ingredient">
       <ColNames>ingredientId</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>ingredient</RefTableName>
     </foreign-key>
-    <index id="473" parent="355" name="FK_recipedetail_recipe">
-      <ColNames>recipeId</ColNames>
+    <index id="467" parent="354" name="PRIMARY">
+      <ColNames>productId
+ingredientId</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="468" parent="354" name="productId">
+      <ColNames>productId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="474" parent="355" name="FK_recipedetail_ingredient">
+    <index id="469" parent="354" name="ingredientId">
       <ColNames>ingredientId</ColNames>
       <Type>btree</Type>
     </index>
+    <key id="470" parent="354" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="471" parent="355" name="roleId">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>varchar(10)|0s</StoredType>
+    </column>
+    <column id="472" parent="355" name="roleName">
+      <Position>2</Position>
+      <StoredType>varchar(50)|0s</StoredType>
+    </column>
+    <column id="473" parent="355" name="access">
+      <Position>3</Position>
+      <StoredType>int(11)|0s</StoredType>
+    </column>
+    <index id="474" parent="355" name="PRIMARY">
+      <ColNames>roleId</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="475" parent="355" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

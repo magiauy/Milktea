@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Product;
 import milktea.milktea.DTO.Status;
 
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+@Slf4j
 public class Product_DAO extends Connect {
     public static ArrayList<Product> getAllProduct() {
         ArrayList<Product> arrProduct = new ArrayList<>();
@@ -22,7 +23,6 @@ public class Product_DAO extends Connect {
                 while (rs.next()) {
                     Product product = Product.builder()
                             .productId(rs.getString("productId"))
-                            .recipeId(rs.getString("recipeId"))
                             .name(rs.getString("name"))
                             .categoryId(rs.getString("categoryId"))
                             .price(rs.getBigDecimal("price"))
@@ -31,7 +31,7 @@ public class Product_DAO extends Connect {
                     arrProduct.add(product);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 closeConnection();
             }
@@ -43,23 +43,22 @@ public class Product_DAO extends Connect {
         boolean result = false;
         if (openConnection("Product")) {
             try {
-                String sql = "Insert into product values(?,?,?,?,?,?)";
+                String sql = "Insert into product values(?,?,?,?,?)";
 
                 PreparedStatement stmt = connection.prepareStatement(sql);
 
                 stmt.setString(1, product.getProductId());
-                stmt.setString(2,product.getRecipeId());
-                stmt.setString(3, product.getName());
-                stmt.setString(4, product.getCategoryId());
-                stmt.setBigDecimal(5, product.getPrice());
-                stmt.setString(6, product.getStatus().toString());
+                stmt.setString(2, product.getName());
+                stmt.setString(3, product.getCategoryId());
+                stmt.setBigDecimal(4, product.getPrice());
+                stmt.setString(5, product.getStatus().toString());
 
                 if (stmt.executeUpdate() >= 1) {
                     result = true;
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 closeConnection();
             }
@@ -71,27 +70,84 @@ public class Product_DAO extends Connect {
         boolean result = false;
         if (openConnection("Product")) {
             try {
-                String sql = "Update product set name = ?, categoryId = ?, price = ?, recipeId = ? where productId = ?";
+                String sql = "Update product set name = ?, categoryId = ?, price = ?, where productId = ?";
 
                 PreparedStatement stmt = connection.prepareStatement(sql);
 
                 stmt.setString(1, product.getName());
                 stmt.setString(2, product.getCategoryId());
                 stmt.setBigDecimal(3, product.getPrice());
-                stmt.setString(4, product.getRecipeId());
-                stmt.setString(5, product.getProductId());
+                stmt.setString(4, product.getProductId());
 
                 if (stmt.executeUpdate() >= 1) {
                     result = true;
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 closeConnection();
             }
         }
         return result;
+    }
+
+    public static Product getProductByName(String key) {
+        Product product = null;
+        if (openConnection("Product")) {
+            try {
+                String sql = "Select * " +
+                        "from product " +
+                        "where name = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, key);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    product = Product.builder()
+                            .productId(rs.getString("productId"))
+                            .name(rs.getString("name"))
+                            .categoryId(rs.getString("categoryId"))
+                            .price(rs.getBigDecimal("price"))
+                            .status(getStatus(rs.getString("status")))
+                            .build();
+                }
+            } catch (SQLException e) {
+                log.error("Error: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return product;
+    }
+
+    public static Product getProductById(String key) {
+        Product product = null;
+        if (openConnection("Product")) {
+            try {
+                String sql = "Select * " +
+                        "from product " +
+                        "where productId = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, key);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    product = Product.builder()
+                            .productId(rs.getString("productId"))
+                            .name(rs.getString("name"))
+                            .categoryId(rs.getString("categoryId"))
+                            .price(rs.getBigDecimal("price"))
+                            .status(getStatus(rs.getString("status")))
+                            .build();
+                }
+            } catch (SQLException e) {
+                log.error("Error: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return product;
     }
 
     public boolean changeStatusProduct(String productId, Status status) {
@@ -110,7 +166,7 @@ public class Product_DAO extends Connect {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("Error: ", e);
             } finally {
                 closeConnection();
             }

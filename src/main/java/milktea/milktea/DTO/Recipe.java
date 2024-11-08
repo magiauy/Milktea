@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Recipe {
-    private String id;
-    private String name;
+    private String productId;
+    private String ingredientId;
+    private double quantity;
+    private Unit unit;
 }

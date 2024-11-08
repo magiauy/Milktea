@@ -9,16 +9,15 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import lombok.extern.slf4j.Slf4j;
+import milktea.milktea.BUS.Role_BUS;
 import milktea.milktea.DTO.Employee;
-import milktea.milktea.DTO.Role;
-import org.controlsfx.validation.Validator;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 
 import milktea.milktea.BUS.Employee_BUS;
 import javafx.stage.Stage;
+import milktea.milktea.Util.ValidationUtil;
 
 @Slf4j
 public class Login_Controller {
@@ -34,34 +33,28 @@ public class Login_Controller {
     @FXML
     public void initialize() {
         btnLogin.setOnAction(this::btnLogin);
+        txtUsername.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("TAB")) {
+                txtPassword.requestFocus();
+            }
+        });
+        txtPassword.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                btnLogin(new ActionEvent());
+            }
+        });
+        Employee_BUS.getLocalData();
     }
-
-
-
-    public void tab(KeyEvent keyEvent) {
-        if (keyEvent.getCode().toString().equals("TAB")) {
-            txtPassword.requestFocus();
-        }
-    }
-
     public void btnLogin(ActionEvent actionEvent) {
         if (validate()) {
-            infoAlert("Login successful");
+            ValidationUtil.showInfoAlert("Login successful");
             System.out.println("Login successful");
             account = Employee_BUS.getEmployeeByUsername(txtUsername.getText());
-            selectedScreen();
+            assert account != null;
+            account.setPermission(Role_BUS.getAccessById(account.getRole()));
+            openStage("Main.fxml");
         }
 
-    }
-    public void loginenter(KeyEvent keyEvent) {
-        if (keyEvent.getCode().toString().equals("ENTER")) {
-            btnLogin(null);
-        }    }
-
-    public void enter(KeyEvent keyEvent) {
-        if (keyEvent.getCode().toString().equals("ENTER")) {
-            btnLogin(null);
-        }
     }
 
 public boolean validate() {
@@ -75,14 +68,14 @@ public boolean validate() {
     if ((Objects.isNull(txtUsername.getText()) || txtUsername.getText().isEmpty())&&(Objects.isNull(txtPassword.getText()) || txtPassword.getText().isEmpty())) {
         txtUsername.getStyleClass().add("error");
         txtPassword.getStyleClass().add("error");
-            errorAlert("Username and Password are required");
+            ValidationUtil.showErrorAlert("Username and Password are required");
             alert = true;
         valid = false;
     }
     if (Objects.isNull(txtUsername.getText()) || txtUsername.getText().isEmpty()) {
         txtUsername.getStyleClass().add("error");
         if (!alert) {
-        errorAlert("Username is required");
+        ValidationUtil.showErrorAlert("Username is required");
             alert = true;
         }
         valid = false;
@@ -90,7 +83,7 @@ public boolean validate() {
     if (Objects.isNull(txtPassword.getText()) || txtPassword.getText().isEmpty()) {
         txtPassword.getStyleClass().add("error");
         if (!alert) {
-        errorAlert("Password is required");
+        ValidationUtil.showErrorAlert("Password is required");
             alert = true;
         }
         valid = false;
@@ -98,7 +91,7 @@ public boolean validate() {
     if (!Employee_BUS.checkInvalidUsername(txtUsername.getText())) {
         txtUsername.getStyleClass().add("error");
         if (!alert) {
-        errorAlert("Username is invalid");
+        ValidationUtil.showErrorAlert("Username is invalid");
             alert = true;
         }
         valid = false;
@@ -106,41 +99,14 @@ public boolean validate() {
     if (!Employee_BUS.checkLogin(txtUsername.getText(), txtPassword.getText())) {
         txtPassword.getStyleClass().add("error");
         if (!alert) {
-        errorAlert("Password is invalid");
+        ValidationUtil.showErrorAlert("Password is invalid");
         }
         valid = false;
     }
     return valid;
 }
-    public void errorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    public void infoAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    public void selectedScreen() {
-        switch (account.getRole()) {
-            case Role.ADMIN:
-                openStage("Admin_Main.fxml");
-                break;
-            case Role.MANAGER:
-                openStage("Manager_Main.fxml");
-                break;
-            case Role.EMPLOYEE:
-                openStage("Employee_Main.fxml");
-                break;
-            default:
-                break;
-        }
-    }
+
+
     public void openStage(String fxmlFile) {
     try {
         FXMLLoader loader = new FXMLLoader();

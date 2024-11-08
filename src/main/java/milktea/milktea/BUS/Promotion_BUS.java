@@ -5,8 +5,13 @@ import milktea.milktea.DTO.Promotion;
 
 import java.util.ArrayList;
 public class Promotion_BUS {
+    private static ArrayList<Promotion> arrPromotion = new ArrayList<>();
+
+    public static void getLocalData(){
+        arrPromotion = Promotion_DAO.getAllPromotion();
+    }
     public static ArrayList<Promotion> getAllPromotion(){
-        return Promotion_DAO.getAllPromotion();
+        return arrPromotion;
     }
 
     public static boolean addPromotion(Promotion promotion){

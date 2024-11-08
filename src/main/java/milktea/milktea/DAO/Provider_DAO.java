@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Provider;
 
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+@Slf4j
 public class Provider_DAO extends Connect{
     public static ArrayList<Provider> getAllProvider(){
         ArrayList<Provider> arrProvider = new ArrayList<>();
@@ -29,7 +31,7 @@ public class Provider_DAO extends Connect{
                     arrProvider.add(provider);
                 }
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
@@ -55,7 +57,7 @@ public class Provider_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }
@@ -82,7 +84,7 @@ public class Provider_DAO extends Connect{
                 }
 
             }catch(SQLException e){
-                e.printStackTrace();
+                log.error("Error: ", e);
             }finally{
                 closeConnection();
             }

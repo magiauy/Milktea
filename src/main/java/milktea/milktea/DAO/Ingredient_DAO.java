@@ -1,5 +1,6 @@
 package milktea.milktea.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Ingredient;
 
 import java.sql.PreparedStatement;
@@ -8,9 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.SQLException;
 
+@Slf4j
 public class Ingredient_DAO extends Connect{
     public static ArrayList<Ingredient> getAllIngredient() {
-        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+        ArrayList<Ingredient> list = new ArrayList<>();
         try {
             if (openConnection("Ingredient")) {
                 String sql = "Select * from ingredient";
@@ -18,10 +20,9 @@ public class Ingredient_DAO extends Connect{
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
                     Ingredient ingredient = Ingredient.builder()
-                            .id(rs.getString("ingredientId"))
-                            .name(rs.getString("ingredientName"))
+                            .id(rs.getString("id"))
+                            .name(rs.getString("name"))
                             .quantity(rs.getFloat("quantity"))
-                            .price(rs.getBigDecimal("price"))
                             .unit(getUnit(rs.getString("unit")))
                             .status(getStatus(rs.getString("status")))
                             .build();
@@ -29,7 +30,7 @@ public class Ingredient_DAO extends Connect{
                 }
             }
             }catch(SQLException e){
-                System.out.println(e);
+                log.error("e: ", e);
             }finally{
                 closeConnection();
             }
@@ -40,20 +41,19 @@ public class Ingredient_DAO extends Connect{
         boolean result = false;
         try{
             if(openConnection("Ingredient")){
-                String sql = "Insert into ingredient values(?,?,?,?,?,?)";
+                String sql = "Insert into ingredient values(?,?,?,?,?)";
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 stmt.setString(1,ingredient.getId());
                 stmt.setString(2,ingredient.getName());
-                stmt.setBigDecimal(3,ingredient.getPrice());
-                stmt.setFloat(4,ingredient.getQuantity());
-                stmt.setString(5,ingredient.getUnit().toString());
-                stmt.setString(6,ingredient.getStatus().toString());
+                stmt.setFloat(3,ingredient.getQuantity());
+                stmt.setString(4,ingredient.getUnit().toString());
+                stmt.setString(5,ingredient.getStatus().toString());
                 if(stmt.executeUpdate()>=1){
                     result = true;
                 }
             }
         }catch(SQLException e){
-            System.out.println(e);
+            log.error("e: ", e);
         }finally{
             closeConnection();
         }
@@ -63,20 +63,19 @@ public class Ingredient_DAO extends Connect{
         boolean result = false;
         try{
             if(openConnection("Ingredient")){
-                String sql = "Update ingredient set name = ?, unit = ?, status = ?, price = ?, quantity = ? where id = ?";
+                String sql = "Update ingredient set name = ?, unit = ?, status = ?, quantity = ? where id = ?";
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 stmt.setString(1,ingredient.getName());
                 stmt.setString(2,ingredient.getUnit().toString());
                 stmt.setString(3,ingredient.getStatus().toString());
-                stmt.setBigDecimal(4,ingredient.getPrice());
-                stmt.setFloat(5,ingredient.getQuantity());
-                stmt.setString(6,ingredient.getId());
+                stmt.setFloat(4,ingredient.getQuantity());
+                stmt.setString(5,ingredient.getId());
                 if(stmt.executeUpdate()>=1){
                     result = true;
                 }
             }
         }catch(SQLException e){
-            System.out.println(e);
+            log.error("e: ", e);
         }finally{
             closeConnection();
         }

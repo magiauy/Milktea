@@ -6,13 +6,6 @@
 }
 /* CSS for the custom button */
 .custom-button {
-    -fx-background-color: null;
-    -fx-text-fill: black; /* Màu chữ */
-    -fx-font-size: 14px; /* Cỡ chữ */
-    -fx-font-weight: bold; /* Chữ đậm */
-    -fx-padding: 5px 10px; /* Khoảng cách giữa nút và nội dung */
-    -fx-border-color: black; /* Màu viền */
-    -fx-border-width: 1 0 0 0;
 }
 .custom-button:hover {
     -fx-background-color: lightgray;
@@ -42,4 +35,11 @@
     -fx-padding: 10px;
     -fx-border-color: transparent;
     -fx-border-width: 0;
+}
+.item-border-clicker{
+    -fx-border-color: red;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-background-color: #f0f0f0;
 }
