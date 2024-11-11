@@ -9,11 +9,8 @@ import milktea.milktea.BUS.Ingredient_BUS;
 import milktea.milktea.DTO.Ingredient;
 import milktea.milktea.DTO.Recipe;
 import milktea.milktea.DTO.Unit;
+import milktea.milktea.Util.ValidationUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class RecipeSubGUI {
     @FXML
@@ -50,14 +47,18 @@ public class RecipeSubGUI {
             lblTitle.setText("Thêm Công thức");
         }
         btnSave.setOnAction(event -> {
-            recipe.setProductId(ProductSubGUI.getProductID());
-            recipe.setIngredientId(cbIngredient.getValue().getId());
-            recipe.setQuantity(Float.parseFloat(txtQuantity.getText()));
-            recipe.setUnit(Unit.valueOf(cbUnit.getValue()));
-            recipe.setIngredientName(cbIngredient.getValue().getName());
-            Stage stage = (Stage) btnSave.getScene().getWindow();
-            isEdited = true;
-            stage.close();
+            if(!ValidationUtil.isEmptyComboBox(cbIngredient,cbUnit)){
+                if (!ValidationUtil.isEmpty(txtQuantity)) {
+                    recipe.setProductId(ProductSubGUI.getProductID());
+                    recipe.setIngredientId(cbIngredient.getValue().getId());
+                    recipe.setQuantity(Float.parseFloat(txtQuantity.getText()));
+                    recipe.setUnit(Unit.valueOf(cbUnit.getValue()));
+                    recipe.setIngredientName(cbIngredient.getValue().getName());
+                    Stage stage = (Stage) btnSave.getScene().getWindow();
+                    isEdited = true;
+                    stage.close();
+                }
+            }
         });
     }
 

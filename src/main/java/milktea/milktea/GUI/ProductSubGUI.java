@@ -92,17 +92,15 @@ public class ProductSubGUI {
             productID = Product_BUS.autoId();
             txtProductID.setText(productID);
         }
-        imgAdd.setOnMouseClicked(event -> {
-            openStage("Recipe_SubGUI.fxml",()->{
-                if (RecipeSubGUI.isEdited()) {
-                    arrRecipe.add(RecipeSubGUI.getRecipe());
-                    ObservableList<Recipe> list = FXCollections.observableArrayList(arrRecipe);
-                    tblRecipe.setItems(list);
-                    RecipeSubGUI.setRecipe(null);
-                    RecipeSubGUI.setEdited(false);
-                }
-            });
-        });
+        imgAdd.setOnMouseClicked(event -> openStage("Recipe_SubGUI.fxml",()->{
+            if (RecipeSubGUI.isEdited()) {
+                arrRecipe.add(RecipeSubGUI.getRecipe());
+                ObservableList<Recipe> list = FXCollections.observableArrayList(arrRecipe);
+                tblRecipe.setItems(list);
+                RecipeSubGUI.setRecipe(null);
+                RecipeSubGUI.setEdited(false);
+            }
+        }));
         imgEdit.setOnMouseClicked(event -> {
             if (tblRecipe.getSelectionModel().getSelectedItem() != null) {
                 isEditable = true;
@@ -144,19 +142,29 @@ public class ProductSubGUI {
             }
         });
         btnSave.setOnAction(event -> {
-            if (!ValidationUtil.isEmpty(txtProductName, txtPrice)&&!ValidationUtil.isNotPrice(txtPrice)) {
-                if (ProductGUI.isEditable) {
-                    product = ProductGUI.getSelectedProduct();
-                    product.setName(txtProductName.getText());
-                    product.setCategoryId(cbCategory.getValue().getId());
-                    product.setPrice(BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())));
-                    product.setStatus(Status.ACTIVE);
-                } else {
-                    product = new Product(productID, txtProductName.getText(), cbCategory.getValue().getId(), BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())), Status.ACTIVE);
+            if (!ValidationUtil.isEmpty(txtProductName, txtPrice)) {
+                if (!ValidationUtil.isNotPrice(txtPrice)) {
+                    if (!arrRecipe.isEmpty()) {
+                        if (ProductGUI.isEditable) {
+                            product = ProductGUI.getSelectedProduct();
+                            product.setName(txtProductName.getText());
+                            product.setCategoryId(cbCategory.getValue().getId());
+                            product.setPrice(BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())));
+                            product.setStatus(Status.ACTIVE);
+                        } else {
+                            product = new Product(productID, txtProductName.getText(), cbCategory.getValue().getId(), BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())), Status.ACTIVE);
+                        }
+                        isEdited = true;
+                        Stage stage = (Stage) btnSave.getScene().getWindow();
+                        stage.close();
+                    }else{
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Vui lòng thêm công thức cho sản phẩm");
+                        alert.showAndWait();
+                    }
                 }
-                isEdited = true;
-                Stage stage = (Stage) btnSave.getScene().getWindow();
-                stage.close();
             }
         });
     }

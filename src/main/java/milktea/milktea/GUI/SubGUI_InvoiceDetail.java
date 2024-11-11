@@ -1,6 +1,5 @@
 package milktea.milktea.GUI;
 
-import ch.qos.logback.core.status.StatusUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -38,15 +37,15 @@ public class SubGUI_InvoiceDetail {
     public void initialize() {
         addNumericValidation(txtIce);
         addNumericValidation(txtSugar);
-        if (!InvoiceGUI.isEditable) {
+        if (!InvoiceGUI.isEditable()) {
             txtIce.setText("100");
             txtSugar.setText("100");
-            txtProductName.setText(InvoiceGUI.selectedProduct.getName());
+            txtProductName.setText(InvoiceGUI.getSelectedProduct().getName());
         }else {
-            txtIce.setText(String.valueOf(InvoiceGUI.selectedInvoiceDetail.getIce()));
-            txtSugar.setText(String.valueOf(InvoiceGUI.selectedInvoiceDetail.getSugar()));
-            txtProductName.setText(Objects.requireNonNull(Product_BUS.getProductById(InvoiceGUI.selectedInvoiceDetail.getInvoiceDetail().getProductId())).getName());
-            topping.putAll(InvoiceGUI.selectedInvoiceDetail.getTopping());
+            txtIce.setText(String.valueOf(InvoiceGUI.getSelectedInvoiceDetail().getIce()));
+            txtSugar.setText(String.valueOf(InvoiceGUI.getSelectedInvoiceDetail().getSugar()));
+            txtProductName.setText(Objects.requireNonNull(Product_BUS.getProductById(InvoiceGUI.getSelectedInvoiceDetail().getInvoiceDetail().getProductId())).getName());
+            topping.putAll(InvoiceGUI.getSelectedInvoiceDetail().getTopping());
             spTopping.setContent(toppingPortView());
             btnAdd.setText("Cập nhật chi tiết");
         }
@@ -56,28 +55,29 @@ public class SubGUI_InvoiceDetail {
 
     private void btnAdd(ActionEvent actionEvent) {
         if (!ValidationUtil.isEmpty(txtIce, txtSugar)) {
-            if (!InvoiceGUI.isEditable) {
-                InvoiceGUI.invoiceDetail.add(new TempInvoiceDetail(new InvoiceDetail(InvoiceGUI.invoiceId, InvoiceGUI.selectedProduct.getProductId(), 1, InvoiceGUI.selectedProduct.getPrice(), InvoiceGUI.selectedProduct.getPrice()), Integer.parseInt(txtSugar.getText()), Integer.parseInt(txtIce.getText()), txtNote.getText(), topping));
+            if (!InvoiceGUI.isEditable()) {
+                InvoiceGUI.getInvoiceDetail().add(new TempInvoiceDetail(new InvoiceDetail(InvoiceGUI.getInvoiceId(), InvoiceGUI.getSelectedProduct().getProductId(), 1, InvoiceGUI.getSelectedProduct().getPrice(), InvoiceGUI.getSelectedProduct().getPrice()), Integer.parseInt(txtSugar.getText()), Integer.parseInt(txtIce.getText()), txtNote.getText(), topping));
+
             } else {
-                InvoiceGUI.selectedInvoiceDetail.setIce(Integer.parseInt(txtIce.getText()));
-                InvoiceGUI.selectedInvoiceDetail.setSugar(Integer.parseInt(txtSugar.getText()));
-                InvoiceGUI.selectedInvoiceDetail.setNote(txtNote.getText());
-                InvoiceGUI.selectedInvoiceDetail.setTopping(topping);
+                InvoiceGUI.getSelectedInvoiceDetail().setIce(Integer.parseInt(txtIce.getText()));
+                InvoiceGUI.getSelectedInvoiceDetail().setSugar(Integer.parseInt(txtSugar.getText()));
+                InvoiceGUI.getSelectedInvoiceDetail().setNote(txtNote.getText());
+                InvoiceGUI.getSelectedInvoiceDetail().setTopping(topping);
             }
             Stage stage = (Stage) btnAdd.getScene().getWindow();
             stage.close();
         }else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Empty field");
-            alert.setContentText("Please fill in all fields");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập đầy đủ thông tin");
             alert.showAndWait();
         }
 
     }
     boolean ignoreAction = false;
     public void setupCpTopping() {
-        if (!InvoiceGUI.isEditable||topping.isEmpty()){
+        if (!InvoiceGUI.isEditable()||topping.isEmpty()){
             Product_BUS.getAllProduct().forEach(product -> {
                 if (product.getCategoryId().equals("C005")&&product.getStatus().equals(Status.ACTIVE)) {
                     cbTopping.getItems().add(product);
@@ -96,15 +96,15 @@ public class SubGUI_InvoiceDetail {
                 if (topping.containsKey(cbTopping.getValue().getProductId())) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setHeaderText("Topping already exists");
-                    alert.setContentText("Please choose another topping");
+                    alert.setHeaderText("Topping đã được chọn");
+                    alert.setContentText("Vui lòng chọn topping khác");
                     alert.showAndWait();
 
                 } else if (!Product_BUS.checkQuantityBelowZero(Product_BUS.getAllProduct(), cbTopping.getValue().getProductId())) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setHeaderText("Out of stock");
-                    alert.setContentText("This topping is out of stock");
+                    alert.setHeaderText("Hết hàng");
+                    alert.setContentText("Topping đã hết hàng");
                     alert.showAndWait();
                 } else {
                     if (!ignoreAction) {

@@ -47,7 +47,7 @@ public class Login_Controller {
     }
     public void btnLogin(ActionEvent actionEvent) {
         if (validate()) {
-            ValidationUtil.showInfoAlert("Login successful");
+            ValidationUtil.showInfoAlert("Đăng nhập thành công");
             System.out.println("Login successful");
             account = Employee_BUS.getEmployeeByUsername(txtUsername.getText());
             assert account != null;
@@ -68,14 +68,14 @@ public boolean validate() {
     if ((Objects.isNull(txtUsername.getText()) || txtUsername.getText().isEmpty())&&(Objects.isNull(txtPassword.getText()) || txtPassword.getText().isEmpty())) {
         txtUsername.getStyleClass().add("error");
         txtPassword.getStyleClass().add("error");
-            ValidationUtil.showErrorAlert("Username and Password are required");
+            ValidationUtil.showErrorAlert("Username và Password không được để trống");
             alert = true;
         valid = false;
     }
     if (Objects.isNull(txtUsername.getText()) || txtUsername.getText().isEmpty()) {
         txtUsername.getStyleClass().add("error");
         if (!alert) {
-        ValidationUtil.showErrorAlert("Username is required");
+        ValidationUtil.showErrorAlert("Username không được để trống");
             alert = true;
         }
         valid = false;
@@ -83,7 +83,7 @@ public boolean validate() {
     if (Objects.isNull(txtPassword.getText()) || txtPassword.getText().isEmpty()) {
         txtPassword.getStyleClass().add("error");
         if (!alert) {
-        ValidationUtil.showErrorAlert("Password is required");
+        ValidationUtil.showErrorAlert("Password không được để trống");
             alert = true;
         }
         valid = false;
@@ -91,7 +91,7 @@ public boolean validate() {
     if (!Employee_BUS.checkInvalidUsername(txtUsername.getText())) {
         txtUsername.getStyleClass().add("error");
         if (!alert) {
-        ValidationUtil.showErrorAlert("Username is invalid");
+        ValidationUtil.showErrorAlert("Username không hợp lệ");
             alert = true;
         }
         valid = false;
@@ -99,7 +99,8 @@ public boolean validate() {
     if (!Employee_BUS.checkLogin(txtUsername.getText(), txtPassword.getText())) {
         txtPassword.getStyleClass().add("error");
         if (!alert) {
-        ValidationUtil.showErrorAlert("Password is invalid");
+        ValidationUtil.showErrorAlert("Password không hợp lệ");
+            alert = true;
         }
         valid = false;
     }

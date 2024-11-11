@@ -68,7 +68,7 @@ public class CustomerGUI {
                 tableMain.refresh();
             });
         }else {
-            ValidationUtil.showErrorAlert("Please select a customer");
+            ValidationUtil.showErrorAlert("Vui lòng chọn khách hàng cần sửa");
         }
     }
     public void btnSearch(ActionEvent event){

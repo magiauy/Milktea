@@ -15,7 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.BUS.*;
 import milktea.milktea.DTO.*;
@@ -84,18 +86,33 @@ public class InvoiceGUI {
     @FXML
     private ImageView btnDelete;
 
-    public static String invoiceId = null;
-    public static Product selectedProduct = null;
-    public static TempInvoiceDetail selectedInvoiceDetail = null;
-    public static Object selectedObject = null;
+    private final ArrayList<Product> arrProducts = new ArrayList<>();
 
-    public final ArrayList<Product> arrProducts = new ArrayList<>();
-    public static ArrayList<TempInvoiceDetail> invoiceDetail = new ArrayList<>();
+    @Getter
+    @Setter
+    private static String invoiceId = null;
+    @Getter
+    @Setter
+    private static Product selectedProduct = null;
+    @Getter
+    @Setter
+    private static TempInvoiceDetail selectedInvoiceDetail = null;
+    @Getter
+    @Setter
+    private static Object selectedObject = null;
+    @Getter
+    @Setter
+    private static ArrayList<TempInvoiceDetail> invoiceDetail = new ArrayList<>();
+    @Getter
+    @Setter
+    private static boolean isEditable = false;
+    @Getter
+    @Setter
+    private static int globalProductIndex = 0 ;
 
-    public static boolean isEditable = false;
-    public static int globalProductIndex = 0 ;
-
-    public static String globalListFlag = null;
+    @Getter
+    @Setter
+    private static String globalListFlag = null;
     public void initialize() {
         invoiceId = Invoice_BUS.autoId();
         txtInvoiceId.setText(invoiceId);
@@ -236,12 +253,20 @@ public class InvoiceGUI {
 
     private void btnAddProduct(ActionEvent actionEvent) {
         if (selectedProduct != null) {
-            openStage("SubGUI_InvoiceDetail.fxml", () -> {
-                arrProducts.clear();
-                arrProducts.addAll(Recipe_BUS.updateProductQuantity(Product_BUS.getAllProduct(), invoiceDetail, false));
-                productPane.setContent(createListProduct());
-                invoiceDetailPane.setContent(createListInvoiceDetail());
-            });
+            if (Product_BUS.checkQuantityBelowZero(arrProducts, selectedProduct.getProductId())) {
+                openStage("SubGUI_InvoiceDetail.fxml", () -> {
+                    arrProducts.clear();
+                    arrProducts.addAll(Recipe_BUS.updateProductQuantity(Product_BUS.getAllProduct(), invoiceDetail, false));
+                    productPane.setContent(createListProduct());
+                    invoiceDetailPane.setContent(createListInvoiceDetail());
+                });
+            }else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Số lượng sản phẩm đã hết");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -431,7 +456,6 @@ public class InvoiceGUI {
                     productSpinnerChanged = false;
                 }
             });
-
             GridPane.setMargin(snProductQuantity, new Insets(0 ,10 , 0 ,0));
             GridPane.setMargin(lblProductName, new Insets(0 ,0 , 0 ,5));
 
@@ -669,15 +693,22 @@ public class InvoiceGUI {
     txtDiscount.setText(discount.setScale(0, RoundingMode.HALF_UP).toString());
 }
     public void earnPoint(Customer customer) {
-        if (discount.compareTo(total) > 0) {
-            BigDecimal remainingPoint = discount.subtract(total).subtract(discountByPromotion);
-            BigDecimal newPoint = total.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
-            customer.setPoint(newPoint.add(remainingPoint));
+        if (chbPoint.isSelected()) {
+            System.out.println(discount.compareTo(total) > 0);
+            if (discount.compareTo(total) > 0) {
+                BigDecimal remainingPoint = discount.subtract(total).subtract(discountByPromotion);
+                BigDecimal newPoint = total.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
+                customer.setPoint(newPoint.add(remainingPoint));
+            } else {
+                BigDecimal newPoint = total.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
+                customer.setPoint(newPoint);
+            }
         }else {
             BigDecimal newPoint = total.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
             customer.setPoint(customer.getPoint().add(newPoint));
         }
         Customer_BUS.editCustomer(customer);
+        Customer_BUS.editCustomerLocal(customer);
     }
 
     @FXML

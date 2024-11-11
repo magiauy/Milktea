@@ -1,5 +1,6 @@
 package milktea.milktea.BUS;
 
+import lombok.NonNull;
 import milktea.milktea.DAO.Recipe_DAO;
 import milktea.milktea.DTO.*;
 
@@ -30,7 +31,7 @@ public class Recipe_BUS {
         return arrRecipes;
     }
 
-    public static boolean addRecipe(ArrayList<Recipe> recipe){
+    public static boolean addRecipe(@NonNull ArrayList<Recipe> recipe){
         for (Recipe r : recipe) {
             if (!Recipe_DAO.addRecipe(r)) {
                 return false;
@@ -39,8 +40,24 @@ public class Recipe_BUS {
         return true;
     }
 
+    public static boolean addRecipesLocal(@NonNull ArrayList<Recipe> recipes) {
+        for (Recipe recipe : recipes) {
+            if (!findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
+                arrRecipes.add(recipe);
+                mapRecipes.computeIfAbsent(recipe.getProductId(), k -> new ArrayList<>()).add(recipe);
+            }
+        }
+        return true;
+    }
+    public static boolean addRecipeLocal(@NonNull Recipe recipe) {
+        if (!findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
+            arrRecipes.add(recipe);
+            return true;
+        }
+        return false;
+    }
 
-    public static boolean editRecipe(ArrayList<Recipe> recipes) {
+    public static boolean editRecipe(@NonNull ArrayList<Recipe> recipes) {
         for (Recipe recipe : recipes) {
             if (findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
                 // Nếu `editRecipe` thất bại, trả về `false` ngay lập tức
@@ -58,14 +75,29 @@ public class Recipe_BUS {
         return true;
     }
 
-
-    public static boolean findRecipe(String productId, String ingredientId){
-        for (Recipe recipe : arrRecipes) {
-            if (recipe.getProductId().equals(productId) && recipe.getIngredientId().equals(ingredientId)) {
-                return true;
+    public static boolean editRecipesLocal(@NonNull ArrayList<Recipe> tempArrRecipe) {
+        for (Recipe recipe : tempArrRecipe) {
+            if (findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
+                if(!editRecipeLocal(recipe)){
+                    return false;
+                }
+            } else {
+                if(!addRecipeLocal(recipe)){
+                    return false;
+                }
             }
         }
-        return false;
+        getMapData();
+        return true;
+    }
+    public static boolean deleteRecipeByProductID(String productId) {
+        return Recipe_DAO.deleteRecipeByProductID(productId);
+    }
+
+    public static boolean deleteLocalRecipeByProductID(String productId) {
+        arrRecipes.removeIf(recipe -> recipe.getProductId().equals(productId));
+        getMapData();
+        return true;
     }
 
     public static boolean deleteRecipe(ArrayList<Recipe> recipes){
@@ -79,6 +111,18 @@ public class Recipe_BUS {
         return true;
     }
 
+
+    public static boolean findRecipe(String productId, String ingredientId){
+        for (Recipe recipe : arrRecipes) {
+            if (recipe.getProductId().equals(productId) && recipe.getIngredientId().equals(ingredientId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 public static boolean deleteLocalRecipe(ArrayList<Recipe> recipes) {
     if (recipes != null) {
         arrRecipes.removeIf(recipe -> recipes.stream()
@@ -87,7 +131,7 @@ public static boolean deleteLocalRecipe(ArrayList<Recipe> recipes) {
     getMapData();
     return true;
 }
-    public static ArrayList<Product> forecastProductQuantity(ArrayList<Product> arrProducts, HashMap<String,Ingredient> arrIngredient) {
+    public static ArrayList<Product> forecastProductQuantity(@NonNull ArrayList<Product> arrProducts, HashMap<String,Ingredient> arrIngredient) {
 
         // Update the quantities of the products based on the available ingredients
         for (Product product : arrProducts) {
@@ -134,7 +178,7 @@ public static boolean deleteLocalRecipe(ArrayList<Recipe> recipes) {
 
                 // Update the required ingredients for the product
                 assert product != null;
-                updateIngredients(arrIngredient, product, productQuantity, isAdd);
+                updateTempIngredients(arrIngredient, product, productQuantity, isAdd);
 
                 // Iterate through the toppings
                 if (tempInvoiceDetail.getTopping() != null) {
@@ -144,7 +188,7 @@ public static boolean deleteLocalRecipe(ArrayList<Recipe> recipes) {
 
                         // Update the required ingredients for the topping
                         assert topping != null;
-                        updateIngredients(arrIngredient, topping, toppingQuantity, isAdd);
+                        updateTempIngredients(arrIngredient, topping, toppingQuantity, isAdd);
                     }
                 }
             }
@@ -154,7 +198,7 @@ public static boolean deleteLocalRecipe(ArrayList<Recipe> recipes) {
     return forecastProductQuantity(arrProducts, ingredientMap);
 }
 
-private static void updateIngredients(ArrayList<Ingredient> arrIngredient, Product product, int quantity, boolean isAdd) {
+private static void updateTempIngredients(@NonNull ArrayList<Ingredient> arrIngredient, Product product, int quantity, boolean isAdd) {
     HashMap<String, Ingredient> ingredientMap = new HashMap<>();
     for (Ingredient ingredient : arrIngredient) {
         ingredientMap.put(ingredient.getId(), ingredient);
@@ -190,46 +234,13 @@ private static void updateIngredients(ArrayList<Ingredient> arrIngredient, Produ
         return false;
     }
 
-    public static boolean addRecipeLocal(ArrayList<Recipe> recipes) {
-        for (Recipe recipe : recipes) {
-            if (!findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
-                arrRecipes.add(recipe);
-                mapRecipes.computeIfAbsent(recipe.getProductId(), k -> new ArrayList<>()).add(recipe);
+    public static boolean hasIngredient(String ingredientId) {
+        for (Recipe recipe : arrRecipes) {
+            if (recipe.getIngredientId().equals(ingredientId)) {
+                return true;
             }
-        }
-        return true;
-    }
-    public static boolean addRecipeLocal(Recipe recipe) {
-        if (!findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
-            arrRecipes.add(recipe);
-            return true;
         }
         return false;
     }
 
-    public static boolean editRecipesLocal(ArrayList<Recipe> tempArrRecipe) {
-        for (Recipe recipe : tempArrRecipe) {
-            if (findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
-                if(!editRecipeLocal(recipe)){
-                    return false;
-                }
-            } else {
-                if(!addRecipeLocal(recipe)){
-                    return false;
-                }
-            }
-        }
-        getMapData();
-        return true;
-    }
-
-    public static boolean deleteRecipeByProductID(String productId) {
-        return Recipe_DAO.deleteRecipeByProductID(productId);
-    }
-
-    public static boolean deleteLocalRecipeByProductID(String productId) {
-        arrRecipes.removeIf(recipe -> recipe.getProductId().equals(productId));
-        getMapData();
-        return true;
-    }
 }

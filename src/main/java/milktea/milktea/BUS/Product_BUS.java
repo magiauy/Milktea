@@ -1,6 +1,5 @@
 package milktea.milktea.BUS;
 
-import javafx.beans.property.ReadOnlyProperty;
 import lombok.NonNull;
 import milktea.milktea.DAO.Product_DAO;
 import milktea.milktea.DTO.Product;
@@ -44,11 +43,6 @@ public class Product_BUS {
             }
         }
         return false;
-    }
-
-
-    public static Product getProductByName(String key) {
-        return Product_DAO.getProductByName(key);
     }
 
     public static Product getProductById(@NonNull String key) {

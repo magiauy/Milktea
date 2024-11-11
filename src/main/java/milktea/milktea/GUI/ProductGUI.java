@@ -116,7 +116,7 @@ public class ProductGUI {
         imgAdd.setOnMouseClicked(event -> openStage("Product_SubGUI.fxml",()->{
             if (ProductSubGUI.isEdited()) {
                 if (Product_BUS.addProduct(ProductSubGUI.getProduct())&&Recipe_BUS.addRecipe(ProductSubGUI.getArrRecipe())) {
-                    if (Product_BUS.addProductLocal(ProductSubGUI.getProduct())&&Recipe_BUS.addRecipeLocal(ProductSubGUI.getArrRecipe())) {
+                    if (Product_BUS.addProductLocal(ProductSubGUI.getProduct())&&Recipe_BUS.addRecipesLocal(ProductSubGUI.getArrRecipe())) {
                         ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
                         tblProduct.setItems(data);
                         tblProduct.refresh();

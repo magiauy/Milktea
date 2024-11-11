@@ -37,7 +37,7 @@ public class CustomerSubGUI {
     public void initialize() {
         mapTextField();
         if (CustomerGUI.isEditable){
-            lblTitle.setText("Sửa thông tin khách hàng");
+            lblTitle.setText("Sửa thông tin");
             btnSave.setOnAction(this::btnSave);
             cbGender.getItems().add("Nam");
             cbGender.getItems().add("Nữ");
@@ -81,17 +81,17 @@ public class CustomerSubGUI {
                 } else {
                     if (Customer_BUS.addCustomer(customer)) {
                         Customer_BUS.addCustomerLocal(customer);
-                        ValidationUtil.showInfoAlert("Add customer successful");
+                        ValidationUtil.showInfoAlert("Thêm khách hàng thành công");
                         CustomerGUI.selectedCustomer = null;
                         isAdded = true;
                         ((Stage) btnSave.getScene().getWindow()).close();
 
                     } else {
-                        ValidationUtil.showErrorAlert("Add customer failed");
+                        ValidationUtil.showErrorAlert("Thêm khách hàng thất bại");
                     }
                 }
             }else {
-                ValidationUtil.showErrorAlert("Phone number is already used");
+                ValidationUtil.showErrorAlert("Số điện thoại đã tồn tại");
             }
         }
     }

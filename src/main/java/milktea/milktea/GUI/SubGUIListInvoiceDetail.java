@@ -44,7 +44,7 @@ public class SubGUIListInvoiceDetail {
 
     @FXML
     public void initialize() {
-        switch (InvoiceGUI.globalListFlag) {
+        switch (InvoiceGUI.getGlobalListFlag()) {
             case "Nhân Viên":
                 lblTitle.setText("Danh sách nhân viên");
                 createEmployeeTable();
@@ -64,9 +64,9 @@ public class SubGUIListInvoiceDetail {
 
     private void btnAdd(ActionEvent actionEvent) {
         if (tableMain.getSelectionModel().getSelectedItem() != null || tablePromotion.getSelectionModel().getSelectedItem() != null) {
-            if (InvoiceGUI.globalListFlag.equals("Khuyến Mãi")) {
+            if (InvoiceGUI.getGlobalListFlag().equals("Khuyến Mãi")) {
                 if (PromotionProgram_BUS.checkInvalidDate(tablePromotion.getSelectionModel().getSelectedItem().getPromotionProgramId())) {
-                    InvoiceGUI.selectedObject = tablePromotion.getSelectionModel().getSelectedItem();
+                    InvoiceGUI.setSelectedObject(tablePromotion.getSelectionModel().getSelectedItem());
                     Stage stage = (Stage) btnAdd.getScene().getWindow();
                     stage.close();
                 }else {
@@ -77,7 +77,7 @@ public class SubGUIListInvoiceDetail {
                     alert.showAndWait();
                 }
             } else {
-                InvoiceGUI.selectedObject = tableMain.getSelectionModel().getSelectedItem();
+                InvoiceGUI.setSelectedObject(tableMain.getSelectionModel().getSelectedItem());
                 Stage stage = (Stage) btnAdd.getScene().getWindow();
                 stage.close();
             }

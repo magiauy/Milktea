@@ -34,6 +34,9 @@ public class Ingredient_BUS {
         return Ingredient_DAO.editIngredient(ingredient);
     }
 
+    public static boolean deleteIngredient(String id) {
+        return Ingredient_DAO.deleteIngredient(id);
+    }
     public static String getIngredientNameById(String id) {
         return tempArrIngredients.get(id).getName();
     }
@@ -96,4 +99,30 @@ public class Ingredient_BUS {
     }
     return true;
 }
+    public static String autoId() {
+        if (arrIngredients.isEmpty()) {
+            return "I001";
+        }
+        String lastId = arrIngredients.getLast().getId();
+        int id = Integer.parseInt(lastId.substring(1)) + 1;
+        return "I" + String.format("%03d", id);
+    }
+
+    public static void editIngredientLocal(Ingredient ingredient) {
+        Ingredient ingredient1 = tempArrIngredients.get(ingredient.getId());
+        ingredient1.setName(ingredient.getName());
+        ingredient1.setUnit(ingredient.getUnit());
+        ingredient1.setQuantity(ingredient.getQuantity());
+
+    }
+
+    public static void addIngredientLocal(Ingredient ingredient) {
+        arrIngredients.add(ingredient);
+        tempArrIngredients.put(ingredient.getId(), ingredient);
+    }
+
+    public static void deleteIngredientLocal(String id) {
+        arrIngredients.removeIf(ingredient -> ingredient.getId().equals(id));
+        tempArrIngredients.remove(id);
+    }
 }

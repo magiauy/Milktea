@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="216.0" prefWidth="406.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.RecipeSubGUI">
    <children>
       <Label fx:id="lblTitle" layoutX="57.0" layoutY="14.0" text="Thêm công thức ">
@@ -20,13 +19,13 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbIngredient" layoutX="149.0" layoutY="70.0" prefHeight="25.0" prefWidth="205.0" />
+      <ComboBox fx:id="cbIngredient" layoutX="149.0" layoutY="70.0" prefHeight="25.0" prefWidth="205.0" promptText="Nguyên liệu" />
       <Label layoutX="53.0" layoutY="106.0" prefHeight="26.0" prefWidth="101.0" text="Đơn vị tính:">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbUnit" layoutX="149.0" layoutY="107.0" prefHeight="25.0" prefWidth="205.0" />
+      <ComboBox fx:id="cbUnit" layoutX="149.0" layoutY="107.0" prefHeight="25.0" prefWidth="205.0" promptText="Đơn vị" />
       <Label layoutX="53.0" layoutY="143.0" prefHeight="26.0" prefWidth="101.0" text="Số lượng:">
          <font>
             <Font size="17.0" />

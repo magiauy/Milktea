@@ -81,5 +81,24 @@ public class Ingredient_DAO extends Connect{
         }
         return result;
     }
+
+    public static boolean deleteIngredient(String id){
+        boolean result = false;
+        try{
+            if(openConnection()){
+                String sql = "Delete from ingredient where id = ?";
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1,id);
+                if(stmt.executeUpdate()>=1){
+                    result = true;
+                }
+            }
+        }catch(SQLException e){
+            log.error("e: ", e);
+        }finally{
+            closeConnection();
+        }
+        return result;
+    }
 }
 

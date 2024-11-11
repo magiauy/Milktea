@@ -18,4 +18,13 @@ public class GoodsReceiptDetail_BUS {
     public static boolean addGoodsReceiptDetail(ArrayList<GoodsReceiptDetail> goodsReceiptDetails) {
         return GoodsReceiptDetail_DAO.addGoodsReceiptDetail(goodsReceiptDetails);
     }
+
+    public static boolean hasIngredient(String id) {
+        for (GoodsReceiptDetail goodsReceiptDetail : arrGoodsReceiptDetail) {
+            if (goodsReceiptDetail.getIngredientId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
