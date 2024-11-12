@@ -6,15 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="909ee63f-1597-44ad-9330-ee67f36c4850" name="Changes" comment="Create">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/InvoiceGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/InvoiceGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/SubGUIListInvoiceDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/SubGUIListInvoiceDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/GoodsReceipt_GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/GoodsReceipt_GUI.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Invoice_GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Invoice_GUI.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Product_GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Product_GUI.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Product_SubGUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Product_SubGUI.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/ProviderList_SubGUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/ProviderList_SubGUI.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/SubGUI_List_InvoiceDetail.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/SubGUI_List_InvoiceDetail.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProductGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProductGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,7 +303,7 @@
       <workItem from="1731346240724" duration="601000" />
       <workItem from="1731387315603" duration="983000" />
       <workItem from="1731388315384" duration="11546000" />
-      <workItem from="1731400044052" duration="14713000" />
+      <workItem from="1731400044052" duration="15128000" />
     </task>
     <task id="LOCAL-00001" summary="Create">
       <option name="closed" value="true" />

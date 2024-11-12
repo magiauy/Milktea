@@ -16,6 +16,7 @@ import milktea.milktea.BUS.Recipe_BUS;
 import milktea.milktea.DTO.Product;
 import milktea.milktea.DTO.Recipe;
 import milktea.milktea.DTO.Status;
+import milktea.milktea.Util.ValidationUtil;
 
 import static milktea.milktea.Util.UI_Util.openStage;
 import java.util.ArrayList;
@@ -165,32 +166,36 @@ public class ProductGUI {
         imgLock.setOnMouseClicked(event -> {
             if (tblProduct.getSelectionModel().getSelectedItem() != null) {
                 if (tblProduct.getSelectionModel().getSelectedItem().getStatus().equals(Status.ACTIVE)) {
-                    if (Product_BUS.changeStatusProduct(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.INACTIVE)) {
-                        if (Product_BUS.changeStatusProductLocal(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.INACTIVE)) {
-                            tblProduct.getSelectionModel().getSelectedItem().setStatus(Status.INACTIVE);
-                            imgLock.setImage(new ImageView("img/Lock.png").getImage());
-                            ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
-                            tblProduct.setItems(data);
-                            tblProduct.refresh();
+                    if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn khóa sản phẩm này không?")) {
+                        if (Product_BUS.changeStatusProduct(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.INACTIVE)) {
+                            if (Product_BUS.changeStatusProductLocal(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.INACTIVE)) {
+                                tblProduct.getSelectionModel().getSelectedItem().setStatus(Status.INACTIVE);
+                                imgLock.setImage(new ImageView("img/Lock.png").getImage());
+                                ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
+                                tblProduct.setItems(data);
+                                tblProduct.refresh();
+                            }else {
+                                failedAlert();
+                            }
                         }else {
                             failedAlert();
                         }
-                    }else {
-                        failedAlert();
                     }
                 }else {
-                    if (Product_BUS.changeStatusProduct(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.ACTIVE)) {
-                        if (Product_BUS.changeStatusProductLocal(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.ACTIVE)) {
-                            tblProduct.getSelectionModel().getSelectedItem().setStatus(Status.ACTIVE);
-                            imgLock.setImage(new ImageView("img/Padlock.png").getImage());
-                            ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
-                            tblProduct.setItems(data);
-                            tblProduct.refresh();
-                        }else {
+                    if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn mở khóa sản phẩm này không?")) {
+                        if (Product_BUS.changeStatusProduct(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.ACTIVE)) {
+                            if (Product_BUS.changeStatusProductLocal(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.ACTIVE)) {
+                                tblProduct.getSelectionModel().getSelectedItem().setStatus(Status.ACTIVE);
+                                imgLock.setImage(new ImageView("img/Padlock.png").getImage());
+                                ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
+                                tblProduct.setItems(data);
+                                tblProduct.refresh();
+                            } else {
+                                failedAlert();
+                            }
+                        } else {
                             failedAlert();
                         }
-                    }else {
-                        failedAlert();
                     }
                 }
             }else {
