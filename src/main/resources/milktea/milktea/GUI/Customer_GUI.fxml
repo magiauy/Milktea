@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="839.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.CustomerGUI">
+<AnchorPane prefHeight="839.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.CustomerGUI">
    <children>
       <Pane layoutX="7.0" layoutY="12.0" prefHeight="816.0" prefWidth="1103.0" style="-fx-background-color: #fccfd4; -fx-border-color: black; -fx-border-radius: 5px;">
          <children>
@@ -30,20 +36,27 @@
             </TableView>
             <TextField fx:id="txtSearch" layoutX="14.0" layoutY="86.0" prefHeight="25.0" prefWidth="210.0" />
             <Button fx:id="btnSearch" layoutX="223.0" layoutY="86.0" mnemonicParsing="false" text="Search" />
-             <ImageView fx:id="btnAdd" fitHeight="42.0" fitWidth="42.0" layoutX="1041.0" layoutY="69.0"
-                        pickOnBounds="true" preserveRatio="true">
+             <ImageView fx:id="btnAdd" fitHeight="42.0" fitWidth="42.0" layoutX="998.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                  <cursor>
-                     <Cursor fx:constant="HAND"/>
+                     <Cursor fx:constant="HAND" />
                  </cursor>
-                 <Image url="@../../../icon/Plus.png"/>
+                 <Image url="@../../../icon/Plus.png" />
              </ImageView>
-            <ImageView fx:id="btnEdit" fitHeight="42.0" fitWidth="42.0" layoutX="991.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnEdit" fitHeight="42.0" fitWidth="42.0" layoutX="948.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../icon/Edit.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+            </ImageView>
+            <ImageView fx:id="btnDelete" fitHeight="42.0" fitWidth="42.0" layoutX="1047.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <image>
+                  <Image url="@../../../img/Trash.png" />
+               </image>
             </ImageView>
          </children>
       </Pane>

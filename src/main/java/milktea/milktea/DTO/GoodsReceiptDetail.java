@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 public class GoodsReceiptDetail {
     private String goodsReceiptId;
     private String ingredientId;
-    private double quantity;
+    private float quantity;
+    private Unit unit;
     private BigDecimal price;
     private BigDecimal total;
 

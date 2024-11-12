@@ -101,9 +101,11 @@ public class ProductGUI {
                                 ProductSubGUI.setProduct(null);
                                 ProductSubGUI.setArrRecipe(null);
                                 ProductSubGUI.setEdited(false);
-                            }
-                    }
-
+                            }else
+                                failedAlert();
+                        }else {
+                            failedAlert();
+                        }
                     }
                 });
             }else {
@@ -258,7 +260,7 @@ public class ProductGUI {
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
     }
     public void hideButtonWithoutPermission(){
-        int permission = Login_Controller.account.getPermission();
+        int permission = Login_Controller.getAccount().getPermission();
         if (!Main.checkRolePermission(permission,9)){
             imgAdd.setVisible(false);
             imgDelete.setVisible(false);

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="835.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.GoodsReceiptGUI">
+   <children>
+      <TabPane layoutX="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1130.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Tạo phiếu nhập">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="780.0" prefWidth="668.0" style="-fx-background-color: FCCFD4; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: Black;">
+                           <children>
+                              <Label layoutX="159.0" text="Danh sách nguyên liệu">
+                                 <font>
+                                    <Font name="System Bold" size="33.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtSearchIngredient" layoutX="14.0" layoutY="63.0" />
+                              <Button fx:id="btnSearch" layoutX="163.0" layoutY="63.0" mnemonicParsing="false" text="Tìm" />
+                              <Button fx:id="btnAdd" layoutX="213.0" layoutY="713.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="241.0" style="-fx-font-weight: bold; -fx-font-size: 20;" text="Thêm vào phiếu nhập" />
+                              <TableView fx:id="tblIngredient" layoutX="14.0" layoutY="98.0" prefHeight="608.0" prefWidth="639.0">
+                                <columns>
+                                  <TableColumn fx:id="colIngredientId" prefWidth="74.0" text="Mã NL" />
+                                  <TableColumn fx:id="colIngredientName" prefWidth="344.0" text="Tên NL" />
+                                    <TableColumn fx:id="colQuantity" prefWidth="106.0" text="Số Lượng" />
+                                    <TableColumn fx:id="colUnit" prefWidth="114.0" text="Đơn vị " />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="695.0" layoutY="14.0" prefHeight="780.0" prefWidth="421.0" style="-fx-background-color: FCCFD4; -fx-background-radius: 5px; -fx-border-radius: 5px; -fx-border-color: Black;">
+                           <children>
+                              <Label layoutX="52.0" text="Thông tin phiếu nhập">
+                                 <font>
+                                    <Font name="System Bold" size="33.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="44.0" layoutY="67.0" text="Mã PN:" />
+                              <Label layoutX="44.0" layoutY="100.0" text="Mã NV:" />
+                              <TextField fx:id="txtGoodsReceiptId" editable="false" layoutX="89.0" layoutY="64.0" prefHeight="25.0" prefWidth="92.0" />
+                              <TextField fx:id="txtGoodsEmployeeId" disable="true" editable="false" layoutX="89.0" layoutY="97.0" prefHeight="25.0" prefWidth="91.0" />
+                              <Label layoutX="195.0" layoutY="67.0" text="Ngày:" />
+                              <Label layoutX="196.0" layoutY="100.0" text="Mã NCC:" />
+                              <TextField fx:id="txtGoodsProviderId" disable="true" editable="false" layoutX="245.0" layoutY="96.0" prefHeight="25.0" prefWidth="106.0" />
+                              <Label layoutX="43.0" layoutY="132.0" text="Tên NV:" />
+                              <Label layoutX="195.0" layoutY="132.0" text="Tên NCC:" />
+                              <TextField fx:id="txtGoodsEmployeeName" editable="false" layoutX="89.0" layoutY="129.0" prefHeight="25.0" prefWidth="92.0" />
+                              <TextField fx:id="txtGoodsProviderName" editable="false" layoutX="245.0" layoutY="128.0" prefHeight="25.0" prefWidth="134.0" />
+                              <Label layoutX="30.0" layoutY="667.0" text="Tổng: " textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="35.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTotal" layoutX="124.0" layoutY="667.0" prefHeight="51.0" prefWidth="172.0" text="0đ">
+                                 <font>
+                                    <Font name="System Bold" size="35.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnClear" layoutX="322.0" layoutY="673.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="78.0" text="Clear">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnAddGoodsReceipt" layoutX="19.0" layoutY="718.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="382.0" text="Xuất phiếu nhập">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnProviderList" layoutX="350.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="..." />
+                              <ImageView fx:id="imgEdit" fitHeight="42.0" fitWidth="42.0" layoutX="312.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../icon/Edit.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="imgDelete" fitHeight="42.0" fitWidth="42.0" layoutX="358.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../icon/Trash.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <TextField fx:id="txtGoodsReceiptDate" editable="false" layoutX="245.0" layoutY="64.0" prefHeight="25.0" prefWidth="134.0" />
+                              <TableView fx:id="tblGoodsReceiptDetail" layoutX="21.0" layoutY="168.0" prefHeight="451.0" prefWidth="378.0">
+                                <columns>
+                                  <TableColumn fx:id="colGoodsReceiptDetailStt" prefWidth="35.0" text="STT" />
+                                  <TableColumn fx:id="colGoodsReceiptDetailIngredientName" prefWidth="115.0" text="Tên NL" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailQuantity" prefWidth="75.0" text="Số lượng" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailPrice" prefWidth="75.0" text="Đơn giá" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailTotal" prefWidth="77.0" text="Thành tiền" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tabGoodsReceipt" text="Danh sách phiếu nhập">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="775.0" prefWidth="655.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
+                           <children>
+                              <TableView fx:id="tblGoodsReceipt" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0">
+                                 <columns>
+                                    <TableColumn fx:id="colGoodsReceiptId" prefWidth="97.0" text="Mã PN" />
+                                    <TableColumn fx:id="colGoodsReceiptProviderId" prefWidth="120.0" text="Mã NCC" />
+                                    <TableColumn fx:id="colGoodsReceiptEmployeeId" prefWidth="134.0" text="Mã NV" />
+                                    <TableColumn fx:id="colGoodsReceiptDate" prefWidth="161.0" text="Ngày Lập" />
+                                    <TableColumn fx:id="colGoodsReceiptTotal" prefWidth="119.0" text="Tổng tiền" />
+                                 </columns>
+                              </TableView>
+                              <Label layoutX="189.0" layoutY="8.0" text="Danh Sách Phiếu Nhập">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtSearchGoodsReceipt" layoutX="443.0" layoutY="59.0" />
+                              <Button fx:id="btnSearchGoodsReceipt" layoutX="592.0" layoutY="59.0" mnemonicParsing="false" text="Search" />
+                              <Button fx:id="advancedSearch" layoutX="14.0" layoutY="59.0" mnemonicParsing="false" text="Tìm kiếm nâng cao" />
+                              <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="129.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../img/Refresh.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="681.0" layoutY="14.0" prefHeight="775.0" prefWidth="435.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
+                           <children>
+                              <TableView fx:id="tblGoodsReceiptDetail1" layoutX="13.0" layoutY="190.0" prefHeight="519.0" prefWidth="411.0">
+                                 <columns>
+                                    <TableColumn fx:id="colGoodsReceiptDetailIngredientId1" prefWidth="75.0" text="Mã NL" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailIngredientName1" prefWidth="82.0" text="Tên NL" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailQuantity1" prefWidth="68.0" text="Số Lượng" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailUnit1" prefWidth="60.0" text="Đơn Vị" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailPrice1" prefWidth="54.0" text="Đơn giá" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailTotal1" prefWidth="71.0" text="Thành Tiền" />
+                                 </columns>
+                              </TableView>
+                              <Label layoutX="97.0" layoutY="14.0" text="Chi Tiết Phiếu Nhập">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="160.0" layoutY="52.0" text="Mã PN: ">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblGoodsReceiptId" layoutX="218.0" layoutY="52.0" prefHeight="21.0" prefWidth="90.0">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="39.0" layoutY="73.0" text="Mã Nhân Viên">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtGoodsEmployeeId1" editable="false" layoutX="39.0" layoutY="98.0" />
+                              <Label layoutX="247.0" layoutY="73.0" text="Mã Nhà Cung Cấp">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtGoodsProviderId1" editable="false" layoutX="247.0" layoutY="98.0" />
+                              <Label layoutX="39.0" layoutY="130.0" text="Ngày Lập">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtGoodsReceiptDate1" editable="false" layoutX="39.0" layoutY="155.0" />
+                              <Label layoutX="247.0" layoutY="125.0" text="Tổng Tiền">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtGoodsReceiptTotal1" editable="false" layoutX="247.0" layoutY="150.0" />
+                              <Button fx:id="Clear" layoutX="197.0" layoutY="722.0" mnemonicParsing="false" text="Clear" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

@@ -3,6 +3,7 @@ package milktea.milktea.Util;
 import javafx.scene.control.*;
 import lombok.NonNull;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class ValidationUtil {
@@ -143,6 +144,18 @@ public class ValidationUtil {
         }
         return false;
     }
+    public static boolean isNotPrice(TextField... params) {
+        for (TextField param : params) {
+            try {
+                Float.parseFloat(param.getText());
+            } catch (NumberFormatException e) {
+                showErrorAlert("Giá tiền không hợp lệ");
+                param.requestFocus();
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static boolean isEmptyComboBox(@NonNull ComboBox<?>... params) {
         for (ComboBox<?> param : params) {
@@ -154,17 +167,6 @@ public class ValidationUtil {
         }
         return false;
     }
-
-    public static boolean isEmptySpinner(@NonNull Spinner<?>... params) {
-            for (Spinner<?> param : params) {
-                if (param.getValue() == null) {
-                    showErrorAlert("Vui lòng nhập số lượng");
-                    param.requestFocus();
-                    return true;
-                }
-            }
-            return false;
-        }
 
     public static boolean isNegativeFloat(Float value) {
         if (value < 0) {
@@ -190,5 +192,29 @@ public class ValidationUtil {
         alert.setHeaderText(null);
         alert.setContentText(s);
         return alert.showAndWait().map(buttonType -> buttonType == ButtonType.OK).orElse(false);
+    }
+
+    public static boolean isValidDateRange(LocalDate startDate, LocalDate endDate){
+        if (startDate.isAfter(endDate)){
+            showErrorAlert("Ngày bắt đầu phải trước ngày kết thúc");
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidTotalRange(TextField txtSearchInvoiceMinTotal, TextField txtSearchInvoiceMaxTotal) {
+        if (Float.parseFloat(txtSearchInvoiceMinTotal.getText()) > Float.parseFloat(txtSearchInvoiceMaxTotal.getText())) {
+            showErrorAlert("Tổng tiền nhỏ nhất phải nhỏ hơn tổng tiền lớn nhất");
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isEmptyDp(DatePicker dtpGoodsReceiptStartDate,String key) {
+        if (dtpGoodsReceiptStartDate.getValue() == null){
+            showErrorAlert("Vui lòng chọn ngày "+key);
+            return true;
+        }
+        return false;
     }
 }

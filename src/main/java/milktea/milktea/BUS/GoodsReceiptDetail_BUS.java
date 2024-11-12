@@ -27,4 +27,17 @@ public class GoodsReceiptDetail_BUS {
         }
         return false;
     }
+    public static void addGoodsReceiptDetailLocal(ArrayList<GoodsReceiptDetail> goodsReceiptDetails) {
+        arrGoodsReceiptDetail.addAll(goodsReceiptDetails);
+    }
+
+    public static ArrayList<GoodsReceiptDetail> getGoodsReceiptDetailByGoodsReceiptId(String goodsReceiptId) {
+        ArrayList<GoodsReceiptDetail> result = new ArrayList<>();
+        for (GoodsReceiptDetail goodsReceiptDetail : arrGoodsReceiptDetail) {
+            if (goodsReceiptDetail.getGoodsReceiptId().equals(goodsReceiptId)) {
+                result.add(goodsReceiptDetail);
+            }
+        }
+        return result;
+    }
 }

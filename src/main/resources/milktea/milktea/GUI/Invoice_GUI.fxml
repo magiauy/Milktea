@@ -51,9 +51,8 @@
                         <Label layoutX="44.0" layoutY="67.0" text="Mã HĐ:" />
                         <Label layoutX="44.0" layoutY="100.0" text="Mã NV:" />
                         <TextField fx:id="txtInvoiceId" editable="false" layoutX="89.0" layoutY="64.0" prefHeight="25.0" prefWidth="92.0" />
-                        <TextField fx:id="txtEmployeeId" disable="true" editable="false" layoutX="89.0" layoutY="97.0" prefHeight="25.0" prefWidth="64.0" />
+                        <TextField fx:id="txtEmployeeId" disable="true" editable="false" layoutX="89.0" layoutY="97.0" prefHeight="25.0" prefWidth="91.0" />
                         <Label layoutX="195.0" layoutY="67.0" text="Ngày:" />
-                        <Button fx:id="btnEmployeePicker" layoutX="153.0" layoutY="97.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="..." />
                         <Label layoutX="196.0" layoutY="100.0" text="Mã KH:" />
                         <TextField fx:id="txtCustomerId" disable="true" editable="false" layoutX="237.0" layoutY="96.0" prefHeight="25.0" prefWidth="86.0" />
                         <Button fx:id="btnCustomerAdd" layoutX="350.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="+" />
@@ -92,7 +91,7 @@
                         </Pane>
                         <ScrollPane fx:id="invoiceDetailPane" layoutX="31.0" layoutY="198.0" prefHeight="346.0" prefWidth="369.0" />
                         <Label layoutX="34.0" layoutY="615.0" text="Điểm hiện có: " />
-                        <TextField fx:id="txtCurrentPoint" layoutX="110.0" layoutY="611.0" prefHeight="25.0" prefWidth="92.0" />
+                        <TextField fx:id="txtCurrentPoint" editable="false" layoutX="110.0" layoutY="611.0" prefHeight="25.0" prefWidth="92.0" />
                         <Label layoutX="210.0" layoutY="615.0" prefHeight="17.0" prefWidth="41.0" text="Mã KM:" />
                         <TextField fx:id="txtPromotion" disable="true" editable="false" layoutX="256.0" layoutY="611.0" prefHeight="25.0" prefWidth="118.0" />
                         <CheckBox fx:id="chbPoint" layoutX="34.0" layoutY="646.0" mnemonicParsing="false" text="Sử dụng điểm" />
@@ -167,6 +166,14 @@
                         <TextField fx:id="txtSearchInvoice" layoutX="443.0" layoutY="59.0" />
                         <Button fx:id="btnSearchInvoice" layoutX="592.0" layoutY="59.0" mnemonicParsing="false" text="Search" />
                         <Button fx:id="btnAdvanceSearchInvoice" layoutX="14.0" layoutY="59.0" mnemonicParsing="false" text="Tìm kiếm nâng cao" />
+                        <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="130.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../img/Refresh.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
                      </children>
                   </Pane>
                   <Pane layoutX="681.0" layoutY="14.0" prefHeight="775.0" prefWidth="435.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">

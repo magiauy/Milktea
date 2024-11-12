@@ -24,7 +24,7 @@ public class GoodsReceiptDetail_DAO extends Connect{
                     GoodsReceiptDetail goodsReceiptDetail = GoodsReceiptDetail.builder()
                             .goodsReceiptId(rs.getString("goodsReceiptId"))
                             .ingredientId(rs.getString("ingredientId"))
-                            .quantity(rs.getDouble("quantity"))
+                            .quantity(rs.getFloat("quantity"))
                             .price(rs.getBigDecimal("price"))
                             .total(rs.getBigDecimal("total"))
                             .build();
@@ -40,24 +40,46 @@ public class GoodsReceiptDetail_DAO extends Connect{
     }
     public static boolean addGoodsReceiptDetail(ArrayList<GoodsReceiptDetail> goodsReceiptDetails){
         boolean result = false;
-        if(openConnection("GoodsReceiptDetail")){
+        if(openConnection()){
             try{
                 for (GoodsReceiptDetail goodsReceiptDetail : goodsReceiptDetails) {
-                    String sql = "Insert into goodsreceiptdetail values(?,?,?,?,?)";
+                    String sql = "Insert into goodsreceiptdetail values(?,?,?,?,?,?)";
 
                     PreparedStatement stmt = connection.prepareStatement(sql);
 
                     stmt.setString(1,goodsReceiptDetail.getGoodsReceiptId());
                     stmt.setString(2,goodsReceiptDetail.getIngredientId());
-                    stmt.setDouble(3,goodsReceiptDetail.getQuantity());
-                    stmt.setBigDecimal(4,goodsReceiptDetail.getPrice());
-                    stmt.setBigDecimal(5,goodsReceiptDetail.getTotal());
+                    stmt.setFloat(3,goodsReceiptDetail.getQuantity());
+                    stmt.setString(4,goodsReceiptDetail.getUnit().toString());
+                    stmt.setBigDecimal(5,goodsReceiptDetail.getPrice());
+                    stmt.setBigDecimal(6,goodsReceiptDetail.getTotal());
 
                     if(stmt.executeUpdate()>=1){
                         result = true;
                     }
                 }
 
+            }catch(SQLException e){
+                log.error("e: ", e);
+                return false;
+            }finally{
+                closeConnection();
+            }
+        }
+        return result;
+    }
+    public static boolean deleteGoodsReceiptDetail(String goodsReceiptId){
+        boolean result = false;
+        if(openConnection("GoodsReceiptDetail")){
+            try{
+                String sql = "Delete from goodsreceiptdetail where goodsReceiptId = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1,goodsReceiptId);
+
+                if(stmt.executeUpdate()>=1){
+                    result = true;
+                }
             }catch(SQLException e){
                 log.error("e: ", e);
             }finally{

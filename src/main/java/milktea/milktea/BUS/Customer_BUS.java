@@ -43,10 +43,10 @@ public class Customer_BUS {
         return null;
     }
     public static String autoId(){
-        String lastId = arrCustomer.getLast().getId();
-        if (lastId == null) {
+        if (arrCustomer.isEmpty()) {
             return "KH0001";
         }
+        String lastId = arrCustomer.getLast().getId();
         int id = Integer.parseInt(lastId.substring(2)) + 1;
         return "KH" + String.format("%03d", id);
     }

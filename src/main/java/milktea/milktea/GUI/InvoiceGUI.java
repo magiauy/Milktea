@@ -58,8 +58,6 @@ public class InvoiceGUI {
     @FXML
     private TextField txtEmployeeName;
     @FXML
-    private Button btnEmployeePicker;
-    @FXML
     private Button btnCustomerPicker;
     @FXML
     private Button btnCustomerAdd;
@@ -117,8 +115,8 @@ public class InvoiceGUI {
         invoiceId = Invoice_BUS.autoId();
         txtInvoiceId.setText(invoiceId);
 
-        txtEmployeeId.setText(Login_Controller.account.getId());
-        txtEmployeeName.setText(Login_Controller.account.getLastName());
+        txtEmployeeId.setText(Login_Controller.getAccount().getId());
+        txtEmployeeName.setText(Login_Controller.getAccount().getLastName());
 
         txtCustomerId.setText(Customer_BUS.getAllCustomer().getFirst().getId());
         txtCustomerName.setText(Customer_BUS.getAllCustomer().getFirst().getLastName());
@@ -139,7 +137,6 @@ public class InvoiceGUI {
     public void setupButton(){
         configureButton(btnProductSearch, this::btnProductSearch);
         configureButton(btnAddProduct, this::btnAddProduct);
-        configureButton(btnEmployeePicker, this::btnEmployeePicker);
         configureButton(btnCustomerPicker, this::btnCustomerPicker);
         configureButton(btnCustomerAdd, this::btnCustomerAdd);
         configureButton(btnPromotionPicker, this::btnPromotionPicker);
@@ -213,18 +210,6 @@ public class InvoiceGUI {
                 productPane.setContent(createListProduct());
             }
         }
-    }
-
-    private void btnEmployeePicker(ActionEvent actionEvent) {
-        globalListFlag = "Nhân Viên";
-        openStage("SubGUI_List_InvoiceDetail.fxml",() -> {
-            if (selectedObject != null) {
-                if (selectedObject instanceof Employee) {
-                    txtEmployeeId.setText(((Employee) selectedObject).getId());
-                    txtEmployeeName.setText(((Employee) selectedObject).getLastName());
-                }
-            }
-        });
     }
 
     private void btnCustomerPicker(ActionEvent actionEvent) {
@@ -765,6 +750,9 @@ public class InvoiceGUI {
     @FXML
     Tab tabInvoice;
 
+    @FXML
+    ImageView imgRefresh;
+
     public void tabInvoiceInit(){
         loadTableInvoice();
         btnClearInvoice.setOnAction(event -> {
@@ -791,9 +779,22 @@ public class InvoiceGUI {
             }
         });
         btnAdvanceSearchInvoice.setOnAction(event -> {
-//            HashMap<String, String> search = new HashMap<>();
             //TODO: Add advanced search
-
+            openStage("AdvancedSearchInvoice_SubGUI.fxml",() -> {
+                if (AdvancedSearchInvoiceSubGUI.getArrInvoice() != null) {
+                    if (AdvancedSearchInvoiceSubGUI.isDone()) {
+                        ObservableList<Invoice> invoices = FXCollections.observableList(AdvancedSearchInvoiceSubGUI.getArrInvoice());
+                        tblInvoice.setItems(invoices);
+                        tblInvoice.refresh();
+                        AdvancedSearchInvoiceSubGUI.setDone(false);
+                        AdvancedSearchInvoiceSubGUI.setArrInvoice(null);
+                    }
+                }
+            });
+        });
+        imgRefresh.setOnMouseClicked(event -> {
+            loadTableInvoice();
+            btnClearInvoice.fire();
         });
     }
     public void loadTableInvoice(){

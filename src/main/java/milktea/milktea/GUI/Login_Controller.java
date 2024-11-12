@@ -6,8 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.BUS.Role_BUS;
 import milktea.milktea.DTO.Employee;
@@ -28,7 +29,9 @@ public class Login_Controller {
     @FXML
     private Button btnLogin;
 
-    public static Employee account = null;
+    @Getter
+    @Setter
+    private static Employee account = null;
 
     @FXML
     public void initialize() {
@@ -100,7 +103,7 @@ public boolean validate() {
         txtPassword.getStyleClass().add("error");
         if (!alert) {
         ValidationUtil.showErrorAlert("Password không hợp lệ");
-            alert = true;
+
         }
         valid = false;
     }

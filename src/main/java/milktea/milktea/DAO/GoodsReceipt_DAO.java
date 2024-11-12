@@ -58,6 +58,7 @@ public class GoodsReceipt_DAO extends Connect{
 
             }catch(SQLException e){
                 log.error("Error: ", e);
+                return result;
             }finally{
                 closeConnection();
             }
@@ -66,4 +67,22 @@ public class GoodsReceipt_DAO extends Connect{
     }
 
 
+    public static void deleteGoodsReceipt(String id) {
+        if(openConnection()){
+            try{
+                String sql = "Delete from goodsreceipt where id = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+
+                stmt.setString(1,id);
+
+                stmt.executeUpdate();
+
+            }catch(SQLException e){
+                log.error("Error: ", e);
+            }finally{
+                closeConnection();
+            }
+        }
+    }
 }

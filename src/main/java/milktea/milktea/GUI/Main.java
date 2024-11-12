@@ -49,7 +49,7 @@ public class Main {
     @FXML
     public void initialize() {
         btnGroup.getChildren().clear();
-        Userlabel.setText("User: " + Login_Controller.account.getUsername());
+        Userlabel.setText("User: " + Login_Controller.getAccount().getUsername());
         configButton();
         loadButtonByPermission();
         loadLocalDate();
@@ -67,6 +67,9 @@ public class Main {
             Category_BUS.getLocalData();
             Ingredient_BUS.getLocalData();
             Recipe_BUS.getLocalData();
+            GoodsReceipt_BUS.getLocalData();
+            GoodsReceiptDetail_BUS.getLocalData();
+            Provider_BUS.getLocalData();
             isLoaded = true;
         }
 
@@ -140,7 +143,7 @@ public class Main {
 
     public void loadButtonByPermission() {
         Button[] buttons = {btnInvoice, btnCustomer, btnProduct,  btnIngredient, btnGoodsReceipt, btnProvider, btnPromotion, btnStatistic, btnEmployee};
-        int permission = Login_Controller.account.getPermission();
+        int permission = Login_Controller.getAccount().getPermission();
         int firstButton = 0;
         for (Button button : buttons) {
             if (checkRolePermission(permission, buttonHashMap.get(button))) {
