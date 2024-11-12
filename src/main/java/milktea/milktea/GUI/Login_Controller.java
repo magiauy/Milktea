@@ -40,6 +40,7 @@ public class Login_Controller {
 
     @FXML
     public void initialize() {
+        txtUsername.requestFocus();
         btnLogin.setOnAction(this::btnLogin);
         txtUsername.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("TAB")) {
@@ -57,7 +58,6 @@ public class Login_Controller {
         txtPasswordVisible.managedProperty().bind(imgHide.visibleProperty());
         txtPasswordVisible.visibleProperty().bind(imgHide.visibleProperty());
         txtPasswordVisible.textProperty().bindBidirectional(txtPassword.textProperty());
-
         imgHide.setOnMouseClicked(event -> {
             if (txtPassword.isVisible()) {
                 imgHide.setImage(new javafx.scene.image.Image("/img/Eye.png"));
@@ -75,10 +75,8 @@ public class Login_Controller {
                 txtPassword.setManaged(true);
                 txtPasswordVisible.setVisible(false);
                 txtPasswordVisible.setManaged(false);
-                txtPassword.requestFocus();
             }
         });
-        txtUsername.requestFocus();
     }
     public void btnLogin(ActionEvent actionEvent) {
         if (validate()) {
