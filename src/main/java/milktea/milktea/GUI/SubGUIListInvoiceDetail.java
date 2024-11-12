@@ -14,6 +14,7 @@ import milktea.milktea.BUS.PromotionProgram_BUS;
 import milktea.milktea.BUS.Promotion_BUS;
 import milktea.milktea.DTO.Person;
 import milktea.milktea.DTO.Promotion;
+import milktea.milktea.Util.ValidationUtil;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -60,6 +61,18 @@ public class SubGUIListInvoiceDetail {
 
         }
         btnAdd.setOnAction(this::btnAdd);
+        btnSearch.setOnAction(this::btnSearch);
+    }
+
+    private void btnSearch(ActionEvent actionEvent) {
+        if (InvoiceGUI.getGlobalListFlag().equals("Khách Hàng")){
+            if (!ValidationUtil.isInvalidSearch(txtSearch)){
+                ObservableList<Person> data = FXCollections.observableList(Customer_BUS.searchCustomer(txtSearch.getText()).stream()
+                        .map(customer -> (Person) customer)
+                        .collect(Collectors.toList()));
+                tableMain.setItems(data);
+            }
+        }
     }
 
     private void btnAdd(ActionEvent actionEvent) {
