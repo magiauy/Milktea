@@ -16,6 +16,7 @@ import milktea.milktea.BUS.Ingredient_BUS;
 import milktea.milktea.DTO.GoodsReceipt;
 import milktea.milktea.DTO.GoodsReceiptDetail;
 import milktea.milktea.DTO.Ingredient;
+import milktea.milktea.DTO.Status;
 import milktea.milktea.Util.ValidationUtil;
 
 import java.math.BigDecimal;
@@ -138,8 +139,14 @@ public class GoodsReceiptGUI {
         btnClear.setOnAction(this::Clear);
         btnAddGoodsReceipt.setOnAction(this::AddGoodsReceipt);
         tabGoodsReceipt.setOnSelectionChanged(this::tabGoodsReceiptInit);
+        btnSearch.setOnAction(this::Search);
     }
 
+    private void Search(ActionEvent actionEvent) {
+        ArrayList<Ingredient> ingredients = new ArrayList<>(Ingredient_BUS.searchIngredient(txtSearchIngredient.getText()));
+        ingredients.removeIf(ingredient -> ingredient.getStatus().equals(Status.INACTIVE));
+        tblIngredient.setItems(FXCollections.observableArrayList(ingredients));
+    }
 
 
     private void AddGoodsReceipt(ActionEvent actionEvent) {
@@ -234,7 +241,9 @@ public class GoodsReceiptGUI {
         colIngredientName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        tblIngredient.setItems(FXCollections.observableArrayList(Ingredient_BUS.getAllIngredient()));
+        ArrayList<Ingredient> ingredients = new ArrayList<>(Ingredient_BUS.getAllIngredient());
+        ingredients.removeIf(ingredient -> ingredient.getStatus().equals(Status.INACTIVE));
+        tblIngredient.setItems(FXCollections.observableArrayList(ingredients));
     }
     public void loadGoodsReceiptDetail() {
         colGoodsReceiptDetailStt.setCellValueFactory(cellData -> {

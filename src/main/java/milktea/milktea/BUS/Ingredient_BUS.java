@@ -4,6 +4,7 @@ import milktea.milktea.DAO.Ingredient_DAO;
 import milktea.milktea.DTO.Ingredient;
 import milktea.milktea.DTO.InvoiceDetail;
 import milktea.milktea.DTO.Recipe;
+import milktea.milktea.DTO.Status;
 import milktea.milktea.Util.CalUnitUtil;
 
 import java.util.*;
@@ -134,5 +135,14 @@ public class Ingredient_BUS {
             }
         }
         return result;
+    }
+
+    public static void changeStatusLocal(String id, Status status) {
+        Ingredient ingredient = tempArrIngredients.get(id);
+        ingredient.setStatus(status);
+    }
+
+    public static boolean changeStatus(String id, Status status) {
+        return Ingredient_DAO.changeStatus(id, status);
     }
 }

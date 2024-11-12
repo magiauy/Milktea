@@ -2,6 +2,7 @@ package milktea.milktea.DAO;
 
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Ingredient;
+import milktea.milktea.DTO.Status;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -96,6 +97,27 @@ public class Ingredient_DAO extends Connect{
         }catch(SQLException e){
             log.error("e: ", e);
         }finally{
+            closeConnection();
+        }
+        return result;
+    }
+
+    public static boolean changeStatus(String id, Status status) {
+        boolean result = false;
+        try {
+            if (openConnection()) {
+                String sql = "Update ingredient set status = ? where id = ?";
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, status.toString());
+                stmt.setString(2, id);
+                if (stmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+            }
+        } catch (SQLException e) {
+            log.error("e: ", e);
+            return false;
+        } finally {
             closeConnection();
         }
         return result;

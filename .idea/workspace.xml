@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="909ee63f-1597-44ad-9330-ee67f36c4850" name="Changes" comment="Create">
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProviderGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProviderSubGUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Provider_GUI.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Provider_SubGUI.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/GoodsReceipt_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/GoodsReceipt_BUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Provider_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Provider_BUS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Provider_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Provider_DAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/Util/ValidationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/Util/ValidationUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Ingredient_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Ingredient_BUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Recipe_BUS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/BUS/Recipe_BUS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Ingredient_DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DAO/Ingredient_DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/DTO/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/GoodsReceiptGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/GoodsReceiptGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/IngredientGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/IngredientGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/InvoiceGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/InvoiceGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProductGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProductGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProviderGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/milktea/milktea/GUI/ProviderGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Ingredient_GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/milktea/milktea/GUI/Ingredient_GUI.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -310,7 +312,7 @@
       <workItem from="1731346240724" duration="601000" />
       <workItem from="1731387315603" duration="983000" />
       <workItem from="1731388315384" duration="11546000" />
-      <workItem from="1731400044052" duration="9031000" />
+      <workItem from="1731400044052" duration="11301000" />
     </task>
     <task id="LOCAL-00001" summary="Create">
       <option name="closed" value="true" />

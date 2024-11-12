@@ -69,6 +69,8 @@ public class ProductGUI {
     @FXML
     Button btnClear;
 
+//    @FXML
+//    Button btnCategory;
     public static boolean isEditable = false;
 
     @Getter
@@ -198,6 +200,11 @@ public class ProductGUI {
                 alert.showAndWait();
             }
         });
+//        btnCategory.setOnAction(this::btnCategory);
+    }
+
+    private void btnCategory(ActionEvent actionEvent) {
+        //TODO: Open CategoryGUI and manage category
     }
 
     private void failedAlert() {

@@ -145,8 +145,12 @@ public static boolean deleteLocalRecipe(ArrayList<Recipe> recipes) {
                     // Find the available quantity of the ingredient
                     Ingredient ingredient = Ingredient_BUS.getIngredientById(arrIngredient, ingredientId);
                     if (ingredient != null) {
-                        float possibleQuantity = calUnitConverter(recipe.getUnit(),ingredient.getUnit(),requiredQuantity,ingredient.getQuantity());
-
+                        float possibleQuantity;
+                        if (ingredient.getStatus().equals(Status.ACTIVE)) {
+                            possibleQuantity = calUnitConverter(recipe.getUnit(), ingredient.getUnit(), requiredQuantity, ingredient.getQuantity());
+                        }else {
+                            possibleQuantity = 0;
+                        }
                         // Update the minimum quantity
                         if (possibleQuantity < minQuantity) {
                             minQuantity = possibleQuantity;

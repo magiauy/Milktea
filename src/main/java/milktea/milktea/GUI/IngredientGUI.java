@@ -15,6 +15,7 @@ import milktea.milktea.BUS.GoodsReceiptDetail_BUS;
 import milktea.milktea.BUS.Ingredient_BUS;
 import milktea.milktea.BUS.Recipe_BUS;
 import milktea.milktea.DTO.Ingredient;
+import milktea.milktea.DTO.Status;
 import milktea.milktea.Util.ValidationUtil;
 
 import static milktea.milktea.Util.UI_Util.openStage;
@@ -42,6 +43,8 @@ public class IngredientGUI {
     ImageView imgEdit;
     @FXML
     ImageView imgDelete;
+    @FXML
+    ImageView imgLock;
 
     @FXML
     TextField txtSearch;
@@ -55,6 +58,7 @@ public class IngredientGUI {
     private static Ingredient selectedIngredient;
 
     public void initialize() {
+        hideButtonWithoutPermission();
         createTable();
         imgAdd.setOnMouseClicked(event -> openStage("Ingredient_SubGUI.fxml", () -> {
             if (IngredientSubGUI.isEdited()) {
@@ -83,30 +87,63 @@ public class IngredientGUI {
             if (tableMain.getSelectionModel().getSelectedItem() != null) {
                 if (!Recipe_BUS.hasIngredient(tableMain.getSelectionModel().getSelectedItem().getId())) {
                     if (!GoodsReceiptDetail_BUS.hasIngredient(tableMain.getSelectionModel().getSelectedItem().getId())) {
-                        if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa nguyên liệu này không?")) {
-                            if (Ingredient_BUS.deleteIngredient(tableMain.getSelectionModel().getSelectedItem().getId())) {
-                                Ingredient_BUS.deleteIngredientLocal(tableMain.getSelectionModel().getSelectedItem().getId());
-                                ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
-                                tableMain.setItems(data);
-                                tableMain.refresh();
-                                ValidationUtil.showInfoAlert("Xóa nguyên liệu thành công");
-                            } else {
-                                ValidationUtil.showErrorAlert("Xóa nguyên liệu thất bại");
+                        if (tableMain.getSelectionModel().getSelectedItem().getQuantity() == 0) {
+                                if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa nguyên liệu này không?")) {
+                                    if (Ingredient_BUS.deleteIngredient(tableMain.getSelectionModel().getSelectedItem().getId())) {
+                                        Ingredient_BUS.deleteIngredientLocal(tableMain.getSelectionModel().getSelectedItem().getId());
+                                        ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
+                                        tableMain.setItems(data);
+                                        tableMain.refresh();
+                                        ValidationUtil.showInfoAlert("Xóa nguyên liệu thành công");
+                                    } else {
+                                        ValidationUtil.showErrorAlert("Xóa nguyên liệu thất bại");
+                                    }
+                                }
+                            }else{
+                                ValidationUtil.showErrorAlert("Nguyên liệu này đang có số lượng lớn hơn 0, không thể xóa");
                             }
+                        } else {
+                            ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong phiếu nhập, không thể xóa");
                         }
-                    }else {
-                        ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong phiếu nhập, không thể xóa");
+                    } else {
+                        ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong công thức, không thể xóa");
                     }
                 } else {
-                    ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong công thức, không thể xóa");
+                    ValidationUtil.showErrorAlert("Vui lòng chọn nguyên liệu cần xóa");
                 }
-            }
         });
         btnSearch.setOnMouseClicked(event -> {
             if (!ValidationUtil.isInvalidSearch(txtSearch)) {
                 ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.searchIngredient(txtSearch.getText()));
                 tableMain.setItems(data);
                 tableMain.refresh();
+            }
+        });
+        imgLock.setOnMouseClicked(event -> {
+            if (tableMain.getSelectionModel().getSelectedItem() != null) {
+                if (tableMain.getSelectionModel().getSelectedItem().getStatus().equals(Status.ACTIVE)) {
+                    if (Ingredient_BUS.changeStatus(tableMain.getSelectionModel().getSelectedItem().getId(),Status.INACTIVE)) {
+                        Ingredient_BUS.changeStatusLocal(tableMain.getSelectionModel().getSelectedItem().getId(),Status.INACTIVE);
+                        ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
+                        tableMain.setItems(data);
+                        tableMain.refresh();
+                        ValidationUtil.showInfoAlert("Khóa nguyên liệu thành công");
+                    } else {
+                        ValidationUtil.showErrorAlert("Khóa nguyên liệu thất bại");
+                    }
+                } else {
+                    if (Ingredient_BUS.changeStatus(tableMain.getSelectionModel().getSelectedItem().getId(),Status.ACTIVE)) {
+                        Ingredient_BUS.changeStatusLocal(tableMain.getSelectionModel().getSelectedItem().getId(),Status.ACTIVE);
+                        ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
+                        tableMain.setItems(data);
+                        tableMain.refresh();
+                        ValidationUtil.showInfoAlert("Mở khóa nguyên liệu thành công");
+                    } else {
+                        ValidationUtil.showErrorAlert("Mở khóa nguyên liệu thất bại");
+                    }
+                }
+            } else {
+                ValidationUtil.showErrorAlert("Vui lòng chọn nguyên liệu cần khóa");
             }
         });
     }
@@ -119,5 +156,14 @@ public class IngredientGUI {
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
         tableMain.setItems(data);
+    }
+    public void hideButtonWithoutPermission(){
+        int permission = Login_Controller.getAccount().getPermission();
+        if (!Main.checkRolePermission(permission,10)){
+            imgAdd.setVisible(false);
+            imgDelete.setVisible(false);
+            imgEdit.setVisible(false);
+            imgLock.setVisible(false);
+        }
     }
 }

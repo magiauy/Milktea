@@ -50,6 +50,7 @@ public class ProviderGUI {
     @Setter
     private static Provider selectedProvider;
     public void initialize() {
+        hideButtonWithoutPermission();
         loadProvider();
         btnSearch.setOnAction(e -> {
             if (!ValidationUtil.isInvalidSearch(txtSearch)) {
@@ -75,13 +76,11 @@ public class ProviderGUI {
                 }
             }
         });
-        imgAdd.setOnMouseClicked(e -> {
-            openStage("Provider_SubGUI.fxml", () -> {
-                if (ProviderSubGUI.isSaved()) {
-                    loadProvider();
-                }
-            });
-        });
+        imgAdd.setOnMouseClicked(e -> openStage("Provider_SubGUI.fxml", () -> {
+            if (ProviderSubGUI.isSaved()) {
+                loadProvider();
+            }
+        }));
         imgEdit.setOnMouseClicked(e -> {
             if (tableMain.getSelectionModel().getSelectedItem() != null) {
                 selectedProvider = tableMain.getSelectionModel().getSelectedItem();
@@ -106,4 +105,12 @@ public class ProviderGUI {
         tableMain.setItems(FXCollections.observableArrayList(Provider_BUS.getAllProvider()));
     }
 
+    public void hideButtonWithoutPermission(){
+        int permission = Login_Controller.getAccount().getPermission();
+        if (!Main.checkRolePermission(permission,11)){
+            imgAdd.setVisible(false);
+            imgDelete.setVisible(false);
+            imgEdit.setVisible(false);
+        }
+    }
 }

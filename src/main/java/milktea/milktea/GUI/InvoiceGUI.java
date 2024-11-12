@@ -779,7 +779,6 @@ public class InvoiceGUI {
             }
         });
         btnAdvanceSearchInvoice.setOnAction(event -> {
-            //TODO: Add advanced search
             openStage("AdvancedSearchInvoice_SubGUI.fxml",() -> {
                 if (AdvancedSearchInvoiceSubGUI.getArrInvoice() != null) {
                     if (AdvancedSearchInvoiceSubGUI.isDone()) {
