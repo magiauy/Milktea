@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,11 @@ public class Login_Controller {
     @FXML
     private PasswordField txtPassword;
     @FXML
+    private TextField txtPasswordVisible;
+    @FXML
     private Button btnLogin;
+    @FXML
+    private ImageView imgHide;
 
     @Getter
     @Setter
@@ -47,6 +52,33 @@ public class Login_Controller {
             }
         });
         Employee_BUS.getLocalData();
+        txtPasswordVisible.setManaged(false);
+        txtPasswordVisible.setVisible(false);
+        txtPasswordVisible.managedProperty().bind(imgHide.visibleProperty());
+        txtPasswordVisible.visibleProperty().bind(imgHide.visibleProperty());
+        txtPasswordVisible.textProperty().bindBidirectional(txtPassword.textProperty());
+
+        imgHide.setOnMouseClicked(event -> {
+            if (txtPassword.isVisible()) {
+                imgHide.setImage(new javafx.scene.image.Image("/img/Eye.png"));
+                txtPasswordVisible.managedProperty().unbind();
+                txtPasswordVisible.visibleProperty().unbind();
+                txtPassword.setVisible(false);
+                txtPassword.setManaged(false);
+                txtPasswordVisible.setVisible(true);
+                txtPasswordVisible.setManaged(true);
+            } else {
+                imgHide.setImage(new javafx.scene.image.Image("/img/Blind.png"));
+                txtPasswordVisible.managedProperty().unbind();
+                txtPasswordVisible.visibleProperty().unbind();
+                txtPassword.setVisible(true);
+                txtPassword.setManaged(true);
+                txtPasswordVisible.setVisible(false);
+                txtPasswordVisible.setManaged(false);
+                txtPassword.requestFocus();
+            }
+        });
+        txtUsername.requestFocus();
     }
     public void btnLogin(ActionEvent actionEvent) {
         if (validate()) {
