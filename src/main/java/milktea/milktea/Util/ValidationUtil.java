@@ -87,7 +87,7 @@ public class ValidationUtil {
 
     public static boolean isInValidChar(HashMap<TextField, String> textFieldInfo, @NonNull TextField... params) {
         for (TextField param : params) {
-            if (!param.getText().matches("^[a-zA-Z\\s]+$")) {
+            if (!param.getText().matches("^[\\p{L}\\s]+$")) {
                 showErrorAlert(textFieldInfo.get(param) + " không được chứa số hoặc ký tự đặc biệt");
                 param.requestFocus();
                 return true;
@@ -213,6 +213,15 @@ public class ValidationUtil {
     public static boolean isEmptyDp(DatePicker dtpGoodsReceiptStartDate,String key) {
         if (dtpGoodsReceiptStartDate.getValue() == null){
             showErrorAlert("Vui lòng chọn ngày "+key);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isNotEmail(HashMap<TextField, String> map, TextField txtEmail) {
+        if (!txtEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+            showErrorAlert(map.get(txtEmail) + " không hợp lệ");
+            txtEmail.requestFocus();
             return true;
         }
         return false;

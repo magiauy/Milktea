@@ -37,5 +37,42 @@ public class Provider_BUS {
     }
 
 
+    public static boolean deleteProvider(String id) {
+        return Provider_DAO.deleteProvider(id);
 
+    }
+
+    public static void deleteProviderLocal(String id) {
+        arrProvider.removeIf(provider -> provider.getId().equals(id));
+    }
+
+    public static String autoID() {
+        if (arrProvider.isEmpty()) {
+            return "PR001";
+        }else {
+            int max = 0;
+            for (Provider provider : arrProvider){
+                int id = Integer.parseInt(provider.getId().substring(2));
+                if (id > max){
+                    max = id;
+                }
+            }
+            return "PR" + String.format("%03d", max + 1);
+        }
+    }
+
+    public static void addProviderLocal(Provider provider) {
+        arrProvider.add(provider);
+    }
+
+    public static void editProviderLocal(Provider provider) {
+        for (Provider provider1 : arrProvider){
+            if (provider1.getId().equals(provider.getId())){
+                provider1.setName(provider.getName());
+                provider1.setAddress(provider.getAddress());
+                provider1.setPhone(provider.getPhone());
+                provider1.setEmail(provider.getEmail());
+            }
+        }
+    }
 }

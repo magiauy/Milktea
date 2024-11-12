@@ -104,4 +104,12 @@ public class GoodsReceipt_BUS {
         return result;
     }
 
+    public static boolean isProviderExist(String id) {
+        for (GoodsReceipt goodsReceipt : arrGoodsReceipt) {
+            if (goodsReceipt.getProviderId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
