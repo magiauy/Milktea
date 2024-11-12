@@ -32,7 +32,7 @@
                               <TextField fx:id="txtSearchIngredient" layoutX="14.0" layoutY="63.0" />
                               <Button fx:id="btnSearch" layoutX="163.0" layoutY="63.0" mnemonicParsing="false" text="Tìm" />
                               <Button fx:id="btnAdd" layoutX="213.0" layoutY="713.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="241.0" style="-fx-font-weight: bold; -fx-font-size: 20;" text="Thêm vào phiếu nhập" />
-                              <TableView fx:id="tblIngredient" layoutX="14.0" layoutY="98.0" prefHeight="608.0" prefWidth="639.0">
+                              <TableView fx:id="tblIngredient" layoutX="14.0" layoutY="98.0" prefHeight="608.0" prefWidth="639.0" stylesheets="@../../../css/style.css">
                                 <columns>
                                   <TableColumn fx:id="colIngredientId" prefWidth="74.0" text="Mã NL" />
                                   <TableColumn fx:id="colIngredientName" prefWidth="344.0" text="Tên NL" />
@@ -98,7 +98,7 @@
                                  </cursor>
                               </ImageView>
                               <TextField fx:id="txtGoodsReceiptDate" editable="false" layoutX="245.0" layoutY="64.0" prefHeight="25.0" prefWidth="134.0" />
-                              <TableView fx:id="tblGoodsReceiptDetail" layoutX="21.0" layoutY="168.0" prefHeight="451.0" prefWidth="378.0">
+                              <TableView fx:id="tblGoodsReceiptDetail" layoutX="21.0" layoutY="168.0" prefHeight="451.0" prefWidth="378.0" stylesheets="@../../../css/style.css">
                                 <columns>
                                   <TableColumn fx:id="colGoodsReceiptDetailStt" prefWidth="35.0" text="STT" />
                                   <TableColumn fx:id="colGoodsReceiptDetailIngredientName" prefWidth="115.0" text="Tên NL" />
@@ -119,7 +119,7 @@
                      <children>
                         <Pane layoutX="14.0" layoutY="14.0" prefHeight="775.0" prefWidth="655.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
                            <children>
-                              <TableView fx:id="tblGoodsReceipt" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0">
+                              <TableView fx:id="tblGoodsReceipt" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0" stylesheets="@../../../css/style.css" >
                                  <columns>
                                     <TableColumn fx:id="colGoodsReceiptId" prefWidth="97.0" text="Mã PN" />
                                     <TableColumn fx:id="colGoodsReceiptProviderId" prefWidth="120.0" text="Mã NCC" />

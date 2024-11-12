@@ -150,6 +150,7 @@ public class InvoiceGUI {
                 btnProductSearch(new ActionEvent());
             }
         });
+        cbxCategory.getItems().clear();
         cbxCategory.getItems().add("Tất cả");
         cbxCategory.getItems().addAll(Category_BUS.getAllCategoryName());
 

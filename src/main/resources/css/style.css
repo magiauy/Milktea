@@ -23,14 +23,16 @@
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #d9d9d9;
-    -fx-text-fill: #333;
+    -fx-background-color: #0096c9;
 }
 
 .table-row-cell:hover {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: rgba(224, 224, 224, 0.58);
 }
-
+.table-row-cell:selected:hover {
+    -fx-background-color: #0078d7; /* Change to your desired hover color */
+    -fx-text-fill: #ffffff; /* Change to your desired text color */
+}
 .custom-table-cell {
     -fx-padding: 10px;
     -fx-border-color: transparent;

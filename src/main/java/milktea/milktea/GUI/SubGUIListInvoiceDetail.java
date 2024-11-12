@@ -147,6 +147,7 @@ public class SubGUIListInvoiceDetail {
         arrPromotion.removeIf(promotion -> promotion.getPromotionId().equals("NoPromotion"));
         ObservableList<Promotion> data = FXCollections.observableList(arrPromotion);
         tablePromotion.setItems(data);
+        tablePromotion.getStylesheets().add("css/style.css");
         switchTable(tablePromotion);
     }
     public void switchTable(TableView<Promotion> table){

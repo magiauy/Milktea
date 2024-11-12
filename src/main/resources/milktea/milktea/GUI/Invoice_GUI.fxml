@@ -147,7 +147,7 @@
                <children>
                   <Pane layoutX="14.0" layoutY="14.0" prefHeight="775.0" prefWidth="655.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
                      <children>
-                        <TableView fx:id="tblInvoice" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0">
+                        <TableView fx:id="tblInvoice" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0" stylesheets="@../../../css/style.css" >
                            <columns>
                               <TableColumn fx:id="colInvoiceId" prefWidth="76.0" text="Mã HĐ" />
                               <TableColumn fx:id="colEmployeeId" prefWidth="85.0" text="Mã NV" />
@@ -178,7 +178,7 @@
                   </Pane>
                   <Pane layoutX="681.0" layoutY="14.0" prefHeight="775.0" prefWidth="435.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
                      <children>
-                        <TableView fx:id="tblInvoiceDetail" layoutX="13.0" layoutY="257.0" prefHeight="452.0" prefWidth="411.0">
+                        <TableView fx:id="tblInvoiceDetail" layoutX="13.0" layoutY="257.0" prefHeight="452.0" prefWidth="411.0" stylesheets="@../../../css/style.css">
                            <columns>
                               <TableColumn fx:id="colProductId" prefWidth="75.0" text="Mã SP" />
                               <TableColumn fx:id="colQuantity" prefWidth="82.0" text="Số Lượng" />

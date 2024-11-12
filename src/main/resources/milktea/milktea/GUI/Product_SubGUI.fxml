@@ -49,7 +49,7 @@
             <Font name="System Bold" size="32.0" />
          </font>
       </Label>
-      <TableView fx:id="tblRecipe" layoutX="36.0" layoutY="287.0" prefHeight="471.0" prefWidth="358.0">
+      <TableView fx:id="tblRecipe" layoutX="36.0" layoutY="287.0" prefHeight="471.0" prefWidth="358.0" stylesheets="@../../../css/style.css">
         <columns>
           <TableColumn fx:id="colIngredientName" prefWidth="174.0" text="Tên nguyên liệu" />
           <TableColumn fx:id="colQuantity" prefWidth="87.0" text="Số lượng" />
