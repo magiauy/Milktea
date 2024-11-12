@@ -45,8 +45,8 @@ public class Invoice_DAO extends Connect{
                 PreparedStatement stmt = connection.prepareStatement(sql);
 
                 stmt.setString(1,invoice.getInvoiceId());
-                stmt.setString(2,invoice.getCustomerId());
-                stmt.setString(3,invoice.getEmployeeId());
+                stmt.setString(2,invoice.getEmployeeId());
+                stmt.setString(3,invoice.getCustomerId());
                 stmt.setString(4,invoice.getPromotionId());
                 stmt.setDate(5, Date.valueOf(invoice.getIssueDate()));
                 stmt.setBigDecimal(6,invoice.getDiscount());

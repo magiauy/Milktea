@@ -69,4 +69,22 @@ public class Customer_BUS {
             }
         }return null;
     }
+
+    public static boolean deleteCustomer(String id) {
+        return Customer_DAO.deleteCustomer(id);
+    }
+
+    public static void deleteCustomerLocal(String id) {
+        arrCustomer.removeIf(c -> c.getId().equals(id));
+    }
+
+    public static ArrayList<Customer> searchCustomer(String search) {
+        ArrayList<Customer> arr = new ArrayList<>();
+        for (Customer customer : arrCustomer) {
+            if (customer.getId().contains(search) || customer.getFirstName().contains(search) || customer.getLastName().contains(search) || customer.getPhoneNumber().contains(search)) {
+                arr.add(customer);
+            }
+        }
+        return arr;
+    }
 }

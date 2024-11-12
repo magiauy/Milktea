@@ -263,7 +263,7 @@ public class InvoiceGUI {
         Optional<ButtonType> action = alertConfirm.showAndWait();
 
         if (action.isPresent() && action.get() == ButtonType.OK) {
-            if (!isEmpty(txtCurrentDate, txtCustomerId, txtCustomerName, txtEmployeeId, txtEmployeeName, txtInvoiceId,txtPromotion)) {
+            if (!isEmpty(txtCurrentDate, txtCustomerId,txtEmployeeId, txtCustomerName,  txtEmployeeName, txtInvoiceId,txtPromotion)) {
                 {
                     HashMap<String, Integer> stackedTopping = new HashMap<>();
                     HashMap<String, Integer> stackedProduct = new HashMap<>();

@@ -110,4 +110,12 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
     }
     return result;
 }
+        public static boolean isCustomerExist(String customerId) {
+            for (Invoice invoice : arrInvoice) {
+                if (invoice.getCustomerId().equals(customerId)) {
+                    return true;
+                }
+            }
+            return false;
+        }
 }

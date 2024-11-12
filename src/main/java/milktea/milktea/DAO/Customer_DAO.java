@@ -63,4 +63,9 @@ public class Customer_DAO extends Connect {
                executeUpdate(sql2, customer.getPoint(), customer.getId());
     }
 
+    public static boolean deleteCustomer(String id) {
+        String sql1 = "Delete from customer where id = ?";
+        String sql2 = "Delete from person where id = ?";
+        return executeUpdate(sql1, id) && executeUpdate(sql2, id);
+    }
 }

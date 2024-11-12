@@ -152,6 +152,7 @@ public void loadSQLFile(String filePath) {
                 result = stmt.executeUpdate() >= 1;
             } catch (SQLException e) {
                 log.error("Error: ", e);
+                return false;
             } finally {
                 closeConnection();
             }

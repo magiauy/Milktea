@@ -102,6 +102,13 @@ public class IngredientGUI {
                 }
             }
         });
+        btnSearch.setOnMouseClicked(event -> {
+            if (!ValidationUtil.isInvalidSearch(txtSearch)) {
+                ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.searchIngredient(txtSearch.getText()));
+                tableMain.setItems(data);
+                tableMain.refresh();
+            }
+        });
     }
 
     public void createTable() {

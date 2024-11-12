@@ -125,4 +125,14 @@ public class Ingredient_BUS {
         arrIngredients.removeIf(ingredient -> ingredient.getId().equals(id));
         tempArrIngredients.remove(id);
     }
+
+    public static ArrayList<Ingredient> searchIngredient(String text) {
+        ArrayList<Ingredient> result = new ArrayList<>();
+        for (Ingredient ingredient : arrIngredients) {
+            if (ingredient.getName().toLowerCase().contains(text.toLowerCase())|| ingredient.getId().toLowerCase().contains(text.toLowerCase())) {
+                result.add(ingredient);
+            }
+        }
+        return result;
+    }
 }
