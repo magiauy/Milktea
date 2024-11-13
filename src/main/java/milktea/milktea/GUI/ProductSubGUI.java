@@ -142,30 +142,26 @@ public class ProductSubGUI {
             }
         });
         btnSave.setOnAction(event -> {
-            if (!ValidationUtil.isEmpty(txtProductName, txtPrice)) {
-                if (!ValidationUtil.isNotPrice(txtPrice)) {
-                    if (!arrRecipe.isEmpty()) {
-                        if (ProductGUI.isEditable) {
-                            product = ProductGUI.getSelectedProduct();
-                            product.setName(txtProductName.getText());
-                            product.setCategoryId(cbCategory.getValue().getId());
-                            product.setPrice(BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())));
-                            product.setStatus(Status.ACTIVE);
-                        } else {
-                            product = new Product(productID, txtProductName.getText(), cbCategory.getValue().getId(), BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())), Status.ACTIVE);
-                        }
-                        isEdited = true;
-                        Stage stage = (Stage) btnSave.getScene().getWindow();
-                        stage.close();
-                    }else{
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Information Dialog");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Vui lòng thêm công thức cho sản phẩm");
-                        alert.showAndWait();
-                    }
-                }
+            if (ValidationUtil.isEmpty(txtProductName, txtPrice)) return;
+            if (ValidationUtil.isNotPrice(txtPrice)) return;
+            if (arrRecipe.isEmpty()) {
+                ValidationUtil.showErrorAlert("Vui lòng thêm công thức cho sản phẩm");
+                return;
             }
+
+            if (ProductGUI.isEditable) {
+                product = ProductGUI.getSelectedProduct();
+                product.setName(txtProductName.getText());
+                product.setCategoryId(cbCategory.getValue().getId());
+                product.setPrice(BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())));
+                product.setStatus(Status.ACTIVE);
+            } else {
+                product = new Product(productID, txtProductName.getText(), cbCategory.getValue().getId(), BigDecimal.valueOf(Float.parseFloat(txtPrice.getText())), Status.ACTIVE);
+            }
+
+            isEdited = true;
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.close();
         });
     }
 

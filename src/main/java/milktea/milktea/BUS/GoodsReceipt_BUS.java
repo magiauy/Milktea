@@ -112,4 +112,13 @@ public class GoodsReceipt_BUS {
         }
         return false;
     }
+
+    public static boolean isEmployeeExist(String id) {
+        for (GoodsReceipt goodsReceipt : arrGoodsReceipt) {
+            if (goodsReceipt.getEmployeeId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

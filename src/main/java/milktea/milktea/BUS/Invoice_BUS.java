@@ -118,4 +118,13 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
             }
             return false;
         }
+
+    public static boolean isEmployeeExist(String id) {
+        for (Invoice invoice : arrInvoice) {
+            if (invoice.getEmployeeId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

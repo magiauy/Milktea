@@ -51,37 +51,36 @@ public class IngredientSubGUI {
             txtQuantity.setText(String.valueOf(ingredient.getQuantity()));
         }
         btnSave.setOnMouseClicked(event -> {
-            if (!ValidationUtil.isEmpty(txtName,txtQuantity)&&!ValidationUtil.isEmptyComboBox(cbUnit)) {
-                if (ValidationUtil.isFloat(txtQuantity)) {
-                    if (ValidationUtil.isNegativeFloat(Float.parseFloat(txtQuantity.getText()))) {
-                        ingredient.setId(txtId.getText());
-                        ingredient.setName(txtName.getText());
-                        ingredient.setUnit(cbUnit.getValue());
-                        ingredient.setQuantity(Float.parseFloat(txtQuantity.getText()));
-                        if (IngredientGUI.isEditable()) {
-                            if(Ingredient_BUS.editIngredient(ingredient)){
-                                Ingredient_BUS.editIngredientLocal(ingredient);
-                                IngredientSubGUI.setEdited(true);
-                                ValidationUtil.showInfoAlert("Nguyên liệu đã được chỉnh sửa");
-                                isEdited = true;
-                            }else {
-                                ValidationUtil.showErrorAlert("Chỉnh sửa nguyên liệu thất bại");
-                            }
-                        } else {
-                            ingredient.setStatus(Status.ACTIVE);
-                            if (Ingredient_BUS.addIngredient(ingredient)){
-                                Ingredient_BUS.addIngredientLocal(ingredient);
-                                IngredientSubGUI.setEdited(true);
-                                ValidationUtil.showInfoAlert("Nguyên liệu đã được thêm");
-                                isEdited = true;
-                            }
-                        }
-                        IngredientGUI.setSelectedIngredient(null);
-                        Stage stage = (Stage) btnSave.getScene().getWindow();
-                        stage.close();
-                    }
+            if (ValidationUtil.isEmpty(txtName, txtQuantity) || ValidationUtil.isEmptyComboBox(cbUnit)) return;
+            if (!ValidationUtil.isFloat(txtQuantity)) return;
+            if (!ValidationUtil.isNegativeFloat(Float.parseFloat(txtQuantity.getText()))) return;
+
+            ingredient.setId(txtId.getText());
+            ingredient.setName(txtName.getText());
+            ingredient.setUnit(cbUnit.getValue());
+            ingredient.setQuantity(Float.parseFloat(txtQuantity.getText()));
+
+            if (IngredientGUI.isEditable()) {
+                if (Ingredient_BUS.editIngredient(ingredient)) {
+                    Ingredient_BUS.editIngredientLocal(ingredient);
+                    IngredientSubGUI.setEdited(true);
+                    ValidationUtil.showInfoAlert("Nguyên liệu đã được chỉnh sửa");
+                    isEdited = true;
+                } else {
+                    ValidationUtil.showErrorAlert("Chỉnh sửa nguyên liệu thất bại");
+                }
+            } else {
+                ingredient.setStatus(Status.ACTIVE);
+                if (Ingredient_BUS.addIngredient(ingredient)) {
+                    Ingredient_BUS.addIngredientLocal(ingredient);
+                    IngredientSubGUI.setEdited(true);
+                    ValidationUtil.showInfoAlert("Nguyên liệu đã được thêm");
+                    isEdited = true;
                 }
             }
+            IngredientGUI.setSelectedIngredient(null);
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.close();
         });
     }
 }

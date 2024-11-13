@@ -188,6 +188,16 @@ public class ValidationUtil {
         }
     }
 
+    public static boolean isInt(@NonNull TextField textField) {
+        try {
+            Integer.parseInt(textField.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            showErrorAlert("Số lượng không hợp lệ");
+            return false;
+        }
+    }
+
     public static boolean showConfirmAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");

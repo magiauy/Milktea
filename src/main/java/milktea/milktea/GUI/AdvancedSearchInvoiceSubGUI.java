@@ -102,96 +102,52 @@ public class AdvancedSearchInvoiceSubGUI {
     }
 
     private @NotNull HashMap<String, String> getSearchParams() {
-        HashMap<String, String> searchParams = new HashMap<>();
-        if (chkSearchInvoiceID.isSelected()) {
-            if (!ValidationUtil.isEmpty(txtSearchInvoiceID)) {
-                if (!ValidationUtil.isInvalidSearch(txtSearchInvoiceID)) {
-                    if (!ValidationUtil.isFirstCharNotSpace(txtSearchInvoiceID)) {
-                        searchParams.put("invoiceID", txtSearchInvoiceID.getText());
-                    } else {
-                        isSearch = false;
-                    }
-                } else {
-                    isSearch = false;
-                }
-            } else {
-                isSearch = false;
-            }
-        }
-        if (chkSearchInvoiceDate.isSelected()) {
-            if (!ValidationUtil.isEmpty(txtSearchInvoiceStartDate, txtSearchInvoiceEndDate)) {
-                if (ValidationUtil.isValidDateRange(LocalDate.parse(txtSearchInvoiceStartDate.getText()), LocalDate.parse(txtSearchInvoiceEndDate.getText()))) {
-                    searchParams.put("startDate", txtSearchInvoiceStartDate.getText());
-                    searchParams.put("endDate", txtSearchInvoiceEndDate.getText());
-                }else {
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
-        }
-        if (chkSearchInvoiceTotal.isSelected()) {
-            if (!ValidationUtil.isEmpty(txtSearchInvoiceMinTotal, txtSearchInvoiceMaxTotal)) {
-                if (!ValidationUtil.isNotPrice(txtSearchInvoiceMinTotal, txtSearchInvoiceMaxTotal)) {
-                    if (ValidationUtil.isValidTotalRange(txtSearchInvoiceMinTotal, txtSearchInvoiceMaxTotal)) {
-                        searchParams.put("minTotal", txtSearchInvoiceMinTotal.getText());
-                        searchParams.put("maxTotal", txtSearchInvoiceMaxTotal.getText());
-                    }else {
-                        isSearch = false;
-                    }
-                }else{
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
-        }
-        if (chkSearchInvoiceCustomerID.isSelected()) {
-            if (!ValidationUtil.isEmpty(txtSearchInvoiceCustomerID)) {
-                if (!ValidationUtil.isInvalidSearch(txtSearchInvoiceCustomerID)) {
-                    if (!ValidationUtil.isFirstCharNotSpace(txtSearchInvoiceCustomerID)) {
-                        searchParams.put("customerID", txtSearchInvoiceCustomerID.getText());
-                    }else {
-                        isSearch = false;
-                    }
-                }else {
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
-        }
-        if (chkSearchInvoiceEmployeeID.isSelected()) {
-            if (!ValidationUtil.isEmpty(txtSearchInvoiceEmployeeID)) {
-                if (!ValidationUtil.isInvalidSearch(txtSearchInvoiceEmployeeID)) {
-                    if (!ValidationUtil.isFirstCharNotSpace(txtSearchInvoiceEmployeeID)) {
-                        searchParams.put("employeeID", txtSearchInvoiceEmployeeID.getText());
-                    }else{
-                        isSearch = false;
-                    }
-                }else {
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
-        }
-        if (chkSearchInvoicePromotionID.isSelected()) {
-            if (!ValidationUtil.isEmpty(txtSearchInvoicePromotionID)) {
-                if (!ValidationUtil.isInvalidSearch(txtSearchInvoicePromotionID)) {
-                    if (!ValidationUtil.isFirstCharNotSpace(txtSearchInvoicePromotionID)) {
-                        searchParams.put("promotionID", txtSearchInvoicePromotionID.getText());
-                    }else {
-                        isSearch = false;
-                    }
-                }else {
-                    isSearch = false;
-                }
-            }else{
-                isSearch = false;
-            }
-        }
-        return searchParams;
+    HashMap<String, String> searchParams = new HashMap<>();
+    if (chkSearchInvoiceID.isSelected() && isValidSearchField(txtSearchInvoiceID)) {
+        searchParams.put("invoiceID", txtSearchInvoiceID.getText());
+    }else {
+        isSearch = false;
+    }
+    if (chkSearchInvoiceDate.isSelected() && isValidDateRange(txtSearchInvoiceStartDate, txtSearchInvoiceEndDate)) {
+        searchParams.put("startDate", txtSearchInvoiceStartDate.getText());
+        searchParams.put("endDate", txtSearchInvoiceEndDate.getText());
+    }else {
+        isSearch = false;
+    }
+    if (chkSearchInvoiceTotal.isSelected() && isValidTotalRange(txtSearchInvoiceMinTotal, txtSearchInvoiceMaxTotal)) {
+        searchParams.put("minTotal", txtSearchInvoiceMinTotal.getText());
+        searchParams.put("maxTotal", txtSearchInvoiceMaxTotal.getText());
+    }else {
+        isSearch = false;
+    }
+    if (chkSearchInvoiceCustomerID.isSelected() && isValidSearchField(txtSearchInvoiceCustomerID)) {
+        searchParams.put("customerID", txtSearchInvoiceCustomerID.getText());
+    }else {
+        isSearch = false;
+    }
+    if (chkSearchInvoiceEmployeeID.isSelected() && isValidSearchField(txtSearchInvoiceEmployeeID)) {
+        searchParams.put("employeeID", txtSearchInvoiceEmployeeID.getText());
+    }else {
+        isSearch = false;
+    }
+    if (chkSearchInvoicePromotionID.isSelected() && isValidSearchField(txtSearchInvoicePromotionID)) {
+        searchParams.put("promotionID", txtSearchInvoicePromotionID.getText());
+    }else {
+        isSearch = false;
+    }
+    return searchParams;
+}
+
+    private boolean isValidSearchField(TextField textField) {
+        return !ValidationUtil.isEmpty(textField) && !ValidationUtil.isInvalidSearch(textField) && !ValidationUtil.isFirstCharNotSpace(textField);
+    }
+
+    private boolean isValidDateRange(TextField startDate, TextField endDate) {
+        return !ValidationUtil.isEmpty(startDate, endDate) && ValidationUtil.isValidDateRange(LocalDate.parse(startDate.getText()), LocalDate.parse(endDate.getText()));
+    }
+
+    private boolean isValidTotalRange(TextField minTotal, TextField maxTotal) {
+        return !ValidationUtil.isEmpty(minTotal, maxTotal) && !ValidationUtil.isNotPrice(minTotal, maxTotal) && ValidationUtil.isValidTotalRange(minTotal, maxTotal);
     }
     public void checkBoxAction(Event event) {
         CheckBox checkBox = (CheckBox) event.getSource();

@@ -70,6 +70,8 @@ public class Main {
             GoodsReceipt_BUS.getLocalData();
             GoodsReceiptDetail_BUS.getLocalData();
             Provider_BUS.getLocalData();
+            Employee_BUS.getLocalData();
+            Role_BUS.getLocalData();
             isLoaded = true;
         }
 
@@ -133,6 +135,7 @@ public class Main {
     }
 
     private void btnEmployee(ActionEvent actionEvent) {
+        loadFXML("Employee_GUI.fxml");
     }
 
     private void btnStatistic(ActionEvent actionEvent) {

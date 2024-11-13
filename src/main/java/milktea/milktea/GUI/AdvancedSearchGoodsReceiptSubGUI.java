@@ -49,6 +49,7 @@ public class AdvancedSearchGoodsReceiptSubGUI {
     @Getter
     @Setter
     private static boolean isDone = false;
+
     private boolean isSearch = true;
     @Getter
     @Setter
@@ -66,7 +67,7 @@ public class AdvancedSearchGoodsReceiptSubGUI {
         HashMap<String, String> searchParams = getSearchParams();
         if (isSearch) {
             if (!searchParams.isEmpty()) {
-                    arrGoodsReceipt = GoodsReceipt_BUS.advancedSearchGoodsReceipt(searchParams);
+                arrGoodsReceipt = GoodsReceipt_BUS.advancedSearchGoodsReceipt(searchParams);
                 if (arrGoodsReceipt.isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information");
@@ -83,81 +84,58 @@ public class AdvancedSearchGoodsReceiptSubGUI {
                     Stage stage = (Stage) btnSearch.getScene().getWindow();
                     stage.close();
                     }
-                }else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Vui lòng chọn ít nhất một trường tìm kiếm");
-                    alert.showAndWait();
-                }
+            }else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Vui lòng chọn ít nhất một trường tìm kiếm");
+                alert.showAndWait();
             }
+        }
     }
 
     private @NotNull HashMap<String, String> getSearchParams() {
         HashMap<String, String> searchParams = new HashMap<>();
-        if(chkGoodsReceiptID.isSelected()){
-            if (!ValidationUtil.isEmpty(txtGoodsReceiptID)){
-                if (!ValidationUtil.isInvalidSearch(txtGoodsReceiptID)) {
-                    if (!ValidationUtil.isFirstCharNotSpace(txtGoodsReceiptID)) {
-                        System.out.println(txtGoodsReceiptID.getText());
-                        searchParams.put("goodsReceiptID", txtGoodsReceiptID.getText());
-                    }else {
-                        isSearch = false;
-                    }
-                }else {
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
-        }if (chkGoodsReceiptDate.isSelected()){
-            if (!ValidationUtil.isEmptyDp(dtpGoodsReceiptStartDate,"bắt đầu") && ValidationUtil.isEmptyDp(dtpGoodsReceiptEndDate,"kết thúc")){
-                searchParams.put("startDate", dtpGoodsReceiptStartDate.getValue().toString());
-                searchParams.put("endDate", dtpGoodsReceiptEndDate.getValue().toString());
-            }else {
-                isSearch = false;
-            }
-        }if (chkGoodsReceiptTotal.isSelected()){
-            if (!ValidationUtil.isEmpty(txtGoodsReceiptMinTotal,txtGoodsReceiptMaxTotal)){
-                if (!ValidationUtil.isNotPrice(txtGoodsReceiptMinTotal,txtGoodsReceiptMaxTotal)) {
-                    searchParams.put("minTotal", txtGoodsReceiptMinTotal.getText());
-                    searchParams.put("maxTotal", txtGoodsReceiptMaxTotal.getText());
-                }else {
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
-        }if (chkGoodsReceiptProviderID.isSelected()){
-            if (!ValidationUtil.isEmpty(txtGoodsReceiptProviderID)) {
-                if (!ValidationUtil.isInvalidSearch(txtGoodsReceiptProviderID)) {
-                    if (!ValidationUtil.isFirstCharNotSpace(txtGoodsReceiptProviderID)) {
-                        searchParams.put("providerId", txtGoodsReceiptProviderID.getText());
-                    }else {
-                        isSearch = false;
-                    }
-                }else {
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
-        }if (chkGoodsReceiptEmployeeID.isSelected()){
-            if (!ValidationUtil.isEmpty(txtGoodsReceiptEmployeeID)){
-                if (!ValidationUtil.isInvalidSearch(txtGoodsReceiptEmployeeID)) {
-                    if (!ValidationUtil.isFirstCharNotSpace(txtGoodsReceiptEmployeeID)) {
-                        searchParams.put("employeeId", txtGoodsReceiptEmployeeID.getText());
-                    }else {
-                        isSearch = false;
-                    }
-                }else {
-                    isSearch = false;
-                }
-            }else {
-                isSearch = false;
-            }
+        if (chkGoodsReceiptID.isSelected() && isValidSearchField(txtGoodsReceiptID)) {
+            searchParams.put("goodsReceiptID", txtGoodsReceiptID.getText());
+        }else{
+            isSearch = false;
+        }
+        if (chkGoodsReceiptDate.isSelected() && isValidDateRange(dtpGoodsReceiptStartDate, dtpGoodsReceiptEndDate)) {
+            searchParams.put("startDate", dtpGoodsReceiptStartDate.getValue().toString());
+            searchParams.put("endDate", dtpGoodsReceiptEndDate.getValue().toString());
+        }else{
+            isSearch = false;
+        }
+        if (chkGoodsReceiptTotal.isSelected() && isValidTotalRange(txtGoodsReceiptMinTotal, txtGoodsReceiptMaxTotal)) {
+            searchParams.put("minTotal", txtGoodsReceiptMinTotal.getText());
+            searchParams.put("maxTotal", txtGoodsReceiptMaxTotal.getText());
+        }else{
+            isSearch = false;
+        }
+        if (chkGoodsReceiptProviderID.isSelected() && isValidSearchField(txtGoodsReceiptProviderID)) {
+            searchParams.put("providerId", txtGoodsReceiptProviderID.getText());
+        }else{
+            isSearch = false;
+        }
+        if (chkGoodsReceiptEmployeeID.isSelected() && isValidSearchField(txtGoodsReceiptEmployeeID)) {
+            searchParams.put("employeeId", txtGoodsReceiptEmployeeID.getText());
+        }else{
+            isSearch = false;
         }
         return searchParams;
+    }
+
+    private boolean isValidSearchField(TextField textField) {
+        return !ValidationUtil.isEmpty(textField) && !ValidationUtil.isInvalidSearch(textField) && !ValidationUtil.isFirstCharNotSpace(textField);
+    }
+
+    private boolean isValidDateRange(DatePicker startDate, DatePicker endDate) {
+        return !ValidationUtil.isEmptyDp(startDate, "bắt đầu") && !ValidationUtil.isEmptyDp(endDate, "kết thúc");
+    }
+
+    private boolean isValidTotalRange(TextField minTotal, TextField maxTotal) {
+        return !ValidationUtil.isEmpty(minTotal, maxTotal) && !ValidationUtil.isNotPrice(minTotal, maxTotal);
     }
     public void checkBoxAction(Event event) {
         CheckBox checkBox = (CheckBox) event.getSource();

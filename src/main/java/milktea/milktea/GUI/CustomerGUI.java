@@ -57,44 +57,40 @@ public class CustomerGUI {
     }
 
     private void btnDelete(MouseEvent event) {
-        if(tableMain.getSelectionModel().getSelectedItem() != null){
-            if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa khách hàng này không?")) {
-                Customer selectedCustomer = tableMain.getSelectionModel().getSelectedItem();
-                if (!Invoice_BUS.isCustomerExist(selectedCustomer.getId())) {
-                    if (Customer_BUS.deleteCustomer(selectedCustomer.getId())) {
-                        Customer_BUS.deleteCustomerLocal(selectedCustomer.getId());
-                        ArrayList<Customer> customers = new ArrayList<>(Customer_BUS.getAllCustomer());
-                        customers.sort(Comparator.comparing(Customer::getId));
-                        ObservableList<Customer> sortedData = FXCollections.observableList(customers);
-                        if (!sortedData.isEmpty()) {
-                            sortedData.removeIf(customer -> customer.getId().equals("KH000"));
-                        }
-                        tableMain.setItems(sortedData);
-                        tableMain.getSelectionModel().clearSelection();
-                        tableMain.refresh();
-                    } else {
-                        ValidationUtil.showErrorAlert("Xóa không thành công");
-                    }
-                } else {
-                    ValidationUtil.showErrorAlert("Không thể xóa khách hàng này vì đã mua hàng");
-                }
-            }
-        }else {
+        Customer selectedCustomer = tableMain.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null) {
             ValidationUtil.showErrorAlert("Vui lòng chọn khách hàng cần xóa");
+            return;
         }
+        if (!ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa khách hàng này không?")) return;
+        if (Invoice_BUS.isCustomerExist(selectedCustomer.getId())) {
+            ValidationUtil.showErrorAlert("Không thể xóa khách hàng này vì đã mua hàng");
+            return;
+        }
+        if (Customer_BUS.deleteCustomer(selectedCustomer.getId())) {
+            Customer_BUS.deleteCustomerLocal(selectedCustomer.getId());
+            refreshTable();
+        } else {
+            ValidationUtil.showErrorAlert("Xóa không thành công");
+        }
+    }
+
+    private void refreshTable() {
+        ArrayList<Customer> customers = new ArrayList<>(Customer_BUS.getAllCustomer());
+        customers.sort(Comparator.comparing(Customer::getId));
+        ObservableList<Customer> sortedData = FXCollections.observableList(customers);
+        sortedData.removeIf(customer -> customer.getId().equals("KH000"));
+        tableMain.setItems(sortedData);
+        tableMain.getSelectionModel().clearSelection();
+        tableMain.refresh();
     }
 
     public void btnAdd(MouseEvent event) {
         isEditable = false;
         UI_Util.openStage("CustomerSubGUI.fxml", () -> {
-            ArrayList<Customer> customers = new ArrayList<>(Customer_BUS.getAllCustomer());
-            customers.sort(Comparator.comparing(Customer::getId));
-            ObservableList<Customer> sortedData = FXCollections.observableList(customers);
-            if (!sortedData.isEmpty()) {
-                sortedData.removeIf(customer -> customer.getId().equals("KH000"));
+            if (CustomerSubGUI.isAdded()) {
+                refreshTable();
             }
-            tableMain.setItems(sortedData);
-            tableMain.refresh();
         });
     }
     public void btnEdit(MouseEvent event){
@@ -102,14 +98,9 @@ public class CustomerGUI {
         if(tableMain.getSelectionModel().getSelectedItem() != null){
             selectedCustomer = tableMain.getSelectionModel().getSelectedItem();
             UI_Util.openStage("CustomerSubGUI.fxml",() -> {
-                ArrayList<Customer> customers = new ArrayList<>(Customer_BUS.getAllCustomer());
-                customers.sort(Comparator.comparing(Customer::getId));
-                ObservableList<Customer> sortedData = FXCollections.observableList(customers);
-                if (!sortedData.isEmpty()) {
-                    sortedData.removeIf(customer -> customer.getId().equals("KH000"));
+                if (CustomerSubGUI.isAdded()) {
+                    refreshTable();
                 }
-                tableMain.setItems(sortedData);
-                tableMain.refresh();
             });
         }else {
             ValidationUtil.showErrorAlert("Vui lòng chọn khách hàng cần sửa");

@@ -84,33 +84,35 @@ public class IngredientGUI {
         });
 
         imgDelete.setOnMouseClicked(event -> {
-            if (tableMain.getSelectionModel().getSelectedItem() != null) {
-                if (!Recipe_BUS.hasIngredient(tableMain.getSelectionModel().getSelectedItem().getId())) {
-                    if (!GoodsReceiptDetail_BUS.hasIngredient(tableMain.getSelectionModel().getSelectedItem().getId())) {
-                        if (tableMain.getSelectionModel().getSelectedItem().getQuantity() == 0) {
-                                if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa nguyên liệu này không?")) {
-                                    if (Ingredient_BUS.deleteIngredient(tableMain.getSelectionModel().getSelectedItem().getId())) {
-                                        Ingredient_BUS.deleteIngredientLocal(tableMain.getSelectionModel().getSelectedItem().getId());
-                                        ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
-                                        tableMain.setItems(data);
-                                        tableMain.refresh();
-                                        ValidationUtil.showInfoAlert("Xóa nguyên liệu thành công");
-                                    } else {
-                                        ValidationUtil.showErrorAlert("Xóa nguyên liệu thất bại");
-                                    }
-                                }
-                            }else{
-                                ValidationUtil.showErrorAlert("Nguyên liệu này đang có số lượng lớn hơn 0, không thể xóa");
-                            }
-                        } else {
-                            ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong phiếu nhập, không thể xóa");
-                        }
-                    } else {
-                        ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong công thức, không thể xóa");
-                    }
+            Ingredient selectedItem = tableMain.getSelectionModel().getSelectedItem();
+            if (selectedItem == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn nguyên liệu cần xóa");
+                return;
+            }
+            String ingredientId = selectedItem.getId();
+            if (Recipe_BUS.hasIngredient(ingredientId)) {
+                ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong công thức, không thể xóa");
+                return;
+            }
+            if (GoodsReceiptDetail_BUS.hasIngredient(ingredientId)) {
+                ValidationUtil.showErrorAlert("Nguyên liệu này đang được sử dụng trong phiếu nhập, không thể xóa");
+                return;
+            }
+            if (selectedItem.getQuantity() > 0) {
+                ValidationUtil.showErrorAlert("Nguyên liệu này đang có số lượng lớn hơn 0, không thể xóa");
+                return;
+            }
+            if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa nguyên liệu này không?")) {
+                if (Ingredient_BUS.deleteIngredient(ingredientId)) {
+                    Ingredient_BUS.deleteIngredientLocal(ingredientId);
+                    ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
+                    tableMain.setItems(data);
+                    tableMain.refresh();
+                    ValidationUtil.showInfoAlert("Xóa nguyên liệu thành công");
                 } else {
-                    ValidationUtil.showErrorAlert("Vui lòng chọn nguyên liệu cần xóa");
+                    ValidationUtil.showErrorAlert("Xóa nguyên liệu thất bại");
                 }
+            }
         });
         btnSearch.setOnMouseClicked(event -> {
             if (!ValidationUtil.isInvalidSearch(txtSearch)) {

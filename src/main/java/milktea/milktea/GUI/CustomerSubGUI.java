@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.BUS.Customer_BUS;
 import milktea.milktea.DTO.Customer;
@@ -31,7 +33,9 @@ public class CustomerSubGUI {
     @FXML
     private Label lblTitle;
 
-    public static boolean isAdded = false;
+    @Getter
+    @Setter
+    private static boolean isAdded = false;
     private final HashMap<TextField, String> textFieldInfo = new HashMap<>();
     @FXML
     public void initialize() {

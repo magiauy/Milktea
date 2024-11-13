@@ -149,46 +149,35 @@ public class GoodsReceiptGUI {
     }
 
 
-    private void AddGoodsReceipt(ActionEvent actionEvent) {
-        if (!ValidationUtil.isEmpty(txtGoodsProviderId,txtGoodsEmployeeId,txtGoodsReceiptId,txtGoodsReceiptDate,txtGoodsEmployeeName,txtGoodsProviderName)){
-            if (!arrGoodsReceiptDetail.isEmpty()) {
-                GoodsReceipt goodsReceipt = GoodsReceipt.builder()
-                        .id(txtGoodsReceiptId.getText())
-                        .date(LocalDate.parse(txtGoodsReceiptDate.getText()))
-                        .employeeId(txtGoodsEmployeeId.getText())
-                        .providerId(txtGoodsProviderId.getText())
-                        .total(new BigDecimal(lblTotal.getText()))
-                        .build();
-                if (GoodsReceipt_BUS.addGoodsReceipt(goodsReceipt) ) {
-                    if (GoodsReceiptDetail_BUS.addGoodsReceiptDetail(arrGoodsReceiptDetail)) {
-                        GoodsReceiptDetail_BUS.addGoodsReceiptDetailLocal(arrGoodsReceiptDetail);
-                        GoodsReceipt_BUS.addGoodsReceiptLocal(goodsReceipt);
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Thông báo");
-                        alert.setHeaderText("Đã thêm phiếu nhập hàng thành công");
-                        alert.show();
-                        Clear(actionEvent);
-                    }else {
-                        GoodsReceipt_BUS.deleteGoodsReceipt(goodsReceipt.getId());
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Thêm chi tiết phiếu nhập hàng thất bại");
-                        alert.show();
-                    }
-                }else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Thêm phiếu nhập hàng thất bại");
-                    alert.show();
-                }
-            }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Vui lòng thêm nguyên liệu");
-                alert.show();
-            }
-        }
+private void AddGoodsReceipt(ActionEvent actionEvent) {
+    if (ValidationUtil.isEmpty(txtGoodsProviderId, txtGoodsEmployeeId, txtGoodsReceiptId, txtGoodsReceiptDate, txtGoodsEmployeeName, txtGoodsProviderName)) return;
+    if (arrGoodsReceiptDetail.isEmpty()) {
+        ValidationUtil.showErrorAlert("Vui lòng thêm nguyên liệu");
+        return;
     }
+
+    GoodsReceipt goodsReceipt = GoodsReceipt.builder()
+            .id(txtGoodsReceiptId.getText())
+            .date(LocalDate.parse(txtGoodsReceiptDate.getText()))
+            .employeeId(txtGoodsEmployeeId.getText())
+            .providerId(txtGoodsProviderId.getText())
+            .total(new BigDecimal(lblTotal.getText()))
+            .build();
+
+    if (GoodsReceipt_BUS.addGoodsReceipt(goodsReceipt)) {
+        if (GoodsReceiptDetail_BUS.addGoodsReceiptDetail(arrGoodsReceiptDetail)) {
+            GoodsReceiptDetail_BUS.addGoodsReceiptDetailLocal(arrGoodsReceiptDetail);
+            GoodsReceipt_BUS.addGoodsReceiptLocal(goodsReceipt);
+            ValidationUtil.showErrorAlert("Đã thêm phiếu nhập hàng thành công");
+            Clear(actionEvent);
+        } else {
+            GoodsReceipt_BUS.deleteGoodsReceipt(goodsReceipt.getId());
+            ValidationUtil.showErrorAlert("Thêm chi tiết phiếu nhập hàng thất bại");
+        }
+    } else {
+        ValidationUtil.showErrorAlert("Thêm phiếu nhập hàng thất bại");
+    }
+}
 
     private void Clear(ActionEvent actionEvent) {
         txtGoodsProviderId.clear();

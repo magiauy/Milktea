@@ -60,21 +60,21 @@ public class ProviderGUI {
         });
         imgDelete.setOnMouseClicked(e -> {
             Provider provider = tableMain.getSelectionModel().getSelectedItem();
-            if (provider != null) {
-                if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa nhà cung cấp này không?")) {
-                    if (!GoodsReceipt_BUS.isProviderExist(provider.getId())) {
-                        if (Provider_BUS.deleteProvider(provider.getId())) {
-                            Provider_BUS.deleteProviderLocal(provider.getId());
-                            loadProvider();
-                        } else {
-                            ValidationUtil.showErrorAlert("Xóa nhà cung cấp thất bại");
-                        }
-                        System.out.println("Delete provider");
-                    } else {
-                        ValidationUtil.showErrorAlert("Nhà cung cấp đã tồn tại trong phiếu nhập hàng, không thể xóa");
-                    }
-                }
+            if (provider == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn nhà cung cấp cần xóa");
+                return;
             }
+            if (!ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa nhà cung cấp này không?")) return;
+            if (GoodsReceipt_BUS.isProviderExist(provider.getId())) {
+                ValidationUtil.showErrorAlert("Nhà cung cấp đã tồn tại trong phiếu nhập hàng, không thể xóa");
+                return;
+            }
+            if (!Provider_BUS.deleteProvider(provider.getId())) {
+                ValidationUtil.showErrorAlert("Xóa nhà cung cấp thất bại");
+                return;
+            }
+            Provider_BUS.deleteProviderLocal(provider.getId());
+            loadProvider();
         });
         imgAdd.setOnMouseClicked(e -> openStage("Provider_SubGUI.fxml", () -> {
             if (ProviderSubGUI.isSaved()) {

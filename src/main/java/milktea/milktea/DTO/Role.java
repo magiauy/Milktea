@@ -13,5 +13,8 @@ public class Role {
     private String roleId;
     private String roleName;
     private String description;
-
+    @Override
+    public String toString() {
+        return roleName;
+    }
 }

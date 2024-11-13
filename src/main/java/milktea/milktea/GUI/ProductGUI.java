@@ -88,35 +88,36 @@ public class ProductGUI {
         btnClear.setOnAction(this::onClear);
         hideButtonWithoutPermission();
         imgEdit.setOnMouseClicked(event -> {
-            if (tblProduct.getSelectionModel().getSelectedItem() != null) {
-                isEditable = true;
-                selectedProduct = tblProduct.getSelectionModel().getSelectedItem();
-                openStage("Product_SubGUI.fxml",()->{
-                    if (ProductSubGUI.isEdited()) {
-                        if (Product_BUS.editProduct(ProductSubGUI.getProduct())&&Recipe_BUS.deleteRecipe(ProductSubGUI.getRemovedRecipe())&&Recipe_BUS.editRecipe(ProductSubGUI.getArrRecipe())) {
-                            if (Product_BUS.editProductLocal(ProductSubGUI.getProduct())&&Recipe_BUS.deleteLocalRecipe(ProductSubGUI.getRemovedRecipe())&& Recipe_BUS.editRecipesLocal(ProductSubGUI.getArrRecipe())) {
-                                ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
-                                tblProduct.setItems(data);
-                                tblProduct.refresh();
-                                ObservableList<Recipe> data1 = FXCollections.observableArrayList(ProductSubGUI.getArrRecipe());
-                                tblRecipe.setItems(data1);
-                                tblRecipe.refresh();
-                                ProductSubGUI.setProduct(null);
-                                ProductSubGUI.setArrRecipe(null);
-                                ProductSubGUI.setEdited(false);
-                            }else
-                                failedAlert();
-                        }else {
-                            failedAlert();
-                        }
-                    }
-                });
-            }else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Thông báo");
-                alert.setHeaderText("Vui lòng chọn sản phẩm cần sửa");
-                alert.showAndWait();
+            Product selectedProduct = tblProduct.getSelectionModel().getSelectedItem();
+            if (selectedProduct == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn sản phẩm cần sửa");
+                return;
             }
+            isEditable = true;
+            openStage("Product_SubGUI.fxml", () -> {
+                if (!ProductSubGUI.isEdited()) return;
+                if (!Product_BUS.editProduct(ProductSubGUI.getProduct()) ||
+                    !Recipe_BUS.deleteRecipe(ProductSubGUI.getRemovedRecipe()) ||
+                    !Recipe_BUS.editRecipe(ProductSubGUI.getArrRecipe())) {
+                    failedAlert();
+                    return;
+                }
+                if(!Product_BUS.editProductLocal(ProductSubGUI.getProduct()) ||
+                    !Recipe_BUS.deleteLocalRecipe(ProductSubGUI.getRemovedRecipe()) ||
+                    !Recipe_BUS.editRecipesLocal(ProductSubGUI.getArrRecipe())){
+                    failedAlert();
+                    return;
+                }
+                ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
+                tblProduct.setItems(data);
+                tblProduct.refresh();
+                ObservableList<Recipe> data1 = FXCollections.observableArrayList(ProductSubGUI.getArrRecipe());
+                tblRecipe.setItems(data1);
+                tblRecipe.refresh();
+                ProductSubGUI.setProduct(null);
+                ProductSubGUI.setArrRecipe(null);
+                ProductSubGUI.setEdited(false);
+            });
         });
         imgAdd.setOnMouseClicked(event -> openStage("Product_SubGUI.fxml",()->{
             if (ProductSubGUI.isEdited()) {
@@ -133,77 +134,52 @@ public class ProductGUI {
             }
         }));
         imgDelete.setOnMouseClicked(event -> {
-            if (tblProduct.getSelectionModel().getSelectedItem() != null) {
-                if (showAlert()) {
-                    if (!InvoiceDetail_BUS.checkProductExist(tblProduct.getSelectionModel().getSelectedItem().getProductId())) {
-                        if (Recipe_BUS.deleteRecipeByProductID(tblProduct.getSelectionModel().getSelectedItem().getProductId())) {
-                            if (Product_BUS.deleteProduct(tblProduct.getSelectionModel().getSelectedItem().getProductId())) {
-                                if (Product_BUS.deleteProductLocal(tblProduct.getSelectionModel().getSelectedItem().getProductId()) && Recipe_BUS.deleteLocalRecipeByProductID(tblProduct.getSelectionModel().getSelectedItem().getProductId())) {
-                                    ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
-                                    tblProduct.setItems(data);
-                                    tblProduct.refresh();
-                                }
-                            } else {
-                                failedAlert();
-                            }
-                        } else {
-                            failedAlert();
-                        }
-                    }else {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Thông báo");
-                        alert.setHeaderText("Không thể xóa sản phẩm này vì đã có hóa đơn sử dụng sản phẩm này");
-                        alert.showAndWait();
-                    }
-                }
-            }else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Thông báo");
-                alert.setHeaderText("Vui lòng chọn sản phẩm cần xóa");
-                alert.showAndWait();
+            Product selectedProduct = tblProduct.getSelectionModel().getSelectedItem();
+            if (selectedProduct == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn sản phẩm cần xóa");
+                return;
             }
+            if (!showAlert()) return;
+            String productId = selectedProduct.getProductId();
+            if (InvoiceDetail_BUS.checkProductExist(productId)) {
+                ValidationUtil.showErrorAlert("Không thể xóa sản phẩm này vì đã có hóa đơn sử dụng sản phẩm này");
+                return;
+            }
+            if (!Recipe_BUS.deleteRecipeByProductID(productId) || !Product_BUS.deleteProduct(productId) ||
+                !Product_BUS.deleteProductLocal(productId) || !Recipe_BUS.deleteLocalRecipeByProductID(productId)) {
+                failedAlert();
+                return;
+            }
+            ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
+            tblProduct.setItems(data);
+            tblProduct.refresh();
         });
         imgLock.setOnMouseClicked(event -> {
-            if (tblProduct.getSelectionModel().getSelectedItem() != null) {
-                if (tblProduct.getSelectionModel().getSelectedItem().getStatus().equals(Status.ACTIVE)) {
-                    if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn khóa sản phẩm này không?")) {
-                        if (Product_BUS.changeStatusProduct(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.INACTIVE)) {
-                            if (Product_BUS.changeStatusProductLocal(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.INACTIVE)) {
-                                tblProduct.getSelectionModel().getSelectedItem().setStatus(Status.INACTIVE);
-                                imgLock.setImage(new ImageView("img/Lock.png").getImage());
-                                ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
-                                tblProduct.setItems(data);
-                                tblProduct.refresh();
-                            }else {
-                                failedAlert();
-                            }
-                        }else {
-                            failedAlert();
-                        }
-                    }
-                }else {
-                    if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn mở khóa sản phẩm này không?")) {
-                        if (Product_BUS.changeStatusProduct(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.ACTIVE)) {
-                            if (Product_BUS.changeStatusProductLocal(tblProduct.getSelectionModel().getSelectedItem().getProductId(), Status.ACTIVE)) {
-                                tblProduct.getSelectionModel().getSelectedItem().setStatus(Status.ACTIVE);
-                                imgLock.setImage(new ImageView("img/Padlock.png").getImage());
-                                ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
-                                tblProduct.setItems(data);
-                                tblProduct.refresh();
-                            } else {
-                                failedAlert();
-                            }
-                        } else {
-                            failedAlert();
-                        }
-                    }
-                }
-            }else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Thông báo");
-                alert.setHeaderText("Vui lòng chọn sản phẩm cần khóa");
-                alert.showAndWait();
+            Product selectedProduct = tblProduct.getSelectionModel().getSelectedItem();
+            if (selectedProduct == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn sản phẩm cần khóa");
+                return;
             }
+
+            Status newStatus = selectedProduct.getStatus().equals(Status.ACTIVE) ? Status.INACTIVE : Status.ACTIVE;
+            String confirmMessage = newStatus.equals(Status.INACTIVE) ? "Bạn có chắc chắn muốn khóa sản phẩm này không?" : "Bạn có chắc chắn muốn mở khóa sản phẩm này không?";
+            String lockImage = newStatus.equals(Status.INACTIVE) ? "img/Lock.png" : "img/Padlock.png";
+
+            if (!ValidationUtil.showConfirmAlert(confirmMessage)) return;
+            if (!Product_BUS.changeStatusProduct(selectedProduct.getProductId(), newStatus)) {
+                failedAlert();
+                return;
+            }
+            if (!Product_BUS.changeStatusProductLocal(selectedProduct.getProductId(), newStatus)) {
+                failedAlert();
+                return;
+            }
+
+            selectedProduct.setStatus(newStatus);
+            imgLock.setImage(new ImageView(lockImage).getImage());
+            ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
+            tblProduct.setItems(data);
+            tblProduct.refresh();
         });
 //        btnCategory.setOnAction(this::btnCategory);
     }

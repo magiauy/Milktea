@@ -52,40 +52,35 @@ public class ProviderSubGUI {
             txtEmail.setText(ProviderGUI.getSelectedProvider().getEmail());
         }
         btnSave.setOnAction(e -> {
-            if (!ValidationUtil.isEmpty(txtName, txtAddress, txtPhone, txtEmail)) {
-                if (!ValidationUtil.isFirstCharNotSpace(map,txtName, txtAddress, txtPhone, txtEmail)) {
-                    if (!ValidationUtil.isInValidChar(map, txtName)) {
-                        if (!ValidationUtil.isNotPhoneNumber(map, txtPhone)) {
-                            if (!ValidationUtil.isNotEmail(map, txtEmail)) {
-                                Provider provider = Provider.builder()
-                                        .id(txtID.getText())
-                                        .name(txtName.getText())
-                                        .address(txtAddress.getText())
-                                        .phone(txtPhone.getText())
-                                        .email(txtEmail.getText())
-                                        .build();
-                                if (!ProviderGUI.isEditable()) {
-                                    if (Provider_BUS.addProvider(provider)) {
-                                        Provider_BUS.addProviderLocal(provider);
-                                        isSaved = true;
-                                        Stage stage = (Stage) btnSave.getScene().getWindow();
-                                        stage.close();
-                                    }else {
-                                        ValidationUtil.showErrorAlert("Thêm nhà cung cấp thất bại");
-                                    }
-                                } else {
-                                    if (Provider_BUS.editProvider(provider)){
-                                        Provider_BUS.editProviderLocal(provider);
-                                        isSaved = true;
-                                        Stage stage = (Stage) btnSave.getScene().getWindow();
-                                        stage.close();
-                                    }else {
-                                        ValidationUtil.showErrorAlert("Sửa nhà cung cấp thất bại");
-                                    }
-                                }
-                            }
-                        }
-                    }
+            if (ValidationUtil.isEmpty(txtName, txtAddress, txtPhone, txtEmail)) return;
+            if (ValidationUtil.isFirstCharNotSpace(map, txtName, txtAddress, txtPhone, txtEmail)) return;
+            if (ValidationUtil.isInValidChar(map, txtName)) return;
+            if (ValidationUtil.isNotPhoneNumber(map, txtPhone)) return;
+            if (ValidationUtil.isNotEmail(map, txtEmail)) return;
+
+            Provider provider = Provider.builder()
+                    .id(txtID.getText())
+                    .name(txtName.getText())
+                    .address(txtAddress.getText())
+                    .phone(txtPhone.getText())
+                    .email(txtEmail.getText())
+                    .build();
+
+            if (!ProviderGUI.isEditable()) {
+                if (Provider_BUS.addProvider(provider)) {
+                    Provider_BUS.addProviderLocal(provider);
+                    isSaved = true;
+                    ((Stage) btnSave.getScene().getWindow()).close();
+                } else {
+                    ValidationUtil.showErrorAlert("Thêm nhà cung cấp thất bại");
+                }
+            } else {
+                if (Provider_BUS.editProvider(provider)) {
+                    Provider_BUS.editProviderLocal(provider);
+                    isSaved = true;
+                    ((Stage) btnSave.getScene().getWindow()).close();
+                } else {
+                    ValidationUtil.showErrorAlert("Sửa nhà cung cấp thất bại");
                 }
             }
         });

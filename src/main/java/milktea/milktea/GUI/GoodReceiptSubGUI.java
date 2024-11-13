@@ -47,27 +47,25 @@ public class GoodReceiptSubGUI {
             txtPrice.setText(String.valueOf(GoodsReceiptGUI.getGoodsReceiptDetail().getPrice()));
         }
         btnSave.setOnAction(event -> {
-            if (!ValidationUtil.isEmpty(txtQuantity, txtPrice)) {
-                if (!ValidationUtil.isNotPrice(txtPrice)) {
-                    if (ValidationUtil.isFloat(txtQuantity)) {
-                        if (!GoodsReceiptGUI.isEditable()) {
-                            GoodsReceiptGUI.setGoodsReceiptDetail(new GoodsReceiptDetail());
-                            GoodsReceiptGUI.getGoodsReceiptDetail().setUnit(setUnit(Ingredient_BUS.getIngredientById(GoodsReceiptGUI.getIngredient().getId()).getUnit()));
-                        }else {
-                            GoodsReceiptGUI.getGoodsReceiptDetail().setUnit(setUnit(Ingredient_BUS.getIngredientById(GoodsReceiptGUI.getGoodsReceiptDetail().getIngredientId()).getUnit()));
-                        }
-                        GoodsReceiptGUI.getGoodsReceiptDetail().setQuantity(Float.parseFloat(txtQuantity.getText()));
-                        GoodsReceiptGUI.getGoodsReceiptDetail().setPrice(new BigDecimal(txtPrice.getText()).setScale( 0, RoundingMode.HALF_UP));
-                            GoodsReceiptGUI.getGoodsReceiptDetail().setTotal(new BigDecimal(txtPrice.getText()).multiply(new BigDecimal(txtQuantity.getText()).setScale( 0, RoundingMode.HALF_UP)));
-                            isAdded = true;
-                            Stage stage = (Stage) btnSave.getScene().getWindow();
-                            stage.close();
-                    }
-                }
+            if (ValidationUtil.isEmpty(txtQuantity, txtPrice) || ValidationUtil.isNotPrice(txtPrice) || !ValidationUtil.isFloat(txtQuantity)) return;
+
+            if (!GoodsReceiptGUI.isEditable()) {
+                GoodsReceiptGUI.setGoodsReceiptDetail(new GoodsReceiptDetail());
             }
+            setGoodsReceiptDetailUnit();
+
+            GoodsReceiptGUI.getGoodsReceiptDetail().setQuantity(Float.parseFloat(txtQuantity.getText()));
+            GoodsReceiptGUI.getGoodsReceiptDetail().setPrice(new BigDecimal(txtPrice.getText()).setScale(0, RoundingMode.HALF_UP));
+            GoodsReceiptGUI.getGoodsReceiptDetail().setTotal(new BigDecimal(txtPrice.getText()).multiply(new BigDecimal(txtQuantity.getText()).setScale(0, RoundingMode.HALF_UP)));
+            isAdded = true;
+            ((Stage) btnSave.getScene().getWindow()).close();
         });
     }
-
+    private void setGoodsReceiptDetailUnit() {
+        GoodsReceiptGUI.getGoodsReceiptDetail().setUnit(setUnit(Ingredient_BUS.getIngredientById(
+                GoodsReceiptGUI.isEditable() ? GoodsReceiptGUI.getGoodsReceiptDetail().getIngredientId() : GoodsReceiptGUI.getIngredient().getId()
+        ).getUnit()));
+    }
     public Unit setUnit(Unit unit) {
         if (unit.equals(Unit.GRAM)||unit.equals(Unit.KILOGRAM)) {
             return Unit.KILOGRAM;

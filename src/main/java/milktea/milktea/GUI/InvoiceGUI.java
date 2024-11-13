@@ -228,11 +228,11 @@ public class InvoiceGUI {
 
     private void btnCustomerAdd(ActionEvent actionEvent) {
         openStage("CustomerSubGUI.fxml",() -> {
-            if (CustomerSubGUI.isAdded){
+            if (CustomerSubGUI.isAdded()){
                 txtCustomerId.setText(Customer_BUS.getAllCustomer().getLast().getId());
                 txtCustomerName.setText(Customer_BUS.getAllCustomer().getLast().getLastName());
                 checkPointCustomer();
-                CustomerSubGUI.isAdded = false;
+                CustomerSubGUI.setAdded(false);
             }
         });
     }
