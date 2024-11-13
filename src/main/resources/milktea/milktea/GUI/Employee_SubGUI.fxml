@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="421.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.EmployeeSubGUI">
+    <children>
+        <Label fx:id="lblTitle" layoutX="71.0" layoutY="14.0" prefHeight="47.0" prefWidth="249.0" text="Thêm nhân viên">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Label>
+        <Label layoutX="35.0" layoutY="88.0" prefWidth="69.0" text="Mã NV: ">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtID" disable="true" editable="false" layoutX="131.0" layoutY="88.0" prefHeight="25.0" prefWidth="205.0" />
+        <Label layoutX="35.0" layoutY="121.0" prefWidth="69.0" text="Họ đệm:">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtFirstName" layoutX="131.0" layoutY="121.0" prefHeight="25.0" prefWidth="205.0" />
+        <Label layoutX="35.0" layoutY="154.0" prefWidth="69.0" text="Tên:">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtLastName" layoutX="131.0" layoutY="154.0" prefHeight="25.0" prefWidth="205.0" />
+        <Label layoutX="35.0" layoutY="187.0" prefHeight="26.0" prefWidth="76.0" text="Giới tính:">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="cbGender" layoutX="131.0" layoutY="188.0" prefHeight="25.0" prefWidth="205.0" promptText="Chọn giới tính" />
+        <Label layoutX="35.0" layoutY="253.0" prefHeight="26.0" prefWidth="89.0" text="Username:">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtUsername" layoutX="131.0" layoutY="254.0" prefHeight="25.0" prefWidth="205.0" />
+        <Button fx:id="btnSave" layoutX="151.0" layoutY="358.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="89.0" text="Lưu">
+            <font>
+                <Font size="18.0" />
+            </font></Button>
+      <Label layoutX="35.0" layoutY="287.0" prefHeight="26.0" prefWidth="89.0" text="Password:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPassword" layoutX="131.0" layoutY="288.0" prefHeight="25.0" prefWidth="205.0" />
+      <Label layoutX="35.0" layoutY="320.0" prefWidth="69.0" text="Role:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cbRole" layoutX="131.0" layoutY="321.0" prefHeight="25.0" prefWidth="205.0" promptText="Chọn vài trò" />
+      <Label layoutX="35.0" layoutY="221.0" prefHeight="26.0" prefWidth="89.0" text="SĐT:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPhone" layoutX="131.0" layoutY="222.0" prefHeight="25.0" prefWidth="205.0" />
+    </children>
+</AnchorPane>

@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Employee extends Person{
     private String username; // Tên đăng nhập
     private String password; // Mật khẩu

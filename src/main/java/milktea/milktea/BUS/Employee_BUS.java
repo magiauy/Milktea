@@ -10,6 +10,7 @@ public class Employee_BUS {
     private static ArrayList<Employee> arrEmployee = new ArrayList<>();
 
     public static void getLocalData() {
+        arrEmployee.clear();
         arrEmployee = Employee_DAO.getAllEmployee();
     }
     public static ArrayList<Employee> getAllEmployee() {
@@ -53,5 +54,57 @@ public class Employee_BUS {
             }
         }
         return null;
+    }
+
+    public static ArrayList<Employee> searchEmployee(String text) {
+        ArrayList<Employee> arrSearch = new ArrayList<>();
+        for (Employee employee : arrEmployee) {
+            if (employee.getId().equals(text) || employee.getFirstName().equals(text) || employee.getLastName().equals(text) || employee.getPhoneNumber().equals(text)) {
+                arrSearch.add(employee);
+            }
+        }
+        return arrSearch;
+    }
+
+    public static boolean deleteEmployee(String id) {
+        return Employee_DAO.deleteEmployee(id);
+    }
+
+    public static void callBackIfFail(Employee employee) {
+        Employee_DAO.callBackIfFail(employee);
+    }
+
+    public static String autoID() {
+        if (arrEmployee.isEmpty()) {
+            return "NV001";
+        } else {
+            String lastId = arrEmployee.getLast().getId();
+            int number = Integer.parseInt(lastId.substring(2));
+            return "NV" + String.format("%03d", number + 1);
+        }
+    }
+
+    public static boolean checkAvailablePhone(String phone, String id) {
+        for (Employee employee : arrEmployee) {
+            if (employee.getPhoneNumber().equals(phone) && !employee.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void editEmployeeLocal(Employee employee) {
+        for (Employee employee1 : arrEmployee) {
+            if (employee1.getId().equals(employee.getId())) {
+                employee1.setFirstName(employee.getFirstName());
+                employee1.setLastName(employee.getLastName());
+                employee1.setPhoneNumber(employee.getPhoneNumber());
+                employee1.setRole(employee.getRole());
+            }
+        }
+    }
+
+    public static void addEmployeeLocal(Employee employee) {
+        arrEmployee.add(employee);
     }
 }

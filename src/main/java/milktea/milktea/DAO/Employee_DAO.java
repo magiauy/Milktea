@@ -138,4 +138,56 @@ public static boolean updateStatus(String id, Status status) {
     return result;
     }
 
+    public static boolean deleteEmployee(String id) {
+        boolean result = false;
+        if (openConnection("Employee")) {
+            try {
+                String sql = "Delete from employee where id = ?";
+                String sql2 = "Delete from person where id = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                PreparedStatement stmt2 = connection.prepareStatement(sql2);
+
+                stmt.setString(1, id);
+                stmt2.setString(1, id);
+
+                if (stmt.executeUpdate() >= 1 && stmt2.executeUpdate() >= 1) {
+                    result = true;
+                }
+            } catch (SQLException e) {
+                log.error("Error: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
+    }
+    public static void callBackIfFail(Employee employee){
+        if (openConnection()) {
+            try {
+                String sql = "Insert IGNORE into person values(?,?,?,?,?)";
+                String sql2 = "Insert IGNORE into employee values(?,?,?,?,?)";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                PreparedStatement stmt2 = connection.prepareStatement(sql2);
+
+                stmt.setString(1, employee.getId());
+                stmt.setString(2, employee.getFirstName());
+                stmt.setString(3, employee.getLastName());
+                stmt.setString(4, employee.getGender().toString());
+                stmt.setString(5, employee.getPhoneNumber());
+
+                stmt2.setString(1, employee.getId());
+                stmt2.setString(2, employee.getUsername());
+                stmt2.setString(3, employee.getPassword());
+                stmt2.setString(4, employee.getRole());
+                stmt2.setString(5, employee.getStatus().toString());
+
+            } catch (SQLException e) {
+                log.error("Error: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+    }
 }
