@@ -83,8 +83,8 @@ public class AdvancedSearchGoodsReceiptSubGUI {
                     isDone = true;
                     Stage stage = (Stage) btnSearch.getScene().getWindow();
                     stage.close();
-                    }
-            }else {
+                }
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
@@ -94,44 +94,51 @@ public class AdvancedSearchGoodsReceiptSubGUI {
         }
     }
 
-    private @NotNull HashMap<String, String> getSearchParams() {
-        HashMap<String, String> searchParams = new HashMap<>();
-        if (chkGoodsReceiptID.isSelected() && isValidSearchField(txtGoodsReceiptID)) {
-            searchParams.put("goodsReceiptID", txtGoodsReceiptID.getText());
-        }else{
-            isSearch = false;
-        }
-        if (chkGoodsReceiptDate.isSelected() && isValidDateRange(dtpGoodsReceiptStartDate, dtpGoodsReceiptEndDate)) {
-            searchParams.put("startDate", dtpGoodsReceiptStartDate.getValue().toString());
-            searchParams.put("endDate", dtpGoodsReceiptEndDate.getValue().toString());
-        }else{
-            isSearch = false;
-        }
-        if (chkGoodsReceiptTotal.isSelected() && isValidTotalRange(txtGoodsReceiptMinTotal, txtGoodsReceiptMaxTotal)) {
-            searchParams.put("minTotal", txtGoodsReceiptMinTotal.getText());
-            searchParams.put("maxTotal", txtGoodsReceiptMaxTotal.getText());
-        }else{
-            isSearch = false;
-        }
-        if (chkGoodsReceiptProviderID.isSelected() && isValidSearchField(txtGoodsReceiptProviderID)) {
-            searchParams.put("providerId", txtGoodsReceiptProviderID.getText());
-        }else{
-            isSearch = false;
-        }
-        if (chkGoodsReceiptEmployeeID.isSelected() && isValidSearchField(txtGoodsReceiptEmployeeID)) {
-            searchParams.put("employeeId", txtGoodsReceiptEmployeeID.getText());
-        }else{
-            isSearch = false;
-        }
-        return searchParams;
+private @NotNull HashMap<String, String> getSearchParams() {
+    HashMap<String, String> searchParams = new HashMap<>();
+    isSearch = true; // Reset isSearch to true at the beginning
+
+    if (chkGoodsReceiptID.isSelected() && isValidSearchField(txtGoodsReceiptID)) {
+        searchParams.put("goodsReceiptID", txtGoodsReceiptID.getText());
+    } else if (chkGoodsReceiptID.isSelected()) {
+        isSearch = false;
     }
+
+    if (chkGoodsReceiptDate.isSelected() && isValidDateRange(dtpGoodsReceiptStartDate, dtpGoodsReceiptEndDate)) {
+        searchParams.put("startDate", dtpGoodsReceiptStartDate.getValue().toString());
+        searchParams.put("endDate", dtpGoodsReceiptEndDate.getValue().toString());
+    } else if (chkGoodsReceiptDate.isSelected()) {
+        isSearch = false;
+    }
+
+    if (chkGoodsReceiptTotal.isSelected() && isValidTotalRange(txtGoodsReceiptMinTotal, txtGoodsReceiptMaxTotal)) {
+        searchParams.put("minTotal", txtGoodsReceiptMinTotal.getText());
+        searchParams.put("maxTotal", txtGoodsReceiptMaxTotal.getText());
+    } else if (chkGoodsReceiptTotal.isSelected()) {
+        isSearch = false;
+    }
+
+    if (chkGoodsReceiptProviderID.isSelected() && isValidSearchField(txtGoodsReceiptProviderID)) {
+        searchParams.put("providerId", txtGoodsReceiptProviderID.getText());
+    } else if (chkGoodsReceiptProviderID.isSelected()) {
+        isSearch = false;
+    }
+
+    if (chkGoodsReceiptEmployeeID.isSelected() && isValidSearchField(txtGoodsReceiptEmployeeID)) {
+        searchParams.put("employeeId", txtGoodsReceiptEmployeeID.getText());
+    } else if (chkGoodsReceiptEmployeeID.isSelected()) {
+        isSearch = false;
+    }
+
+    return searchParams;
+}
 
     private boolean isValidSearchField(TextField textField) {
         return !ValidationUtil.isEmpty(textField) && !ValidationUtil.isInvalidSearch(textField) && !ValidationUtil.isFirstCharNotSpace(textField);
     }
 
     private boolean isValidDateRange(DatePicker startDate, DatePicker endDate) {
-        return !ValidationUtil.isEmptyDp(startDate, "bắt đầu") && !ValidationUtil.isEmptyDp(endDate, "kết thúc");
+        return !ValidationUtil.isEmptyDp(startDate, "bắt đầu") && !ValidationUtil.isEmptyDp(endDate, "kết thúc") && ValidationUtil.isValidDateRange(startDate.getValue(), endDate.getValue());
     }
 
     private boolean isValidTotalRange(TextField minTotal, TextField maxTotal) {

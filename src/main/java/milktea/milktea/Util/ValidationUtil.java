@@ -238,6 +238,7 @@ public class ValidationUtil {
         return true;
     }
 
+
     public static boolean isValidTotalRange(TextField txtSearchInvoiceMinTotal, TextField txtSearchInvoiceMaxTotal) {
         if (Float.parseFloat(txtSearchInvoiceMinTotal.getText()) > Float.parseFloat(txtSearchInvoiceMaxTotal.getText())) {
             showErrorAlert("Tổng tiền nhỏ nhất phải nhỏ hơn tổng tiền lớn nhất");

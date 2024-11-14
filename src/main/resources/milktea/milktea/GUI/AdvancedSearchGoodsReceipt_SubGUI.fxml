@@ -15,16 +15,16 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <TextField fx:id="txtGoodsReceiptID" disable="true" layoutX="140.0" layoutY="59.0" prefHeight="25.0" prefWidth="192.0" />
+      <TextField fx:id="txtGoodsReceiptID" disable="true" layoutX="140.0" layoutY="59.0" prefHeight="25.0" prefWidth="192.0" promptText="Nhập mã PN" />
       <CheckBox fx:id="chkGoodsReceiptID" layoutX="65.0" layoutY="63.0" mnemonicParsing="false" text="Mã PN" />
-      <TextField fx:id="txtGoodsReceiptEmployeeID" disable="true" layoutX="140.0" layoutY="92.0" prefHeight="25.0" prefWidth="192.0" />
+      <TextField fx:id="txtGoodsReceiptEmployeeID" disable="true" layoutX="140.0" layoutY="92.0" prefHeight="25.0" prefWidth="192.0" promptText="Nhập mã NV" />
       <CheckBox fx:id="chkGoodsReceiptEmployeeID" layoutX="65.0" layoutY="96.0" mnemonicParsing="false" text="Mã NV" />
-      <TextField fx:id="txtGoodsReceiptProviderID" disable="true" layoutX="140.0" layoutY="124.0" prefHeight="25.0" prefWidth="192.0" />
+      <TextField fx:id="txtGoodsReceiptProviderID" disable="true" layoutX="140.0" layoutY="124.0" prefHeight="25.0" prefWidth="192.0" promptText="Nhập mã NCC" />
       <CheckBox fx:id="chkGoodsReceiptProviderID" layoutX="65.0" layoutY="128.0" mnemonicParsing="false" text="Mã NCC" />
-      <TextField fx:id="txtGoodsReceiptMinTotal" disable="true" layoutX="140.0" layoutY="154.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField fx:id="txtGoodsReceiptMinTotal" disable="true" layoutX="140.0" layoutY="154.0" prefHeight="25.0" prefWidth="85.0" promptText="Tối thiểu" />
       <CheckBox fx:id="chkGoodsReceiptTotal" layoutX="65.0" layoutY="158.0" mnemonicParsing="false" text="Tổng tiền" />
       <CheckBox fx:id="chkGoodsReceiptDate" layoutX="65.0" layoutY="189.0" mnemonicParsing="false" text="Ngày lập" />
-      <TextField fx:id="txtGoodsReceiptMaxTotal" disable="true" layoutX="247.0" layoutY="154.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField fx:id="txtGoodsReceiptMaxTotal" disable="true" layoutX="247.0" layoutY="154.0" prefHeight="25.0" prefWidth="85.0" promptText="Tối đa" />
       <Label layoutX="231.0" layoutY="149.0" text="-">
          <font>
             <Font size="24.0" />
@@ -36,7 +36,7 @@
          </font>
       </Label>
       <Button fx:id="btnSearch" layoutX="176.0" layoutY="215.0" mnemonicParsing="false" text="Tìm kiếm" />
-      <DatePicker fx:id="dtpGoodsReceiptStartDate" disable="true" editable="false" layoutX="140.0" layoutY="185.0" prefHeight="25.0" prefWidth="85.0" />
-      <DatePicker fx:id="dtpGoodsReceiptEndDate" disable="true" editable="false" layoutX="247.0" layoutY="185.0" prefHeight="25.0" prefWidth="85.0" />
+      <DatePicker fx:id="dtpGoodsReceiptStartDate" disable="true" editable="false" layoutX="140.0" layoutY="185.0" prefHeight="25.0" prefWidth="85.0" promptText="Bắt đầu" />
+      <DatePicker fx:id="dtpGoodsReceiptEndDate" disable="true" editable="false" layoutX="247.0" layoutY="185.0" prefHeight="25.0" prefWidth="85.0" promptText="Kết thúc" />
    </children>
 </AnchorPane>

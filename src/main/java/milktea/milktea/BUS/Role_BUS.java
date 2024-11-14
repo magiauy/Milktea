@@ -28,4 +28,17 @@ public class Role_BUS {
         }
         return null;
     }
+
+    public static boolean updateRole(Role role) {
+        return Role_DAO.updateRole(role);
+    }
+
+    public static void updateRoleLocal(Role role) {
+        for (Role r : arrRole) {
+            if (r.getRoleId().equals(role.getRoleId())) {
+                r.setRoleName(role.getRoleName());
+                r.setAccess(role.getAccess());
+            }
+        }
+    }
 }

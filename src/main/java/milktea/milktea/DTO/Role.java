@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Role {
     private String roleId;
     private String roleName;
-    private String description;
+    private int access;
     @Override
     public String toString() {
         return roleName;

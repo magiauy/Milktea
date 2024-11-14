@@ -35,7 +35,7 @@
                               <Font name="System Bold" size="33.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtProductSearch" layoutX="14.0" layoutY="63.0" />
+                        <TextField fx:id="txtProductSearch" layoutX="14.0" layoutY="63.0" promptText="Nhập ID hoặc Tên SP" />
                         <Button fx:id="btnProductSearch" layoutX="163.0" layoutY="63.0" mnemonicParsing="false" text="Tìm" />
                         <Button fx:id="btnAddProduct" layoutX="238.0" layoutY="713.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="192.0" style="-fx-font-weight: bold; -fx-font-size: 20;" text="Thêm sản phẩm" />
                         <ComboBox fx:id="cbxCategory" layoutX="504.0" layoutY="63.0" prefWidth="150.0" promptText="Lọc theo" />
@@ -163,7 +163,7 @@
                               <Font name="System Bold" size="26.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtSearchInvoice" layoutX="443.0" layoutY="59.0" />
+                        <TextField fx:id="txtSearchInvoice" layoutX="449.0" layoutY="59.0" prefHeight="25.0" prefWidth="143.0" promptText="Nhập mã HĐ/KH/NV" />
                         <Button fx:id="btnSearchInvoice" layoutX="592.0" layoutY="59.0" mnemonicParsing="false" text="Search" />
                         <Button fx:id="btnAdvanceSearchInvoice" layoutX="14.0" layoutY="59.0" mnemonicParsing="false" text="Tìm kiếm nâng cao" />
                         <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="130.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">

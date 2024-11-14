@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.BUS.*;
+import milktea.milktea.Util.ValidationUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -63,7 +64,6 @@ public class Main {
             Invoice_BUS.getLocalData();
             InvoiceDetail_BUS.getLocalData();
             Promotion_BUS.getLocalData();
-            Promotion_BUS.addListener();
             PromotionProgram_BUS.getLocalData();
             Category_BUS.getLocalData();
             Ingredient_BUS.getLocalData();
@@ -122,8 +122,8 @@ public class Main {
         btnEmployee.setText("Nhân viên");
 
         buttonHashMap.put(btnInvoice, 0);
-        buttonHashMap.put(btnProduct, 1);
-        buttonHashMap.put(btnCustomer, 2);
+        buttonHashMap.put(btnCustomer, 1);
+        buttonHashMap.put(btnProduct, 2);
         buttonHashMap.put(btnIngredient, 3);
         buttonHashMap.put(btnGoodsReceipt, 4);
         buttonHashMap.put(btnProvider, 5);
@@ -217,18 +217,20 @@ public class Main {
                 "-fx-border-width: 1 0 1 0;"));
     }
     public void logout(){
-        try {
-            Stage stage = (Stage) Userlabel.getScene().getWindow();
-            stage.close();
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("LoginGUI.fxml"));
+        if (ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn đăng xuất?")) {
+            try {
+                Stage stage = (Stage) Userlabel.getScene().getWindow();
+                stage.close();
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("LoginGUI.fxml"));
 
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("MilkTea_Store!");
-            stage.setScene(scene);
-            stage.show();
-        }catch (IOException e){
-            log.error("Error: ", e);
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setTitle("MilkTea_Store!");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                log.error("Error: ", e);
+            }
         }
     }
     public void loadTabFXML(String fxmlFile) {

@@ -15,8 +15,8 @@
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="807.0" prefWidth="648.0" style="-fx-background-color: FCCFD4; -fx-border-color: black; -fx-border-radius: 5px; -fx-background-radius: 5px;">
          <children>
-            <TextField fx:id="txtSearch" layoutX="27.0" layoutY="82.0" prefHeight="25.0" prefWidth="223.0" />
-            <Button fx:id="btnSearch" layoutX="250.0" layoutY="82.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Search" />
+            <TextField fx:id="txtSearch" layoutX="27.0" layoutY="82.0" prefHeight="25.0" prefWidth="223.0" promptText="Nhập ID hoặc Tên SP" />
+            <Button fx:id="btnSearch" layoutX="250.0" layoutY="82.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Tìm" />
             <TableView fx:id="tblProduct" layoutX="27.0" layoutY="117.0" prefHeight="672.0" prefWidth="598.0" stylesheets="@../../../css/style.css">
               <columns>
                 <TableColumn fx:id="colID" prefWidth="75.0" text="Mã SP" />
@@ -115,7 +115,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="btnClear" layoutX="41.0" layoutY="733.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="360.0" text="Clear">
+            <Button fx:id="btnClear" layoutX="41.0" layoutY="733.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="360.0" text="Đặt lại">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font></Button>

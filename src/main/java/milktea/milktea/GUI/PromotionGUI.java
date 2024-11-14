@@ -127,6 +127,25 @@ public class PromotionGUI {
             loadPromotionProgram();
         });
         btnClear.setOnAction(this::btnClear);
+        btnSearch.setOnAction(this::btnSearch);
+    }
+
+    private void btnSearch(ActionEvent actionEvent) {
+        if (ValidationUtil.isInvalidSearch(txtSearch)) {
+            return;
+        }
+        if (txtSearch.getText().isEmpty()) {
+            loadPromotionProgram();
+            return;
+        }
+        ArrayList<PromotionProgram> pg = PromotionProgram_BUS.searchPromotionProgram(txtSearch.getText());
+        if (pg.isEmpty()) {
+            ValidationUtil.showErrorAlert("Không tìm thấy chương trình khuyến mãi");
+            return;
+        }
+        pg.removeIf(promotionProgram -> promotionProgram.getPromotionProgramId().equals("CTKM0000"));
+        tblPromotionProgram.setItems(FXCollections.observableArrayList(pg));
+        tblPromotionProgram.refresh();
     }
 
     private void btnClear(ActionEvent actionEvent) {
@@ -139,7 +158,6 @@ public class PromotionGUI {
     }
 
     public void loadPromotionProgram() {
-        System.out.println(Promotion_BUS.getAllPromotion().size());
         colID.setCellValueFactory(new PropertyValueFactory<>("promotionProgramId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));

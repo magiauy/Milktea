@@ -72,4 +72,14 @@ public class PromotionProgram_BUS {
     public static void removePromotionProgramLocal(String promotionProgramId) {
         arrPromotionProgram.removeIf(promotionProgram -> promotionProgram.getPromotionProgramId().equals(promotionProgramId));
     }
+
+    public static ArrayList<PromotionProgram> searchPromotionProgram(String text) {
+        ArrayList<PromotionProgram> result = new ArrayList<>();
+        for (PromotionProgram program : arrPromotionProgram) {
+            if (program.getName().contains(text)||program.getPromotionProgramId().contains(text)) {
+                result.add(program);
+            }
+        }
+        return result;
+    }
 }

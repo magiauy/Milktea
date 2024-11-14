@@ -62,6 +62,7 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
 
         // Date range filter
         if (search.containsKey("startDate") && search.containsKey("endDate")) {
+            System.out.println(search.get("startDate"));
             LocalDate startDate = LocalDate.parse(search.get("startDate"));
             LocalDate endDate = LocalDate.parse(search.get("endDate"));
             LocalDate issueDate = invoice.getIssueDate();

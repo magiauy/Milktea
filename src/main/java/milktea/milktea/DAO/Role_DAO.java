@@ -26,7 +26,7 @@ public class Role_DAO extends Connect {
 
                     role.setRoleId(rs.getString("roleId"));
                     role.setRoleName(rs.getString("roleName"));
-                    role.setDescription(rs.getString("access"));
+                    role.setAccess(rs.getInt("access"));
 
                     arrRole.add(role);
                 }
@@ -61,5 +61,30 @@ public class Role_DAO extends Connect {
             }
         }
         return access;
+    }
+
+    public static boolean updateRole(Role role) {
+        if (openConnection("Role")) {
+            try {
+                String sql = "Update role set roleName = ?, access = ? where roleId = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, role.getRoleName());
+                stmt.setInt(2, role.getAccess());
+                stmt.setString(3, role.getRoleId());
+
+                int rs = stmt.executeUpdate();
+
+                if (rs > 0) {
+                    return true;
+                }
+
+            } catch (SQLException e) {
+                log.error("Error: ", e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return false;
     }
 }

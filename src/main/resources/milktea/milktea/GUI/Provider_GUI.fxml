@@ -33,7 +33,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
-                <TextField fx:id="txtSearch" layoutX="14.0" layoutY="86.0" prefHeight="25.0" prefWidth="210.0" />
+                <TextField fx:id="txtSearch" layoutX="14.0" layoutY="86.0" prefHeight="25.0" prefWidth="210.0" promptText="Nhập thông tin tìm kiếm" />
                 <Button fx:id="btnSearch" layoutX="223.0" layoutY="86.0" mnemonicParsing="false" text="Search" />
                 <ImageView fx:id="imgAdd" fitHeight="42.0" fitWidth="42.0" layoutX="998.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
                     <cursor>

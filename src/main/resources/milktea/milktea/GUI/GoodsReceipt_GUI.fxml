@@ -29,7 +29,7 @@
                                     <Font name="System Bold" size="33.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtSearchIngredient" layoutX="14.0" layoutY="63.0" />
+                              <TextField fx:id="txtSearchIngredient" layoutX="14.0" layoutY="63.0" promptText="Nhập Mã hoặc Tên NL" />
                               <Button fx:id="btnSearch" layoutX="163.0" layoutY="63.0" mnemonicParsing="false" text="Tìm" />
                               <Button fx:id="btnAdd" layoutX="213.0" layoutY="713.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="241.0" style="-fx-font-weight: bold; -fx-font-size: 20;" text="Thêm vào phiếu nhập" />
                               <TableView fx:id="tblIngredient" layoutX="14.0" layoutY="98.0" prefHeight="608.0" prefWidth="639.0" stylesheets="@../../../css/style.css">
@@ -133,8 +133,8 @@
                                     <Font name="System Bold" size="26.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtSearchGoodsReceipt" layoutX="443.0" layoutY="59.0" />
-                              <Button fx:id="btnSearchGoodsReceipt" layoutX="592.0" layoutY="59.0" mnemonicParsing="false" text="Search" />
+                              <TextField fx:id="txtSearchGoodsReceipt" layoutX="456.0" layoutY="58.0" promptText="Nhập Mã PN/NCC/NV" />
+                              <Button fx:id="btnSearchGoodsReceipt" layoutX="605.0" layoutY="58.0" mnemonicParsing="false" text="Tìm" />
                               <Button fx:id="advancedSearch" layoutX="14.0" layoutY="59.0" mnemonicParsing="false" text="Tìm kiếm nâng cao" />
                               <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="129.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

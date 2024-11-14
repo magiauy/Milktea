@@ -2,10 +2,7 @@ package milktea.milktea.GUI;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,9 +19,9 @@ public class AdvancedSearchInvoiceSubGUI {
     @FXML
     private TextField txtSearchInvoiceID;
     @FXML
-    private TextField txtSearchInvoiceStartDate;
+    private DatePicker dpSearchInvoiceStartDate;
     @FXML
-    private TextField txtSearchInvoiceEndDate;
+    private DatePicker dpSearchInvoiceEndDate;
     @FXML
     private TextField txtSearchInvoiceMinTotal;
     @FXML
@@ -58,7 +55,7 @@ public class AdvancedSearchInvoiceSubGUI {
     @Getter
     @Setter
     private static boolean isDone = false;
-    private boolean isSearch = true;
+    private boolean isSearch ;
     @FXML
     public void initialize() {
         btnSearchInvoice.setOnAction(this::searchInvoice);
@@ -102,48 +99,55 @@ public class AdvancedSearchInvoiceSubGUI {
     }
 
     private @NotNull HashMap<String, String> getSearchParams() {
-    HashMap<String, String> searchParams = new HashMap<>();
-    if (chkSearchInvoiceID.isSelected() && isValidSearchField(txtSearchInvoiceID)) {
-        searchParams.put("invoiceID", txtSearchInvoiceID.getText());
-    }else {
-        isSearch = false;
+        HashMap<String, String> searchParams = new HashMap<>();
+        isSearch = true;
+        if (chkSearchInvoiceID.isSelected() && isValidSearchField(txtSearchInvoiceID)) {
+            searchParams.put("invoiceID", txtSearchInvoiceID.getText());
+        } else if (chkSearchInvoiceID.isSelected()) {
+            isSearch = false;
+        }
+
+        if (chkSearchInvoiceDate.isSelected() && isValidDateRange(dpSearchInvoiceStartDate, dpSearchInvoiceEndDate)) {
+            searchParams.put("startDate", dpSearchInvoiceStartDate.getValue().toString());
+            searchParams.put("endDate", dpSearchInvoiceEndDate.getValue().toString());
+        } else if (chkSearchInvoiceDate.isSelected()) {
+            isSearch = false;
+        }
+
+        if (chkSearchInvoiceTotal.isSelected() && isValidTotalRange(txtSearchInvoiceMinTotal, txtSearchInvoiceMaxTotal)) {
+            searchParams.put("minTotal", txtSearchInvoiceMinTotal.getText());
+            searchParams.put("maxTotal", txtSearchInvoiceMaxTotal.getText());
+        } else if (chkSearchInvoiceTotal.isSelected()) {
+            isSearch = false;
+        }
+
+        if (chkSearchInvoiceCustomerID.isSelected() && isValidSearchField(txtSearchInvoiceCustomerID)) {
+            searchParams.put("customerID", txtSearchInvoiceCustomerID.getText());
+        } else if (chkSearchInvoiceCustomerID.isSelected()) {
+            isSearch = false;
+        }
+
+        if (chkSearchInvoiceEmployeeID.isSelected() && isValidSearchField(txtSearchInvoiceEmployeeID)) {
+            searchParams.put("employeeID", txtSearchInvoiceEmployeeID.getText());
+        } else if (chkSearchInvoiceEmployeeID.isSelected()) {
+            isSearch = false;
+        }
+
+        if (chkSearchInvoicePromotionID.isSelected() && isValidSearchField(txtSearchInvoicePromotionID)) {
+            searchParams.put("promotionID", txtSearchInvoicePromotionID.getText());
+        } else if (chkSearchInvoicePromotionID.isSelected()) {
+            isSearch = false;
+        }
+
+        return searchParams;
     }
-    if (chkSearchInvoiceDate.isSelected() && isValidDateRange(txtSearchInvoiceStartDate, txtSearchInvoiceEndDate)) {
-        searchParams.put("startDate", txtSearchInvoiceStartDate.getText());
-        searchParams.put("endDate", txtSearchInvoiceEndDate.getText());
-    }else {
-        isSearch = false;
-    }
-    if (chkSearchInvoiceTotal.isSelected() && isValidTotalRange(txtSearchInvoiceMinTotal, txtSearchInvoiceMaxTotal)) {
-        searchParams.put("minTotal", txtSearchInvoiceMinTotal.getText());
-        searchParams.put("maxTotal", txtSearchInvoiceMaxTotal.getText());
-    }else {
-        isSearch = false;
-    }
-    if (chkSearchInvoiceCustomerID.isSelected() && isValidSearchField(txtSearchInvoiceCustomerID)) {
-        searchParams.put("customerID", txtSearchInvoiceCustomerID.getText());
-    }else {
-        isSearch = false;
-    }
-    if (chkSearchInvoiceEmployeeID.isSelected() && isValidSearchField(txtSearchInvoiceEmployeeID)) {
-        searchParams.put("employeeID", txtSearchInvoiceEmployeeID.getText());
-    }else {
-        isSearch = false;
-    }
-    if (chkSearchInvoicePromotionID.isSelected() && isValidSearchField(txtSearchInvoicePromotionID)) {
-        searchParams.put("promotionID", txtSearchInvoicePromotionID.getText());
-    }else {
-        isSearch = false;
-    }
-    return searchParams;
-}
 
     private boolean isValidSearchField(TextField textField) {
         return !ValidationUtil.isEmpty(textField) && !ValidationUtil.isInvalidSearch(textField) && !ValidationUtil.isFirstCharNotSpace(textField);
     }
 
-    private boolean isValidDateRange(TextField startDate, TextField endDate) {
-        return !ValidationUtil.isEmpty(startDate, endDate) && ValidationUtil.isValidDateRange(LocalDate.parse(startDate.getText()), LocalDate.parse(endDate.getText()));
+    private boolean isValidDateRange(DatePicker startDate, DatePicker endDate) {
+        return !ValidationUtil.isEmptyDp(startDate, "bắt đầu") && !ValidationUtil.isEmptyDp(endDate, "kết thúc") && ValidationUtil.isValidDateRange(startDate.getValue(), endDate.getValue());
     }
 
     private boolean isValidTotalRange(TextField minTotal, TextField maxTotal) {
@@ -156,8 +160,8 @@ public class AdvancedSearchInvoiceSubGUI {
                 txtSearchInvoiceID.setDisable(!checkBox.isSelected());
                 break;
             case "chkSearchInvoiceDate":
-                    txtSearchInvoiceStartDate.setDisable(!checkBox.isSelected());
-                    txtSearchInvoiceEndDate.setDisable(!checkBox.isSelected());
+                    dpSearchInvoiceStartDate.setDisable(!checkBox.isSelected());
+                    dpSearchInvoiceEndDate.setDisable(!checkBox.isSelected());
                 break;
             case "chkSearchInvoiceTotal":
                 txtSearchInvoiceMinTotal.setDisable(!checkBox.isSelected());
