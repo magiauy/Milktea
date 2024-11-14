@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import milktea.milktea.BUS.Connect_BUS;
 import milktea.milktea.BUS.Role_BUS;
 import milktea.milktea.DTO.Employee;
 
@@ -40,6 +41,7 @@ public class Login_Controller {
 
     @FXML
     public void initialize() {
+        Connect_BUS.createDatabase();
         txtUsername.requestFocus();
         btnLogin.setOnAction(this::btnLogin);
         txtUsername.setOnKeyPressed(event -> {
@@ -52,7 +54,6 @@ public class Login_Controller {
                 btnLogin(new ActionEvent());
             }
         });
-        Employee_BUS.getLocalData();
         txtPasswordVisible.setManaged(false);
         txtPasswordVisible.setVisible(false);
         txtPasswordVisible.managedProperty().bind(imgHide.visibleProperty());
@@ -77,6 +78,7 @@ public class Login_Controller {
                 txtPasswordVisible.setManaged(false);
             }
         });
+        Employee_BUS.getLocalData();
     }
     public void btnLogin(ActionEvent actionEvent) {
         if (validate()) {

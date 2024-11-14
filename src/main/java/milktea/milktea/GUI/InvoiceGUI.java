@@ -91,7 +91,7 @@ public class InvoiceGUI {
     private static String invoiceId = null;
     @Getter
     @Setter
-    private static Product selectedProduct = null;
+    private static Product selectedProduct;
     @Getter
     @Setter
     private static TempInvoiceDetail selectedInvoiceDetail = null;
@@ -112,6 +112,7 @@ public class InvoiceGUI {
     @Setter
     private static String globalListFlag = null;
     public void initialize() {
+        selectedProduct = null;
         invoiceId = Invoice_BUS.autoId();
         txtInvoiceId.setText(invoiceId);
 
@@ -253,6 +254,8 @@ public class InvoiceGUI {
                 alert.setContentText("Số lượng sản phẩm đã hết");
                 alert.showAndWait();
             }
+        }else {
+            ValidationUtil.showErrorAlert("Vui lòng chọn sản phẩm");
         }
     }
 

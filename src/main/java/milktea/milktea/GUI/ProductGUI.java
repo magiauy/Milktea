@@ -195,7 +195,11 @@ public class ProductGUI {
 
     private void btnCategory(ActionEvent actionEvent) {
         //TODO: Open CategoryGUI and manage category
-
+        openStage("Category_GUI.fxml", () -> {
+            ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
+            tblProduct.setItems(data);
+            tblProduct.refresh();
+        });
     }
 
     private void failedAlert() {

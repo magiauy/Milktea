@@ -84,4 +84,27 @@ public class Category_DAO extends Connect{
     }
         return result;
     }
+
+    public static boolean deleteCategory(String id) {
+        boolean result = false;
+        if(openConnection("Category")){
+            try{
+                String sql = "Delete from category where id = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+
+                stmt.setString(1,id);
+
+                if(stmt.executeUpdate()>=1){
+                    result = true;
+                }
+
+            }catch(SQLException e){
+                log.error("Error: ", e);
+            }finally{
+                closeConnection();
+            }
+        }
+        return result;
+    }
 }

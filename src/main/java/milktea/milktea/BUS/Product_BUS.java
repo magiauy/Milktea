@@ -139,4 +139,13 @@ public class Product_BUS {
         }
         return false;
     }
+
+    public static boolean isCategoryExist(String id) {
+        for (Product product : arrProducts) {
+            if (product.getCategoryId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

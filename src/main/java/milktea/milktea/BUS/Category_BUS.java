@@ -19,6 +19,9 @@ public class Category_BUS {
     public static boolean addCategory(Category category) {
         return Category_DAO.addCategory(category);
     }
+    public static void addCategoryLocal(Category category){
+        arrCategory.add(category);
+    }
 
     public static boolean editCategory(Category category) {
         return Category_DAO.editCategory(category);
@@ -49,5 +52,37 @@ public class Category_BUS {
             }
         }
         return null;
+    }
+
+    public static String autoID() {
+        if (arrCategory.isEmpty()) {
+            return "C001";
+        } else {
+            int max = 0;
+            for (Category category : arrCategory) {
+                int id = Integer.parseInt(category.getId().substring(1));
+                if (id > max) {
+                    max = id;
+                }
+            }
+            return "C" + String.format("%03d", max + 1);
+        }
+    }
+
+    public static void editCategoryLocal(Category newCategory) {
+        for (Category category : arrCategory) {
+            if (category.getId().equals(newCategory.getId())) {
+                category.setName(newCategory.getName());
+                break;
+            }
+        }
+    }
+
+    public static boolean deleteCategory(String id) {
+        return Category_DAO.deleteCategory(id);
+    }
+
+    public static void deleteCategoryLocal(String id) {
+        arrCategory.removeIf(category -> category.getId().equals(id));
     }
 }

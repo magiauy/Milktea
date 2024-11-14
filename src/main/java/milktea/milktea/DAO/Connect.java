@@ -1,25 +1,79 @@
 package milktea.milktea.DAO;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DTO.Gender;
+import milktea.milktea.DTO.MySQLConfig;
 import milktea.milktea.DTO.Status;
 import milktea.milktea.DTO.Unit;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.*;
 
 @Slf4j
 public class Connect {
 
-    private static final String DATABASE = "milktea";
-    private static final String DATABASE_URL = "jdbc:mysql://localhost/";
-    private static final String DATABASE_USER = "root";
-    private static final String DATABASE_PASSWORD = "";
+    private static String DATABASE ;
+    private static String DATABASE_URL ;
+    private static String DATABASE_USER ;
+    private static String DATABASE_PASSWORD = "";
     protected static Connection connection = null;
+    private static final String filePath = "src/main/resources/connect.json";
+
+    static {
+        loadConfig();
+    }
+
+    public static boolean loadConfig() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            JsonNode rootNode = objectMapper.readTree(new File(filePath));
+            JsonNode mysqlNode = rootNode.path("mysql");
+            MySQLConfig config = objectMapper.treeToValue(mysqlNode, MySQLConfig.class);
+            DATABASE = config.getDatabase();
+            DATABASE_URL = "jdbc:mysql://" + config.getHost() + ":" + config.getPort() + "/";
+            DATABASE_USER = config.getUser();
+            DATABASE_PASSWORD = config.getPassword();
+            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+            closeConnection();
+            return true;
+        } catch (IOException | SQLException e) {
+            log.error("Failed to load database configuration");
+            return false;
+        }
+    }
+
+    public static boolean checkConnection(MySQLConfig config) {
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://" + config.getHost() + ":" + config.getPort() + "/", config.getUser(), config.getPassword());
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    public static void updateConfig(MySQLConfig newConfig) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            // Read the existing JSON file
+            JsonNode rootNode = objectMapper.readTree(new File(filePath));
+            JsonNode mysqlNode = rootNode.path("mysql");
+            DATABASE_URL = "jdbc:mysql://" + newConfig.getHost() + ":" + newConfig.getPort() + "/";
+            DATABASE_USER = newConfig.getUser();
+            DATABASE_PASSWORD = newConfig.getPassword();
+            // Update the fields with new values
+            ((ObjectNode) mysqlNode).put("host", newConfig.getHost());
+            ((ObjectNode) mysqlNode).put("port", newConfig.getPort());
+            ((ObjectNode) mysqlNode).put("user", newConfig.getUser());
+            ((ObjectNode) mysqlNode).put("password", newConfig.getPassword());
+            // Write the updated JSON back to the file
+            objectMapper.writeValue(new File(filePath), rootNode);
+        } catch (IOException e) {
+            log.error("Failed to update database configuration");
+        }
+    }
 
     public static boolean openConnection(String name) {
         try {
@@ -49,7 +103,7 @@ public class Connect {
         }
     }
 
-    public boolean checkExistDatabase() {
+    public static boolean checkExistDatabase() {
         try {
             connection = DriverManager.getConnection(DATABASE_URL+DATABASE, DATABASE_USER, DATABASE_PASSWORD);
             Statement stmt = connection.createStatement();
@@ -64,7 +118,7 @@ public class Connect {
             return false;
         }
     }
-    public void createDatabase() {
+    public static void createDatabase() {
         try {
             connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
             if (!checkExistDatabase()) {
@@ -76,13 +130,13 @@ public class Connect {
         } catch (SQLException ignored) {
         }
     }
-public void loadSQLFile(String filePath) {
+public static void loadSQLFile(String filePath) {
     try {
         // Create a Statement
         Statement stmt = connection.createStatement();
 
         // Read the SQL script
-        InputStream is = getClass().getResourceAsStream(filePath);
+        InputStream is = Connect.class.getResourceAsStream(filePath);
         assert is != null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
@@ -159,4 +213,5 @@ public void loadSQLFile(String filePath) {
         }
         return result;
     }
+
 }
