@@ -55,7 +55,7 @@ public class ProductSubGUI {
     private Label lblTitle;
     @Setter
     @Getter
-    private static ArrayList<Recipe> arrRecipe ;
+    private static ArrayList<Recipe> arrCurrentRecipe;
     @Getter
     private static String productID ;
     @Setter
@@ -67,10 +67,13 @@ public class ProductSubGUI {
     @Setter
     @Getter
     private static ArrayList<Recipe> removedRecipe = new ArrayList<>();
+    @Getter
+    @Setter
+    private static ArrayList<Recipe> addRecipe = new ArrayList<>();
 
 
     public void initialize() {
-        arrRecipe = new ArrayList<>();
+        arrCurrentRecipe = new ArrayList<>();
         product = new Product();
         loadCategory();
         createTable();
@@ -78,12 +81,12 @@ public class ProductSubGUI {
             productID = ProductGUI.getSelectedProduct().getProductId();
             btnSave.setText("Cập nhật");
             lblTitle.setText("Sửa sản phẩm");
-            arrRecipe = (ArrayList<Recipe>) Recipe_BUS.getRecipeByProductID(ProductGUI.getSelectedProduct().getProductId());
+            arrCurrentRecipe = new ArrayList<>(Recipe_BUS.getRecipeByProductID(ProductGUI.getSelectedProduct().getProductId())) ;
             txtProductID.setText(ProductGUI.getSelectedProduct().getProductId());
             txtProductName.setText(ProductGUI.getSelectedProduct().getName());
             txtPrice.setText(String.valueOf(ProductGUI.getSelectedProduct().getPrice()));
             cbCategory.setValue(Category_BUS.getCategoryById(ProductGUI.getSelectedProduct().getCategoryId()));
-            ObservableList<Recipe> list = FXCollections.observableArrayList(arrRecipe);
+            ObservableList<Recipe> list = FXCollections.observableArrayList(arrCurrentRecipe);
             tblRecipe.setItems(list);
 
         } else {
@@ -94,9 +97,8 @@ public class ProductSubGUI {
         }
         imgAdd.setOnMouseClicked(event -> openStage("Recipe_SubGUI.fxml",()->{
             if (RecipeSubGUI.isEdited()) {
-                arrRecipe.add(RecipeSubGUI.getRecipe());
-                ObservableList<Recipe> list = FXCollections.observableArrayList(arrRecipe);
-                tblRecipe.setItems(list);
+                addRecipe.add(RecipeSubGUI.getRecipe());
+                refreshTable();
                 RecipeSubGUI.setRecipe(null);
                 RecipeSubGUI.setEdited(false);
             }
@@ -107,9 +109,12 @@ public class ProductSubGUI {
                 selectedRecipe = tblRecipe.getSelectionModel().getSelectedItem();
                 openStage("Recipe_SubGUI.fxml",()->{
                     if (RecipeSubGUI.isEdited()) {
-                        arrRecipe.set(tblRecipe.getSelectionModel().getSelectedIndex(), RecipeSubGUI.getRecipe());
-                        ObservableList<Recipe> list = FXCollections.observableArrayList(arrRecipe);
-                        tblRecipe.setItems(list);
+                        if (!addRecipe.contains(tblRecipe.getSelectionModel().getSelectedItem())) {
+                            arrCurrentRecipe.set(tblRecipe.getSelectionModel().getSelectedIndex(), RecipeSubGUI.getRecipe());
+                        }else {
+                            addRecipe.set(addRecipe.indexOf(tblRecipe.getSelectionModel().getSelectedItem()), RecipeSubGUI.getRecipe());
+                        }
+                        refreshTable();
                         RecipeSubGUI.setRecipe(null);
                         RecipeSubGUI.setEdited(false);
                     }
@@ -128,10 +133,14 @@ public class ProductSubGUI {
         imgDelete.setOnMouseClicked(event -> {
             if (tblRecipe.getSelectionModel().getSelectedItem() != null) {
                 if (showAlert()) {
-                    removedRecipe.add(tblRecipe.getSelectionModel().getSelectedItem());
-                    arrRecipe.remove(tblRecipe.getSelectionModel().getSelectedItem());
-                    ObservableList<Recipe> list = FXCollections.observableArrayList(arrRecipe);
-                    tblRecipe.setItems(list);
+                    if (!addRecipe.contains(tblRecipe.getSelectionModel().getSelectedItem())) {
+                        removedRecipe.add(tblRecipe.getSelectionModel().getSelectedItem());
+                        arrCurrentRecipe.remove(tblRecipe.getSelectionModel().getSelectedItem());
+                        refreshTable();
+                    }else {
+                        addRecipe.remove(tblRecipe.getSelectionModel().getSelectedItem());
+                        refreshTable();
+                    }
                 }
             }else{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -144,7 +153,10 @@ public class ProductSubGUI {
         btnSave.setOnAction(event -> {
             if (ValidationUtil.isEmpty(txtProductName, txtPrice)) return;
             if (ValidationUtil.isNotPrice(txtPrice)) return;
-            if (arrRecipe.isEmpty()) {
+            ArrayList<Recipe> tempArrRecipe = new ArrayList<>(arrCurrentRecipe);
+            tempArrRecipe.addAll(addRecipe);
+            tempArrRecipe.removeAll(removedRecipe);
+            if (tempArrRecipe.isEmpty()) {
                 ValidationUtil.showErrorAlert("Vui lòng thêm công thức cho sản phẩm");
                 return;
             }
@@ -163,6 +175,14 @@ public class ProductSubGUI {
             Stage stage = (Stage) btnSave.getScene().getWindow();
             stage.close();
         });
+    }
+
+    private void refreshTable() {
+        ArrayList<Recipe> arr = new ArrayList<>(arrCurrentRecipe);
+        arr.addAll(addRecipe);
+        arr.removeAll(removedRecipe);
+        ObservableList<Recipe> list = FXCollections.observableArrayList(arr);
+        tblRecipe.setItems(list);
     }
 
     private boolean showAlert() {

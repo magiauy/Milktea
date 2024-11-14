@@ -32,9 +32,11 @@ public class Recipe_BUS {
     }
 
     public static boolean addRecipe(@NonNull ArrayList<Recipe> recipe){
-        for (Recipe r : recipe) {
-            if (!Recipe_DAO.addRecipe(r)) {
-                return false;
+        if (!recipe.isEmpty()) {
+            for (Recipe r : recipe) {
+                if (!Recipe_DAO.addRecipe(r)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -58,31 +60,20 @@ public class Recipe_BUS {
     }
 
     public static boolean editRecipe(@NonNull ArrayList<Recipe> recipes) {
-        for (Recipe recipe : recipes) {
-            if (findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
-                // Nếu `editRecipe` thất bại, trả về `false` ngay lập tức
+        if (!recipes.isEmpty()) {
+            for (Recipe recipe : recipes) {
                 if (!Recipe_DAO.editRecipe(recipe)) {
-                    return false;
-                }
-            } else {
-                // Nếu `addRecipe` thất bại, trả về `false` ngay lập tức
-                if (!Recipe_DAO.addRecipe(recipe)) {
                     return false;
                 }
             }
         }
-        // Trả về `true` nếu tất cả các thao tác thành công
         return true;
     }
 
     public static boolean editRecipesLocal(@NonNull ArrayList<Recipe> tempArrRecipe) {
-        for (Recipe recipe : tempArrRecipe) {
-            if (findRecipe(recipe.getProductId(), recipe.getIngredientId())) {
-                if(!editRecipeLocal(recipe)){
-                    return false;
-                }
-            } else {
-                if(!addRecipeLocal(recipe)){
+        if (!tempArrRecipe.isEmpty()) {
+            for (Recipe recipe : tempArrRecipe) {
+                if (!editRecipeLocal(recipe)) {
                     return false;
                 }
             }

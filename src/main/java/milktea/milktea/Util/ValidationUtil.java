@@ -97,10 +97,26 @@ public class ValidationUtil {
         }
         return false;
     }
+    public static boolean isInValidChar(String key, @NonNull TextField textField) {
+        if (!textField.getText().matches("^[\\p{L}\\s]+$")) {
+            showErrorAlert(key + " không được chứa số hoặc ký tự đặc biệt");
+            textField.requestFocus();
+            return true;
+        }
+        return false;
+    }
 
     public static boolean isInvalidSearch(@NonNull TextField textfield) {
         if (!textfield.getText().matches("[\\p{L}\\p{M}\\p{N}\\s]*$")) {
             showErrorAlert("Không được chứa ký tự đặc biệt");
+            textfield.requestFocus();
+            return true;
+        }
+        return false;
+    }
+    public static boolean isInvalidSearch(String key,@NonNull TextField textfield) {
+        if (!textfield.getText().matches("[\\p{L}\\p{M}\\p{N}\\s]*$")) {
+            showErrorAlert(key+" không được chứa ký tự đặc biệt");
             textfield.requestFocus();
             return true;
         }
@@ -132,6 +148,14 @@ public class ValidationUtil {
     public static boolean isFirstCharNotSpace(@NonNull TextField textfield) {
         if (textfield.getText().charAt(0) == ' ') {
             showErrorAlert("Không được bắt đầu bằng khoảng trắng");
+            textfield.requestFocus();
+            return true;
+        }
+        return false;
+    }
+    public static boolean isFirstCharNotSpace(String key,@NonNull TextField textfield) {
+        if (textfield.getText().charAt(0) == ' ') {
+            showErrorAlert(key+ " không được bắt đầu bằng khoảng trắng");
             textfield.requestFocus();
             return true;
         }

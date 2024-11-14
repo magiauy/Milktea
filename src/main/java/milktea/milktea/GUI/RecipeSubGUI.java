@@ -7,9 +7,12 @@ import lombok.Getter;
 import lombok.Setter;
 import milktea.milktea.BUS.Ingredient_BUS;
 import milktea.milktea.DTO.Ingredient;
+import milktea.milktea.DTO.Product;
 import milktea.milktea.DTO.Recipe;
 import milktea.milktea.DTO.Unit;
 import milktea.milktea.Util.ValidationUtil;
+
+import java.util.ArrayList;
 
 
 public class RecipeSubGUI {
@@ -77,7 +80,10 @@ public class RecipeSubGUI {
 
     private void loadIngredient() {
       cbIngredient.getItems().clear();
-        cbIngredient.getItems().addAll(Ingredient_BUS.getIngredientsExcludeIds(ProductSubGUI.getArrRecipe()));
+        ArrayList<Recipe> arrRecipe = new ArrayList<>(ProductSubGUI.getArrCurrentRecipe());
+        arrRecipe.addAll(ProductSubGUI.getAddRecipe());
+        arrRecipe.removeAll(ProductSubGUI.getRemovedRecipe());
+        cbIngredient.getItems().addAll(Ingredient_BUS.getIngredientsExcludeIds(arrRecipe));
         cbIngredient.setOnAction(event -> {
             cbUnit.getItems().clear();
                 if (cbIngredient.getValue() != null) {

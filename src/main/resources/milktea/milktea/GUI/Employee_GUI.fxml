@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="839.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="milktea.milktea.GUI.EmployeeGUI">
     <children>
-        <Pane layoutX="7.0" layoutY="12.0" prefHeight="816.0" prefWidth="1103.0" style="-fx-background-color: #fccfd4; -fx-border-color: black; -fx-border-radius: 5px;">
+        <Pane layoutX="14.0" layoutY="12.0" prefHeight="816.0" prefWidth="1103.0" style="-fx-background-color: #fccfd4; -fx-border-color: black; -fx-border-radius: 5px;">
             <children>
                 <Label layoutX="343.0" text="Danh sách nhân viên">
                     <font>

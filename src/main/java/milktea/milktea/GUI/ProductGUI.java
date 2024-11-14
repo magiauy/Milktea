@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Getter;
 import milktea.milktea.BUS.Ingredient_BUS;
@@ -70,8 +71,8 @@ public class ProductGUI {
     @FXML
     Button btnClear;
 
-//    @FXML
-//    Button btnCategory;
+    @FXML
+    Button btnCategory;
     public static boolean isEditable = false;
 
     @Getter
@@ -88,7 +89,7 @@ public class ProductGUI {
         btnClear.setOnAction(this::onClear);
         hideButtonWithoutPermission();
         imgEdit.setOnMouseClicked(event -> {
-            Product selectedProduct = tblProduct.getSelectionModel().getSelectedItem();
+            selectedProduct = tblProduct.getSelectionModel().getSelectedItem();
             if (selectedProduct == null) {
                 ValidationUtil.showErrorAlert("Vui lòng chọn sản phẩm cần sửa");
                 return;
@@ -98,36 +99,38 @@ public class ProductGUI {
                 if (!ProductSubGUI.isEdited()) return;
                 if (!Product_BUS.editProduct(ProductSubGUI.getProduct()) ||
                     !Recipe_BUS.deleteRecipe(ProductSubGUI.getRemovedRecipe()) ||
-                    !Recipe_BUS.editRecipe(ProductSubGUI.getArrRecipe())) {
+                    !Recipe_BUS.editRecipe(ProductSubGUI.getArrCurrentRecipe()) ||
+                    !Recipe_BUS.addRecipe(ProductSubGUI.getAddRecipe())) {
                     failedAlert();
                     return;
                 }
                 if(!Product_BUS.editProductLocal(ProductSubGUI.getProduct()) ||
                     !Recipe_BUS.deleteLocalRecipe(ProductSubGUI.getRemovedRecipe()) ||
-                    !Recipe_BUS.editRecipesLocal(ProductSubGUI.getArrRecipe())){
+                    !Recipe_BUS.editRecipesLocal(ProductSubGUI.getArrCurrentRecipe())||
+                    !Recipe_BUS.addRecipesLocal(ProductSubGUI.getAddRecipe())){
                     failedAlert();
                     return;
                 }
                 ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
                 tblProduct.setItems(data);
                 tblProduct.refresh();
-                ObservableList<Recipe> data1 = FXCollections.observableArrayList(ProductSubGUI.getArrRecipe());
+                ObservableList<Recipe> data1 = FXCollections.observableArrayList(ProductSubGUI.getArrCurrentRecipe());
                 tblRecipe.setItems(data1);
                 tblRecipe.refresh();
                 ProductSubGUI.setProduct(null);
-                ProductSubGUI.setArrRecipe(null);
+                ProductSubGUI.setArrCurrentRecipe(null);
                 ProductSubGUI.setEdited(false);
             });
         });
         imgAdd.setOnMouseClicked(event -> openStage("Product_SubGUI.fxml",()->{
             if (ProductSubGUI.isEdited()) {
-                if (Product_BUS.addProduct(ProductSubGUI.getProduct())&&Recipe_BUS.addRecipe(ProductSubGUI.getArrRecipe())) {
-                    if (Product_BUS.addProductLocal(ProductSubGUI.getProduct())&&Recipe_BUS.addRecipesLocal(ProductSubGUI.getArrRecipe())) {
+                if (Product_BUS.addProduct(ProductSubGUI.getProduct())&&Recipe_BUS.addRecipe(ProductSubGUI.getAddRecipe())) {
+                    if (Product_BUS.addProductLocal(ProductSubGUI.getProduct())&&Recipe_BUS.addRecipesLocal(ProductSubGUI.getAddRecipe())) {
                         ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
                         tblProduct.setItems(data);
                         tblProduct.refresh();
                         ProductSubGUI.setProduct(null);
-                        ProductSubGUI.setArrRecipe(null);
+                        ProductSubGUI.setArrCurrentRecipe(null);
                         ProductSubGUI.setEdited(false);
                     }
                 }
@@ -181,11 +184,18 @@ public class ProductGUI {
             tblProduct.setItems(data);
             tblProduct.refresh();
         });
-//        btnCategory.setOnAction(this::btnCategory);
+        btnCategory.setOnAction(this::btnCategory);
+        ImageView imgCategory = new ImageView(new Image("img/Settings.png"));
+        imgCategory.setFitHeight(25);
+        imgCategory.setFitWidth(25);
+        btnCategory.setGraphic(imgCategory);
+        btnCategory.setStyle(" -fx-padding: 0");
+
     }
 
     private void btnCategory(ActionEvent actionEvent) {
         //TODO: Open CategoryGUI and manage category
+
     }
 
     private void failedAlert() {
@@ -254,6 +264,7 @@ public class ProductGUI {
             imgDelete.setVisible(false);
             imgEdit.setVisible(false);
             imgLock.setVisible(false);
+            btnCategory.setVisible(false);
         }
     }
 }

@@ -4,6 +4,7 @@ import lombok.NonNull;
 import milktea.milktea.DAO.InvoiceDetail_DAO;
 import milktea.milktea.DAO.Invoice_DAO;
 import milktea.milktea.DTO.Invoice;
+import milktea.milktea.DTO.Promotion;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -122,6 +123,25 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
     public static boolean isEmployeeExist(String id) {
         for (Invoice invoice : arrInvoice) {
             if (invoice.getEmployeeId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isPromotionExist(ArrayList<Promotion> promotions) {
+        for (Promotion promotion : promotions) {
+            for (Invoice invoice : arrInvoice) {
+                if (invoice.getPromotionId().equals(promotion.getPromotionId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isPromotionExist(String promotionId) {
+        for (Invoice invoice : arrInvoice) {
+            if (invoice.getPromotionId().equals(promotionId)) {
                 return true;
             }
         }

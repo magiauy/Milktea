@@ -314,7 +314,7 @@ public class InvoiceGUI {
                             Invoice_BUS.addInvoiceLocal(invoice);
                             InvoiceDetail_BUS.addInvoiceDetailLocal(arrInvoiceDetail);
                             earnPoint(Customer_BUS.getCustomerById(txtCustomerId.getText()));
-                        clear(new ActionEvent());
+//                        clear(new ActionEvent());
 
 
                     } else {

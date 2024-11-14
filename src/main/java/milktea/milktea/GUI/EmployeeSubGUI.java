@@ -63,8 +63,7 @@ public class EmployeeSubGUI {
             txtUsername.setText(EmployeeGUI.getSelectedEmployee().getUsername());
             txtUsername.setDisable(true);
             txtPassword.setText(EmployeeGUI.getSelectedEmployee().getPassword());
-            cbRole.setDisable(!Login_Controller.getAccount().getRole().equals("R01"));
-            cbRole.setDisable(EmployeeGUI.getSelectedEmployee().getRole().equals("R01"));
+            disableRole();
             cbRole.setValue(Role_BUS.getRoleByID(EmployeeGUI.getSelectedEmployee().getRole()));
             cbGender.setValue(String.valueOf(EmployeeGUI.getSelectedEmployee().getGender()));
         } else {
@@ -78,11 +77,21 @@ public class EmployeeSubGUI {
             txtPassword.setText("123456");
             txtPassword.setDisable(true);
             cbRole.setValue(Role_BUS.getRoleByID("R03"));
-            cbRole.setDisable(!Login_Controller.getAccount().getRole().equals("R01"));
+            cbRole.setDisable(!
+                    Login_Controller.getAccount().getRole().equals("R01"));
             cbGender.setValue(pickGender(Gender.MALE));
         }
         setUpCb();
         btnSave.setOnAction(this::save);
+    }
+
+    public void disableRole(){
+        if (!Login_Controller.getAccount().getRole().equals("R01")){
+            cbRole.setDisable(true);
+        }
+        if (Login_Controller.getAccount().getRole().equals(EmployeeGUI.getSelectedEmployee().getRole())){
+            cbRole.setDisable(true);
+        }
     }
 
     private void save(ActionEvent actionEvent) {

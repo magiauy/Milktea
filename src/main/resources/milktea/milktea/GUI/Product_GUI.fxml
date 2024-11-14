@@ -34,7 +34,7 @@
                   <Font name="System Bold" size="43.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgAdd" fitHeight="42.0" fitWidth="42.0" layoutX="541.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgAdd" fitHeight="32.0" fitWidth="32.0" layoutX="551.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -42,7 +42,7 @@
                   <Image url="@../../../icon/Plus.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgEdit" fitHeight="42.0" fitWidth="42.0" layoutX="499.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgEdit" fitHeight="32.0" fitWidth="32.0" layoutX="509.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../icon/Edit.png" />
                </image>
@@ -50,7 +50,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fx:id="imgDelete" fitHeight="42.0" fitWidth="42.0" layoutX="583.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgDelete" fitHeight="32.0" fitWidth="32.0" layoutX="593.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -58,7 +58,7 @@
                   <Image url="@../../../icon/Trash.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgLock" fitHeight="42.0" fitWidth="42.0" layoutX="451.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgLock" fitHeight="32.0" fitWidth="32.0" layoutX="461.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../img/Lock.png" />
                </image>
@@ -66,6 +66,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <Button fx:id="btnCategory" layoutX="590.0" layoutY="15.0" maxHeight="35.0" maxWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
          </children>
       </Pane>
       <Pane layoutX="674.0" layoutY="14.0" prefHeight="807.0" prefWidth="442.0" style="-fx-background-color: FCCFD4; -fx-border-color: black; -fx-border-radius: 5px; -fx-background-radius: 5px;">
@@ -104,7 +105,7 @@
                </font>
             </Label>
             <TextField fx:id="txtStatus" editable="false" layoutX="251.0" layoutY="157.0" />
-            <TableView fx:id="tblRecipe" layoutX="41.0" layoutY="247.0" prefHeight="509.0" prefWidth="360.0">
+            <TableView fx:id="tblRecipe" layoutX="41.0" layoutY="247.0" prefHeight="474.0" prefWidth="360.0">
               <columns>
                 <TableColumn fx:id="colIngredientName" prefWidth="180.0" text="Tên nguyên liệu" />
                 <TableColumn fx:id="colQuantity" prefWidth="67.0" text="Số lượng " />
@@ -114,7 +115,10 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="btnClear" layoutX="200.0" layoutY="768.0" mnemonicParsing="false" text="Clear" />
+            <Button fx:id="btnClear" layoutX="41.0" layoutY="733.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="360.0" text="Clear">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Button>
             <Label layoutX="130.0" layoutY="189.0" text="Công thức">
                <font>
                   <Font name="System Bold" size="35.0" />

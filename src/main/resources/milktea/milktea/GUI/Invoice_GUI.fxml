@@ -89,7 +89,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <ScrollPane fx:id="invoiceDetailPane" layoutX="31.0" layoutY="198.0" prefHeight="346.0" prefWidth="369.0" />
+                        <ScrollPane fx:id="invoiceDetailPane" layoutX="31.0" layoutY="198.0" prefHeight="363.0" prefWidth="369.0" />
                         <Label layoutX="34.0" layoutY="615.0" text="Điểm hiện có: " />
                         <TextField fx:id="txtCurrentPoint" editable="false" layoutX="110.0" layoutY="611.0" prefHeight="25.0" prefWidth="92.0" />
                         <Label layoutX="210.0" layoutY="615.0" prefHeight="17.0" prefWidth="41.0" text="Mã KM:" />
@@ -119,7 +119,7 @@
                            </font>
                         </Button>
                         <Button fx:id="btnCustomerPicker" layoutX="322.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="..." />
-                        <ImageView fx:id="btnEdit" fitHeight="42.0" fitWidth="42.0" layoutX="309.0" layoutY="550.0" onMouseClicked="#edit" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="btnEdit" fitHeight="32.0" fitWidth="32.0" layoutX="328.0" layoutY="569.0" onMouseClicked="#edit" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../icon/Edit.png" />
                            </image>
@@ -127,7 +127,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
-                        <ImageView fx:id="btnDelete" fitHeight="42.0" fitWidth="42.0" layoutX="358.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="btnDelete" fitHeight="32.0" fitWidth="32.0" layoutX="366.0" layoutY="569.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../icon/Trash.png" />
                            </image>
@@ -147,7 +147,7 @@
                <children>
                   <Pane layoutX="14.0" layoutY="14.0" prefHeight="775.0" prefWidth="655.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
                      <children>
-                        <TableView fx:id="tblInvoice" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0" stylesheets="@../../../css/style.css" >
+                        <TableView fx:id="tblInvoice" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0" stylesheets="@../../../css/style.css">
                            <columns>
                               <TableColumn fx:id="colInvoiceId" prefWidth="76.0" text="Mã HĐ" />
                               <TableColumn fx:id="colEmployeeId" prefWidth="85.0" text="Mã NV" />

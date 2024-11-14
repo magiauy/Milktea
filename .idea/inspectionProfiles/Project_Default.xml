@@ -10,6 +10,7 @@
         <language minSize="99" name="Java" />
       </Languages>
     </inspection_tool>
+    <inspection_tool class="LombokSetterMayBeUsed" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="TrivialIf" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoreChainedIf" value="true" />
     </inspection_tool>

@@ -12,4 +12,12 @@ public class Promotion {
     private String promotionId;
     private BigDecimal discount;
     private BigDecimal minimumPrice;
+
+    public Promotion(Promotion selectedItem) {
+        this.promotionProgramId = selectedItem.getPromotionProgramId();
+        this.promotionId = selectedItem.getPromotionId();
+        this.discount = selectedItem.getDiscount();
+        this.minimumPrice = selectedItem.getMinimumPrice();
+
+    }
 }

@@ -86,4 +86,27 @@ public class Promotion_DAO extends Connect{
         return result;
     }
 
+    public static boolean removePromotion(ArrayList<Promotion> removedPromotions) {
+        boolean result = false;
+        if(openConnection("Promotion")){
+            try{
+                String sql = "Delete from promotion where promotionId = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+
+                for (Promotion promotion : removedPromotions){
+                    stmt.setString(1,promotion.getPromotionId());
+                    if(stmt.executeUpdate()>=1){
+                        result = true;
+                    }
+                }
+
+            }catch(SQLException e){
+                log.error("Error: ", e);
+            }finally{
+                closeConnection();
+            }
+        }
+        return result;
+    }
 }

@@ -82,4 +82,26 @@ public class PromotionProgram_DAO extends Connect{
         }
         return result;
     }
+
+    public static boolean deletePromotionProgram(String promotionProgramId) {
+        boolean result = false;
+        if(openConnection("PromotionProgram")){
+            try{
+                String sql = "Delete from PromotionProgram where promotionProgramId = ?";
+
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1,promotionProgramId);
+
+                if(stmt.executeUpdate()>=1){
+                    result = true;
+                }
+
+            }catch(SQLException e){
+                log.error("Error: ", e);
+            }finally{
+                closeConnection();
+            }
+        }
+        return result;
+    }
 }

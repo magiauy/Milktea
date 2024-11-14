@@ -63,6 +63,7 @@ public class Main {
             Invoice_BUS.getLocalData();
             InvoiceDetail_BUS.getLocalData();
             Promotion_BUS.getLocalData();
+            Promotion_BUS.addListener();
             PromotionProgram_BUS.getLocalData();
             Category_BUS.getLocalData();
             Ingredient_BUS.getLocalData();
@@ -142,6 +143,7 @@ public class Main {
     }
 
     private void btnPromotion(ActionEvent actionEvent) {
+        loadFXML("Promotion_GUI.fxml");
     }
 
     public void loadButtonByPermission() {

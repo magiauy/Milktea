@@ -81,7 +81,7 @@
                                  </font>
                               </Button>
                               <Button fx:id="btnProviderList" layoutX="350.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="..." />
-                              <ImageView fx:id="imgEdit" fitHeight="42.0" fitWidth="42.0" layoutX="312.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imgEdit" fitHeight="32.0" fitWidth="32.0" layoutX="321.0" layoutY="627.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../icon/Edit.png" />
                                  </image>
@@ -89,7 +89,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </ImageView>
-                              <ImageView fx:id="imgDelete" fitHeight="42.0" fitWidth="42.0" layoutX="358.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imgDelete" fitHeight="32.0" fitWidth="32.0" layoutX="367.0" layoutY="627.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../icon/Trash.png" />
                                  </image>
@@ -119,7 +119,7 @@
                      <children>
                         <Pane layoutX="14.0" layoutY="14.0" prefHeight="775.0" prefWidth="655.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
                            <children>
-                              <TableView fx:id="tblGoodsReceipt" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0" stylesheets="@../../../css/style.css" >
+                              <TableView fx:id="tblGoodsReceipt" layoutX="12.0" layoutY="91.0" prefHeight="669.0" prefWidth="632.0" stylesheets="@../../../css/style.css">
                                  <columns>
                                     <TableColumn fx:id="colGoodsReceiptId" prefWidth="97.0" text="Mã PN" />
                                     <TableColumn fx:id="colGoodsReceiptProviderId" prefWidth="120.0" text="Mã NCC" />

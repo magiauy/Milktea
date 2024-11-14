@@ -41,4 +41,35 @@ public class PromotionProgram_BUS {
         }
         return true;
     }
+
+    public static void editPromotionProgramLocal(PromotionProgram promotionProgram) {
+        for (PromotionProgram program : arrPromotionProgram) {
+            if (program.getPromotionProgramId().equals(promotionProgram.getPromotionProgramId())) {
+                program.setName(promotionProgram.getName());
+                program.setStartDate(promotionProgram.getStartDate());
+                program.setEndDate(promotionProgram.getEndDate());
+                break;
+            }
+        }
+    }
+
+    public static void addPromotionProgramLocal(PromotionProgram promotionProgram) {
+        arrPromotionProgram.add(promotionProgram);
+    }
+
+    public static String autoID(){
+        if (arrPromotionProgram.isEmpty()) return "CTKM001";
+        String lastID = arrPromotionProgram.getLast().getPromotionProgramId();
+        int number = Integer.parseInt(lastID.substring(4));
+        return "CTKM" + String.format("%04d", number + 1);
+
+    }
+
+    public static boolean deletePromotionProgram(String promotionProgramId) {
+        return PromotionProgram_DAO.deletePromotionProgram(promotionProgramId);
+    }
+
+    public static void removePromotionProgramLocal(String promotionProgramId) {
+        arrPromotionProgram.removeIf(promotionProgram -> promotionProgram.getPromotionProgramId().equals(promotionProgramId));
+    }
 }
