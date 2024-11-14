@@ -18,7 +18,7 @@
    <children>
       <TabPane layoutX="3.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1130.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab text="Tạo phiếu nhập">
+            <Tab fx:id="tabCreateGoodsReceipt" text="Tạo phiếu nhập">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

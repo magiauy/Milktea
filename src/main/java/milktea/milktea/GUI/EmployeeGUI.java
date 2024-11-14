@@ -243,7 +243,7 @@ public class EmployeeGUI {
     }
     public void hideButtonWithoutPermission(){
         int permission = Login_Controller.getAccount().getPermission();
-        if (!Main.checkRolePermission(permission,12)){
+        if (!Main.checkRolePermission(permission,14)){
             btnRole.setVisible(false);
         }
     }

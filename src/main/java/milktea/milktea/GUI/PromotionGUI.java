@@ -76,6 +76,8 @@ public class PromotionGUI {
 
     @FXML
     public void initialize() {
+
+        hideButtonWithoutPermission();
         loadPromotionProgram();
         colPromotionID.setCellValueFactory(new PropertyValueFactory<>("promotionId"));
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
@@ -185,5 +187,14 @@ public class PromotionGUI {
             }
         });
         tblPromotionProgram.refresh();
+    }
+
+    public void hideButtonWithoutPermission(){
+        int permission = Login_Controller.getAccount().getPermission();
+        if (!Main.checkRolePermission(permission,15)){
+            imgAdd.setVisible(false);
+            imgDelete.setVisible(false);
+            imgEdit.setVisible(false);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -37,6 +38,10 @@ public class ProviderSubGUI {
     HashMap<TextField, String> map = new HashMap<>();
 
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Nhà cung cấp");
+        });
         map.put(txtName, "Tên nhà cung cấp");
         map.put(txtAddress, "Địa chỉ");
         map.put(txtPhone, "Số điện thoại");

@@ -84,6 +84,9 @@ public class InvoiceGUI {
     @FXML
     private ImageView btnDelete;
 
+    @FXML
+    private Tab tabCreateInvoice;
+
     private final ArrayList<Product> arrProducts = new ArrayList<>();
 
     @Getter
@@ -112,6 +115,7 @@ public class InvoiceGUI {
     @Setter
     private static String globalListFlag = null;
     public void initialize() {
+        hideTabWithoutPermission();
         selectedProduct = null;
         invoiceId = Invoice_BUS.autoId();
         txtInvoiceId.setText(invoiceId);
@@ -840,4 +844,14 @@ public class InvoiceGUI {
 
     }
 
+    public void hideTabWithoutPermission(){
+        int permission = Login_Controller.getAccount().getPermission();
+        if (!Main.checkRolePermission(permission,0)){
+            tabCreateInvoice.getTabPane().getTabs().remove(tabCreateInvoice);
+            tabInvoiceInit();
+        }
+        if (!Main.checkRolePermission(permission,7)){
+            tabInvoice.getTabPane().getTabs().remove(tabInvoice);
+        }
+    }
 }

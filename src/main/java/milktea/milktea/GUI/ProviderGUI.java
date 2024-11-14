@@ -114,7 +114,7 @@ public class ProviderGUI {
 
     public void hideButtonWithoutPermission(){
         int permission = Login_Controller.getAccount().getPermission();
-        if (!Main.checkRolePermission(permission,11)){
+        if (!Main.checkRolePermission(permission,13)){
             imgAdd.setVisible(false);
             imgDelete.setVisible(false);
             imgEdit.setVisible(false);

@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -58,6 +59,10 @@ public class AdvancedSearchInvoiceSubGUI {
     private boolean isSearch ;
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSearchInvoice.getScene().getWindow();
+            stage.setTitle("Tìm kiếm hóa đơn");
+        });
         btnSearchInvoice.setOnAction(this::searchInvoice);
         chkSearchInvoiceCustomerID.setOnAction(this::checkBoxAction);
         chkSearchInvoiceDate.setOnAction(this::checkBoxAction);

@@ -1,11 +1,13 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -48,6 +50,10 @@ public class EmployeeSubGUI {
     HashMap<TextField, String> textFieldInfo = new HashMap<>();
 
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Thông tin nhân viên");
+        });
         textFieldInfo.put(txtFirstName, "Họ đệm");
         textFieldInfo.put(txtLastName, "Tên");
         textFieldInfo.put(txtPhone, "Số điện thoại");

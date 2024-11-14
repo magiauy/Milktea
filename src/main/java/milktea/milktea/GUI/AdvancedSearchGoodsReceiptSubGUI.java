@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -56,6 +57,10 @@ public class AdvancedSearchGoodsReceiptSubGUI {
     private static ArrayList<GoodsReceipt> arrGoodsReceipt;
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSearch.getScene().getWindow();
+            stage.setTitle("Tìm kiếm phiếu nhập hàng");
+        });
         chkGoodsReceiptDate.setOnAction(this::checkBoxAction);
         chkGoodsReceiptEmployeeID.setOnAction(this::checkBoxAction);
         chkGoodsReceiptID.setOnAction(this::checkBoxAction);

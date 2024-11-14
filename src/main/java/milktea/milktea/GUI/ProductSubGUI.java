@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -73,6 +74,10 @@ public class ProductSubGUI {
 
 
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Thông tin sản phẩm");
+        });
         arrCurrentRecipe = new ArrayList<>();
         product = new Product();
         loadCategory();

@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +37,10 @@ public class PromotionSubGUI {
 
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Mã Khuyến Mãi");
+        });
         promotion = new Promotion();
         if (PromotionProgramSubGUI.isEditable()) {
             lblTitle.setText("Sửa Mã Khuyến Mãi");

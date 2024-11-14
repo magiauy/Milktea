@@ -172,7 +172,7 @@ public class IngredientGUI {
     }
     public void hideButtonWithoutPermission(){
         int permission = Login_Controller.getAccount().getPermission();
-        if (!Main.checkRolePermission(permission,10)){
+        if (!Main.checkRolePermission(permission,12)){
             imgAdd.setVisible(false);
             imgDelete.setVisible(false);
             imgEdit.setVisible(false);

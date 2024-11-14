@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +22,10 @@ public class CategorySubGUI {
 
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Loại sản phẩm");
+        });
         txtID.setDisable(true);
         if (CategoryGUI.isEditable()) {
             lblTitle.setText("Sửa loại sản phẩm");

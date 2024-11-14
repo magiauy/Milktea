@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -45,6 +46,10 @@ public class SubGUIListInvoiceDetail {
 
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnAdd.getScene().getWindow();
+            stage.setTitle("Danh sách");
+        });
         switch (InvoiceGUI.getGlobalListFlag()) {
             case "Nhân Viên":
                 lblTitle.setText("Danh sách nhân viên");

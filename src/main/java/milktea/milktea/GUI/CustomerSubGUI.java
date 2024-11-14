@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -39,6 +40,10 @@ public class CustomerSubGUI {
     private final HashMap<TextField, String> textFieldInfo = new HashMap<>();
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Thông tin khách hàng");
+        });
         mapTextField();
         if (CustomerGUI.isEditable){
             lblTitle.setText("Sửa thông tin");

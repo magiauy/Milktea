@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -36,6 +37,10 @@ public class ProviderListSubGUI {
 
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnChoice.getScene().getWindow();
+            stage.setTitle("Danh sách nhà cung cấp");
+        });
         createProviderTable();
     }
 

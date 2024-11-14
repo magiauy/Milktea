@@ -85,6 +85,8 @@ public class GoodsReceiptGUI {
     Button btnSearch;
     @FXML
     Button btnAddGoodsReceipt;
+    @FXML
+    Tab tabCreateGoodsReceipt;
 
     @Getter
     @Setter
@@ -102,6 +104,7 @@ public class GoodsReceiptGUI {
     private static ArrayList<GoodsReceiptDetail> arrGoodsReceiptDetail = new ArrayList<>();
     @FXML
     public void initialize() {
+        hideTabWithoutPermission();
         txtGoodsReceiptId.setText(GoodsReceipt_BUS.autoId());
         txtGoodsEmployeeId.setText(Login_Controller.getAccount().getId());
         txtGoodsEmployeeName.setText(Login_Controller.getAccount().getLastName());
@@ -373,5 +376,15 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
         colGoodsReceiptDetailQuantity1.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colGoodsReceiptDetailPrice1.setCellValueFactory(new PropertyValueFactory<>("price"));
         colGoodsReceiptDetailTotal1.setCellValueFactory(new PropertyValueFactory<>("total"));
+    }
+    public void hideTabWithoutPermission(){
+        int permission = Login_Controller.getAccount().getPermission();
+        if (!Main.checkRolePermission(permission,4)){
+            tabCreateGoodsReceipt.getTabPane().getTabs().remove(tabCreateGoodsReceipt);
+            tabGoodsReceiptInit(new ActionEvent());
+        }
+        if (!Main.checkRolePermission(permission,8)){
+            tabGoodsReceipt.getTabPane().getTabs().remove(tabGoodsReceipt);
+        }
     }
 }

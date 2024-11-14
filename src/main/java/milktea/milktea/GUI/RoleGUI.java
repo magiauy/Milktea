@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -42,6 +43,10 @@ public class RoleGUI {
     @Setter
     private static boolean isSaved = false;
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnCancel.getScene().getWindow();
+            stage.setTitle("Phân quyền");
+        });
         setMapCheckBox();
         addListenerCheckBox();
         addSpecificListeners();
@@ -132,9 +137,9 @@ public class RoleGUI {
     private void loadAccessData() {
         for (CheckBox checkBox : mapCheckBox.keySet()) {
             if (role.getRoleId().equals("R01")){
-                checkBox.setDisable(mapCheckBox.get(checkBox) == 12 || mapCheckBox.get(checkBox) == 8);
+                checkBox.setDisable(mapCheckBox.get(checkBox) == 10 || mapCheckBox.get(checkBox) == 14);
             }else if (role.getRoleId().equals("R03")){
-                checkBox.setDisable(mapCheckBox.get(checkBox) == 12 || mapCheckBox.get(checkBox) == 8);
+                checkBox.setDisable(mapCheckBox.get(checkBox) == 10 || mapCheckBox.get(checkBox) == 14);
             }else {
                 checkBox.setDisable(false);
             }
@@ -168,7 +173,7 @@ public class RoleGUI {
             checkBox2.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue) {
                     for (CheckBox checkBox : mapCheckBox.keySet()) {
-                        if (mapCheckBox.get(checkBox) == 9) {
+                        if (mapCheckBox.get(checkBox) == 11) {
                             checkBox.setSelected(false);
                         }
                     }
@@ -184,7 +189,7 @@ public class RoleGUI {
             checkBox3.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue) {
                     for (CheckBox checkBox : mapCheckBox.keySet()) {
-                        if (mapCheckBox.get(checkBox) == 10) {
+                        if (mapCheckBox.get(checkBox) == 12) {
                             checkBox.setSelected(false);
                         }
                     }
@@ -200,7 +205,7 @@ public class RoleGUI {
             checkBox5.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue) {
                     for (CheckBox checkBox : mapCheckBox.keySet()) {
-                        if (mapCheckBox.get(checkBox) == 11) {
+                        if (mapCheckBox.get(checkBox) == 13) {
                             checkBox.setSelected(false);
                         }
                     }
@@ -216,7 +221,7 @@ public class RoleGUI {
             checkBox6.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue) {
                     for (CheckBox checkBox : mapCheckBox.keySet()) {
-                        if (mapCheckBox.get(checkBox) == 13) {
+                        if (mapCheckBox.get(checkBox) == 15) {
                             checkBox.setSelected(false);
                         }
                     }
@@ -225,7 +230,7 @@ public class RoleGUI {
         }
 
         Optional<CheckBox> optionalCheckBox9 = mapCheckBox.keySet().stream()
-                .filter(checkBox -> mapCheckBox.get(checkBox) == 9)
+                .filter(checkBox -> mapCheckBox.get(checkBox) == 11)
                 .findFirst();
         if (optionalCheckBox9.isPresent()) {
             CheckBox checkBox9 = optionalCheckBox9.get();
@@ -241,7 +246,7 @@ public class RoleGUI {
         }
 
         Optional<CheckBox> optionalCheckBox10 = mapCheckBox.keySet().stream()
-                .filter(checkBox -> mapCheckBox.get(checkBox) == 10)
+                .filter(checkBox -> mapCheckBox.get(checkBox) == 12)
                 .findFirst();
         if (optionalCheckBox10.isPresent()) {
             CheckBox checkBox10 = optionalCheckBox10.get();
@@ -257,7 +262,7 @@ public class RoleGUI {
         }
 
         Optional<CheckBox> optionalCheckBox11 = mapCheckBox.keySet().stream()
-                .filter(checkBox -> mapCheckBox.get(checkBox) == 11)
+                .filter(checkBox -> mapCheckBox.get(checkBox) == 13)
                 .findFirst();
         if (optionalCheckBox11.isPresent()) {
             CheckBox checkBox11 = optionalCheckBox11.get();
@@ -273,7 +278,7 @@ public class RoleGUI {
         }
 
         Optional<CheckBox> optionalCheckBox13 = mapCheckBox.keySet().stream()
-                .filter(checkBox -> mapCheckBox.get(checkBox) == 13)
+                .filter(checkBox -> mapCheckBox.get(checkBox) == 15)
                 .findFirst();
         if (optionalCheckBox13.isPresent()) {
             CheckBox checkBox13 = optionalCheckBox13.get();
@@ -289,21 +294,30 @@ public class RoleGUI {
         }
     }
 
+    //7->9
+    //9->11
+    //10->12
+    //11->13
+    //12->14
+    //13->15
+
     public void setMapCheckBox() {
-        mapCheckBox.put(new CheckBox("Quản lý hóa đơn"), 0);
+        mapCheckBox.put(new CheckBox("Tạo hóa đơn"), 0);
         mapCheckBox.put(new CheckBox("Quản lý khách hàng"), 1);
         mapCheckBox.put(new CheckBox("Xem sản phẩm"), 2);
         mapCheckBox.put(new CheckBox("Xem nguyên liệu"), 3);
-        mapCheckBox.put(new CheckBox("Quản lý nhập hàng"), 4);
+        mapCheckBox.put(new CheckBox("Tạo phiếu nhập"), 4);
         mapCheckBox.put(new CheckBox("Xem nhà cung cấp"), 5);
         mapCheckBox.put(new CheckBox("Xem Khuyến mãi"), 6);
-        mapCheckBox.put(new CheckBox("Thống kê"), 7);
-        mapCheckBox.put(new CheckBox("Quản lý nhân viên"), 8);
-        mapCheckBox.put(new CheckBox("Quản lý sản phẩm"), 9);
-        mapCheckBox.put(new CheckBox("Quản lý nguyên liệu"), 10);
-        mapCheckBox.put(new CheckBox("Quản lý nhà cung cấp"), 11);
-        mapCheckBox.put(new CheckBox("Quản lý phân quyền"), 12);
-        mapCheckBox.put(new CheckBox("Quản lý khuyến mãi"), 13);
+        mapCheckBox.put(new CheckBox("Xem hoá đơn"), 7);
+        mapCheckBox.put(new CheckBox("Xem phiếu nhập"), 8);
+        mapCheckBox.put(new CheckBox("Thống kê"), 9);
+        mapCheckBox.put(new CheckBox("Quản lý nhân viên"), 10);
+        mapCheckBox.put(new CheckBox("Quản lý sản phẩm"), 11);
+        mapCheckBox.put(new CheckBox("Quản lý nguyên liệu"), 12);
+        mapCheckBox.put(new CheckBox("Quản lý nhà cung cấp"), 13);
+        mapCheckBox.put(new CheckBox("Quản lý phân quyền"), 14);
+        mapCheckBox.put(new CheckBox("Quản lý khuyến mãi"), 15);
     }
 
     public GridPane getPaneRole() {

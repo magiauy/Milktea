@@ -275,7 +275,7 @@ public class ProductGUI {
     }
     public void hideButtonWithoutPermission(){
         int permission = Login_Controller.getAccount().getPermission();
-        if (!Main.checkRolePermission(permission,9)){
+        if (!Main.checkRolePermission(permission,11)){
             imgAdd.setVisible(false);
             imgDelete.setVisible(false);
             imgEdit.setVisible(false);

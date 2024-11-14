@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -35,6 +36,10 @@ public class IngredientSubGUI {
     private static Ingredient ingredient;
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Thông tin nguyên liệu");
+        });
         cbUnit.getItems().addAll(Unit.values());
         if (!IngredientGUI.isEditable()){
             ingredient = new Ingredient();

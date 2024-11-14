@@ -121,15 +121,15 @@ public class Main {
         btnStatistic.setText("Thống kê");
         btnEmployee.setText("Nhân viên");
 
-        buttonHashMap.put(btnInvoice, 0);
+        buttonHashMap.put(btnInvoice, 7);
         buttonHashMap.put(btnCustomer, 1);
         buttonHashMap.put(btnProduct, 2);
         buttonHashMap.put(btnIngredient, 3);
-        buttonHashMap.put(btnGoodsReceipt, 4);
+        buttonHashMap.put(btnGoodsReceipt, 8);
         buttonHashMap.put(btnProvider, 5);
         buttonHashMap.put(btnPromotion, 6);
-        buttonHashMap.put(btnStatistic, 7);
-        buttonHashMap.put(btnEmployee, 8);
+        buttonHashMap.put(btnStatistic, 9);
+        buttonHashMap.put(btnEmployee, 10);
 
 
 
@@ -160,6 +160,28 @@ public class Main {
                 } else {
                     formatButton(button);
                 }
+            } else if (buttonHashMap.get(button) == 7) {
+                if (checkRolePermission(permission,0)){
+                    btnGroup.getChildren().add(button);
+                    if (firstButton == 0) {
+                        formatFirstButton(button);
+                        firstButton = 1;
+                    } else {
+                        formatButton(button);
+                    }
+                }
+
+            } else if (buttonHashMap.get(button) == 8) {
+                if (checkRolePermission(permission,4)){
+                    btnGroup.getChildren().add(button);
+                    if (firstButton == 0) {
+                        formatFirstButton(button);
+                        firstButton = 1;
+                    } else {
+                        formatButton(button);
+                    }
+                }
+
             }
         }
     }

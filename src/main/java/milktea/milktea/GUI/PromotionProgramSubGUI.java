@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,6 +83,10 @@ public class PromotionProgramSubGUI {
     private final HashMap<TextField,String> textFieldInfo = new HashMap<>();
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Thông tin khuyến mãi");
+        });
         removedPromotions = new ArrayList<>();
         addedPromotions = new ArrayList<>();
         initTable();

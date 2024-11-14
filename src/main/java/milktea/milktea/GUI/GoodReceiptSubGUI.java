@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,6 +35,10 @@ public class GoodReceiptSubGUI {
     private static boolean isAdded = false;
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Thông tin nguyên liệu");
+        });
         if (!GoodsReceiptGUI.isEditable()) {
             lblIngredientName.setText(GoodsReceiptGUI.getIngredient().getName());
             lblUnit.setText("/"+setUnit(GoodsReceiptGUI.getIngredient().getUnit()));

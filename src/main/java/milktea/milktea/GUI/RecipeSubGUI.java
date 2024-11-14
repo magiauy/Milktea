@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -33,6 +34,10 @@ public class RecipeSubGUI {
     @Getter
     private static boolean isEdited = false;
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            stage.setTitle("Công thức");
+        });
         recipe = new Recipe();
         loadIngredient();
         if (ProductSubGUI.isEditable) {

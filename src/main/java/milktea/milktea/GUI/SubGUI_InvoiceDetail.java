@@ -1,5 +1,6 @@
 package milktea.milktea.GUI;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -35,6 +36,10 @@ public class SubGUI_InvoiceDetail {
 
     private final HashMap<String,Integer> topping = new HashMap<>();
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnAdd.getScene().getWindow();
+            stage.setTitle("Thông tin sản phẩm");
+        });
         addNumericValidation(txtIce);
         addNumericValidation(txtSugar);
         if (!InvoiceGUI.isEditable()) {
