@@ -17,6 +17,8 @@ public class Ingredient_BUS {
     private static final HashMap<String, Ingredient> tempArrIngredients = new HashMap<>();
 
     public static void getLocalData() {
+        arrIngredients.clear();
+        tempArrIngredients.clear();
         arrIngredients = Ingredient_DAO.getAllIngredient();
         for (Ingredient ingredient : arrIngredients) {
             tempArrIngredients.put(ingredient.getId(), ingredient);

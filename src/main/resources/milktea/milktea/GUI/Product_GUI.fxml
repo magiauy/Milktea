@@ -67,6 +67,14 @@
                </cursor>
             </ImageView>
             <Button fx:id="btnCategory" layoutX="590.0" layoutY="15.0" maxHeight="35.0" maxWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
+            <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="312.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/Refresh.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
          </children>
       </Pane>
       <Pane layoutX="674.0" layoutY="14.0" prefHeight="807.0" prefWidth="442.0" style="-fx-background-color: FCCFD4; -fx-border-color: black; -fx-border-radius: 5px; -fx-background-radius: 5px;">

@@ -25,6 +25,7 @@ public class GoodsReceiptDetail_DAO extends Connect{
                             .goodsReceiptId(rs.getString("goodsReceiptId"))
                             .ingredientId(rs.getString("ingredientId"))
                             .quantity(rs.getFloat("quantity"))
+                            .unit(getUnit(rs.getString("unit")))
                             .price(rs.getBigDecimal("price"))
                             .total(rs.getBigDecimal("total"))
                             .build();

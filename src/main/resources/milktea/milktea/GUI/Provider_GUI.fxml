@@ -61,5 +61,13 @@
                 </ImageView>
             </children>
         </Pane>
+      <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="283.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/Refresh.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
     </children>
 </AnchorPane>

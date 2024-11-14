@@ -10,6 +10,7 @@ public class Category_BUS {
     private static ArrayList<Category> arrCategory = new ArrayList<>();
 
     public static void getLocalData(){
+        arrCategory.clear();
         arrCategory = Category_DAO.getAllCategory();
     }
     public static ArrayList<Category> getAllCategory() {

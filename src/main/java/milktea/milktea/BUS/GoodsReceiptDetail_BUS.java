@@ -9,6 +9,7 @@ public class GoodsReceiptDetail_BUS {
     private static ArrayList<GoodsReceiptDetail> arrGoodsReceiptDetail = new ArrayList<>();
 
     public static void getLocalData() {
+        arrGoodsReceiptDetail.clear();
         arrGoodsReceiptDetail = GoodsReceiptDetail_DAO.getAllGoodsReceiptDetail();
     }
         public static ArrayList<GoodsReceiptDetail> getAllGoodsReceiptDetail() {

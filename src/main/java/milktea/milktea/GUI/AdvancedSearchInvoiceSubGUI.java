@@ -5,11 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import milktea.milktea.BUS.Invoice_BUS;
 import milktea.milktea.DTO.Invoice;
 import milktea.milktea.Util.ValidationUtil;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -98,7 +98,7 @@ public class AdvancedSearchInvoiceSubGUI {
         }
     }
 
-    private @NotNull HashMap<String, String> getSearchParams() {
+    private @NonNull HashMap<String, String> getSearchParams() {
         HashMap<String, String> searchParams = new HashMap<>();
         isSearch = true;
         if (chkSearchInvoiceID.isSelected() && isValidSearchField(txtSearchInvoiceID)) {

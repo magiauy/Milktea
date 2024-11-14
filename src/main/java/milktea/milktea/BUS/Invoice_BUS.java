@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class Invoice_BUS {
     private static ArrayList<Invoice> arrInvoice = new ArrayList<>();
     public static void getLocalData(){
+        arrInvoice.clear();
         arrInvoice = Invoice_DAO.getAllInvoice();
     }
     public static ArrayList<Invoice> getAllInvoice(){

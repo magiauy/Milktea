@@ -9,6 +9,7 @@ public class Role_BUS {
     private static ArrayList<Role> arrRole = new ArrayList<>();
 
     public static void getLocalData(){
+        arrRole.clear();
         arrRole = Role_DAO.getAllRole();
     }
 

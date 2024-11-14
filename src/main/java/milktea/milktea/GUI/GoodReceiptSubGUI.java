@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
-import milktea.milktea.BUS.GoodsReceipt_BUS;
 import milktea.milktea.BUS.Ingredient_BUS;
 import milktea.milktea.DTO.GoodsReceiptDetail;
 import milktea.milktea.DTO.Unit;
@@ -56,7 +55,7 @@ public class GoodReceiptSubGUI {
 
             GoodsReceiptGUI.getGoodsReceiptDetail().setQuantity(Float.parseFloat(txtQuantity.getText()));
             GoodsReceiptGUI.getGoodsReceiptDetail().setPrice(new BigDecimal(txtPrice.getText()).setScale(0, RoundingMode.HALF_UP));
-            GoodsReceiptGUI.getGoodsReceiptDetail().setTotal(new BigDecimal(txtPrice.getText()).multiply(new BigDecimal(txtQuantity.getText()).setScale(0, RoundingMode.HALF_UP)));
+            GoodsReceiptGUI.getGoodsReceiptDetail().setTotal(new BigDecimal(txtPrice.getText()).multiply(new BigDecimal(txtQuantity.getText())));
             isAdded = true;
             ((Stage) btnSave.getScene().getWindow()).close();
         });

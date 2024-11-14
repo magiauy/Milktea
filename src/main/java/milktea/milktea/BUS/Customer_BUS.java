@@ -11,6 +11,7 @@ public class Customer_BUS {
     private static ArrayList<Customer> arrCustomer = new ArrayList<>();
 
     public static void getLocalData() {
+        arrCustomer.clear();
         arrCustomer = Customer_DAO.getAllCustomer();
     }
     public static ArrayList<Customer> getAllCustomer() {

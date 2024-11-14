@@ -38,6 +38,8 @@ public class PromotionGUI {
     ImageView imgEdit;
     @FXML
     ImageView imgDelete;
+    @FXML
+    ImageView imgRefresh;
 
     @FXML
     Button btnSearch;
@@ -93,15 +95,15 @@ public class PromotionGUI {
                 ValidationUtil.showErrorAlert("Chọn chương trình khuyến mãi cần sửa");
                 return;
             }
-            if (selectedPromotionProgram.getEndDate().isAfter(LocalDate.now())){
+            if (selectedPromotionProgram.getEndDate().isBefore(LocalDate.now())){
                 ValidationUtil.showErrorAlert("Không thể sửa chương trình khuyến mãi đã kết thúc");
                 return;
             }
             isEditable = true;
             openStage("PromotionProgram_SubGUI.fxml", () -> {
+                isEditable = false;
                 if (PromotionProgramSubGUI.isEdited()) {
                     loadPromotionProgram();
-                    isEditable = false;
                     PromotionProgramSubGUI.setEdited(false);
                 }
             });
@@ -128,6 +130,13 @@ public class PromotionGUI {
         });
         btnClear.setOnAction(this::btnClear);
         btnSearch.setOnAction(this::btnSearch);
+        imgRefresh.setOnMouseClicked(event -> {
+            Promotion_BUS.getLocalData();
+            PromotionProgram_BUS.getLocalData();
+            txtSearch.clear();
+            loadPromotionProgram();
+            btnClear.fire();
+        });
     }
 
     private void btnSearch(ActionEvent actionEvent) {

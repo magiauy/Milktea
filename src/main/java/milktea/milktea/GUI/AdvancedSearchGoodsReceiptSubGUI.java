@@ -6,11 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import milktea.milktea.BUS.GoodsReceipt_BUS;
 import milktea.milktea.DTO.GoodsReceipt;
 import milktea.milktea.Util.ValidationUtil;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +94,7 @@ public class AdvancedSearchGoodsReceiptSubGUI {
         }
     }
 
-private @NotNull HashMap<String, String> getSearchParams() {
+private @NonNull HashMap<String, String> getSearchParams() {
     HashMap<String, String> searchParams = new HashMap<>();
     isSearch = true; // Reset isSearch to true at the beginning
 

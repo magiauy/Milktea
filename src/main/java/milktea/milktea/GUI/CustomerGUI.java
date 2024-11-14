@@ -45,6 +45,8 @@ public class CustomerGUI {
 
     @FXML
     ImageView btnDelete;
+    @FXML
+    ImageView btnRefresh;
 
     public static Customer selectedCustomer = null;
     public static boolean isEditable = false;
@@ -54,6 +56,13 @@ public class CustomerGUI {
         btnSearch.setOnAction(this::btnSearch);
         initTable();
         btnDelete.setOnMouseClicked(this::btnDelete);
+        btnRefresh.setOnMouseClicked(this::btnRefresh);
+    }
+
+    private void btnRefresh(MouseEvent mouseEvent) {
+        Customer_BUS.getLocalData();
+        txtSearch.clear();
+        refreshTable();
     }
 
     private void btnDelete(MouseEvent event) {
@@ -132,6 +141,7 @@ public class CustomerGUI {
             sortedData.removeIf(customer -> customer.getId().equals("KH000"));
         }
         tableMain.setItems(sortedData);
+        tableMain.refresh();
     }
 
 

@@ -9,6 +9,7 @@ public class Provider_BUS {
     private static ArrayList<Provider> arrProvider = new ArrayList<>();
 
     public static void getLocalData(){
+        arrProvider.clear();
         arrProvider = Provider_DAO.getAllProvider();
     }
     public static ArrayList<Provider> getAllProvider(){

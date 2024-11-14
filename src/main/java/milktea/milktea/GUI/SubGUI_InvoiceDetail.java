@@ -45,6 +45,7 @@ public class SubGUI_InvoiceDetail {
             txtIce.setText(String.valueOf(InvoiceGUI.getSelectedInvoiceDetail().getIce()));
             txtSugar.setText(String.valueOf(InvoiceGUI.getSelectedInvoiceDetail().getSugar()));
             txtProductName.setText(Objects.requireNonNull(Product_BUS.getProductById(InvoiceGUI.getSelectedInvoiceDetail().getInvoiceDetail().getProductId())).getName());
+            txtNote.setText(InvoiceGUI.getSelectedInvoiceDetail().getNote());
             topping.putAll(InvoiceGUI.getSelectedInvoiceDetail().getTopping());
             spTopping.setContent(toppingPortView());
             btnAdd.setText("Cập nhật chi tiết");

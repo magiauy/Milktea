@@ -796,6 +796,8 @@ public class InvoiceGUI {
             });
         });
         imgRefresh.setOnMouseClicked(event -> {
+            Invoice_BUS.getLocalData();
+            InvoiceDetail_BUS.getLocalData();
             loadTableInvoice();
             btnClearInvoice.fire();
         });

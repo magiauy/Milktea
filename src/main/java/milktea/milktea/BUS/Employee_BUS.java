@@ -100,6 +100,7 @@ public class Employee_BUS {
                 employee1.setLastName(employee.getLastName());
                 employee1.setPhoneNumber(employee.getPhoneNumber());
                 employee1.setRole(employee.getRole());
+                employee1.setGender(employee.getGender());
             }
         }
     }

@@ -17,6 +17,7 @@ public class Recipe_BUS {
     private static final HashMap<String, List<Recipe>> mapRecipes = new HashMap<>();
 
     public static void getLocalData(){
+        arrRecipes.clear();
         arrRecipes = milktea.milktea.DAO.Recipe_DAO.getRecipes();
         getMapData();
     }

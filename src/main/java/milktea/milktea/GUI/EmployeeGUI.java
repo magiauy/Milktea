@@ -21,6 +21,7 @@ import milktea.milktea.BUS.GoodsReceipt_BUS;
 import milktea.milktea.BUS.Invoice_BUS;
 import milktea.milktea.BUS.Role_BUS;
 import milktea.milktea.DTO.Employee;
+import milktea.milktea.DTO.Role;
 import milktea.milktea.Util.ValidationUtil;
 
 import java.io.IOException;
@@ -63,6 +64,9 @@ public class EmployeeGUI {
     @FXML
     private ImageView imgDelete;
     @FXML
+    private ImageView imgRefresh;
+
+    @FXML
     private Button btnRole;
 
 
@@ -82,12 +86,17 @@ public class EmployeeGUI {
         imgEdit.setOnMouseClicked(event -> imgEdit());
         btnRole.setOnAction(event -> btnRole());
         hideButtonWithoutPermission();
-        ImageView imgCategory = new ImageView(new Image("img/Settings.png"));
-        imgCategory.setFitHeight(25);
-        imgCategory.setFitWidth(25);
-        btnRole.setGraphic(imgCategory);
+        ImageView imgRoles = new ImageView(Objects.requireNonNull(getClass().getClassLoader().getResource("img/Settings.png")).toString());
+        imgRoles.setFitHeight(25);
+        imgRoles.setFitWidth(25);
+        btnRole.setGraphic(imgRoles);
         btnRole.setStyle(" -fx-padding: 0");
-
+        imgRefresh.setOnMouseClicked(event -> {
+            Employee_BUS.getLocalData();
+            Role_BUS.getLocalData();
+            txtSearch.clear();
+            loadTable();
+        });
     }
 
     private void btnRole() {
@@ -163,9 +172,11 @@ public class EmployeeGUI {
             selectedEmployee = tableMain.getSelectionModel().getSelectedItem();
             isEdited = true;
             openStage("Employee_SubGUI.fxml",()->{
+                tableMain.refresh();
                 if (EmployeeSubGUI.isSaved()){
                     isEdited = false;
                     EmployeeSubGUI.setSaved(false);
+                    System.out.println(Employee_BUS.getAllEmployee());
                     loadTable();
                 }
             });
@@ -228,6 +239,7 @@ public class EmployeeGUI {
             }
         }
         tableMain.setItems(FXCollections.observableArrayList(arrEmployee));
+        tableMain.refresh();
     }
     public void hideButtonWithoutPermission(){
         int permission = Login_Controller.getAccount().getPermission();

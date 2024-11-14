@@ -9,7 +9,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.BUS.Connect_BUS;
 import milktea.milktea.DTO.MySQLConfig;
@@ -45,6 +44,7 @@ public class Connection {
         btnSave.setDisable(true);
         txtHost.setText("localhost");
         txtPort.setText("3306");
+        txtUser.setText("root");
         txtHost.textProperty().addListener((observable, oldValue, newValue) -> disableWithChange());
         txtPort.textProperty().addListener((observable, oldValue, newValue) -> disableWithChange());
         txtUser.textProperty().addListener((observable, oldValue, newValue) -> disableWithChange());
@@ -59,23 +59,22 @@ public class Connection {
         txtPassword.setDisable(!cbPassword.isSelected());
     }
 
-private void btnSave(ActionEvent actionEvent) {
-    if (ValidationUtil.isEmpty(txtHost, txtPort, txtUser)) return;
-    if (!ValidationUtil.isInt(txtPort)) return;
+    private void btnSave(ActionEvent actionEvent) {
+        if (ValidationUtil.isEmpty(txtHost, txtPort, txtUser)) return;
+        if (!ValidationUtil.isInt(txtPort)) return;
 
-    MySQLConfig config = MySQLConfig.builder()
-            .host(txtHost.getText())
-            .port(Integer.parseInt(txtPort.getText()))
-            .user(txtUser.getText())
-            .password(txtPassword.getText())
-            .build();
-
-    Connect_BUS.updateConfig(config);
-    ValidationUtil.showInfoAlert("Lưu cấu hình thành công!");
-    Stage stage = (Stage) btnSave.getScene().getWindow();
-    stage.close();
-    showLogin();
-}
+        MySQLConfig config = MySQLConfig.builder()
+                .host(txtHost.getText())
+                .port(Integer.parseInt(txtPort.getText()))
+                .user(txtUser.getText())
+                .password(txtPassword.getText())
+                .build();
+        Connect_BUS.updateConfig(config);
+        ValidationUtil.showInfoAlert("Lưu cấu hình thành công!");
+        Stage stage = (Stage) btnSave.getScene().getWindow();
+        stage.close();
+        showLogin();
+    }
 
     public void showLogin() {
         try {

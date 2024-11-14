@@ -59,7 +59,7 @@ public class Main {
 
     private void loadLocalDate() {
         if (!isLoaded) {
-            Product_BUS.getLocalProductData();
+            Product_BUS.getLocalData();
             Customer_BUS.getLocalData();
             Invoice_BUS.getLocalData();
             InvoiceDetail_BUS.getLocalData();
@@ -140,6 +140,7 @@ public class Main {
     }
 
     private void btnStatistic(ActionEvent actionEvent) {
+        ValidationUtil.showInfoAlert("Chức năng đang phát triển");
     }
 
     private void btnPromotion(ActionEvent actionEvent) {

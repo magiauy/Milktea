@@ -10,10 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Getter;
-import milktea.milktea.BUS.Ingredient_BUS;
-import milktea.milktea.BUS.InvoiceDetail_BUS;
-import milktea.milktea.BUS.Product_BUS;
-import milktea.milktea.BUS.Recipe_BUS;
+import milktea.milktea.BUS.*;
 import milktea.milktea.DTO.Product;
 import milktea.milktea.DTO.Recipe;
 import milktea.milktea.DTO.Status;
@@ -21,6 +18,7 @@ import milktea.milktea.Util.ValidationUtil;
 
 import static milktea.milktea.Util.UI_Util.openStage;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ProductGUI {
     @FXML
@@ -65,6 +63,8 @@ public class ProductGUI {
     ImageView imgAdd;
     @FXML
     ImageView imgLock;
+    @FXML
+    ImageView imgRefresh;
 
     @FXML
     Button btnSearch;
@@ -96,6 +96,7 @@ public class ProductGUI {
             }
             isEditable = true;
             openStage("Product_SubGUI.fxml", () -> {
+                isEditable = false;
                 if (!ProductSubGUI.isEdited()) return;
                 if (!Product_BUS.editProduct(ProductSubGUI.getProduct()) ||
                     !Recipe_BUS.deleteRecipe(ProductSubGUI.getRemovedRecipe()) ||
@@ -166,7 +167,9 @@ public class ProductGUI {
 
             Status newStatus = selectedProduct.getStatus().equals(Status.ACTIVE) ? Status.INACTIVE : Status.ACTIVE;
             String confirmMessage = newStatus.equals(Status.INACTIVE) ? "Bạn có chắc chắn muốn khóa sản phẩm này không?" : "Bạn có chắc chắn muốn mở khóa sản phẩm này không?";
-            String lockImage = newStatus.equals(Status.INACTIVE) ? "img/Lock.png" : "img/Padlock.png";
+            String lockImage = newStatus.equals(Status.INACTIVE) ?
+                Objects.requireNonNull(getClass().getClassLoader().getResource("img/Lock.png")).toString() :
+                Objects.requireNonNull(getClass().getClassLoader().getResource("img/Padlock.png")).toString();
 
             if (!ValidationUtil.showConfirmAlert(confirmMessage)) return;
             if (!Product_BUS.changeStatusProduct(selectedProduct.getProductId(), newStatus)) {
@@ -185,12 +188,19 @@ public class ProductGUI {
             tblProduct.refresh();
         });
         btnCategory.setOnAction(this::btnCategory);
-        ImageView imgCategory = new ImageView(new Image("img/Settings.png"));
+        ImageView imgCategory = new ImageView(Objects.requireNonNull(getClass().getClassLoader().getResource("img/Settings.png")).toString());
         imgCategory.setFitHeight(25);
         imgCategory.setFitWidth(25);
         btnCategory.setGraphic(imgCategory);
         btnCategory.setStyle(" -fx-padding: 0");
-
+        imgRefresh.setOnMouseClicked(event -> {
+            Product_BUS.getLocalData();
+            Recipe_BUS.getLocalData();
+            Category_BUS.getLocalData();
+            ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
+            tblProduct.setItems(data);
+            tblProduct.refresh();
+        });
     }
 
     private void btnCategory(ActionEvent actionEvent) {
@@ -247,7 +257,9 @@ public class ProductGUI {
             txtCategoryID.setText(product.getCategoryId());
             txtPrice.setText(String.valueOf(product.getPrice()));
             txtStatus.setText(String.valueOf(product.getStatus()));
-            imgLock.setImage(product.getStatus().equals(Status.ACTIVE)?new ImageView("img/Padlock.png").getImage():new ImageView("img/Lock.png").getImage());
+            imgLock.setImage(product.getStatus().equals(Status.ACTIVE)?
+                    new ImageView(Objects.requireNonNull(getClass().getClassLoader().getResource("img/Lock.png")).toString()).getImage()
+                    :new ImageView(Objects.requireNonNull(getClass().getClassLoader().getResource("img/Padlock.png")).toString()).getImage());
             ArrayList<Recipe> arrRecipes = (ArrayList<Recipe>) Recipe_BUS.getRecipeByProductID(product.getProductId());
             for (Recipe recipe : arrRecipes) {
                 recipe.setIngredientName(Ingredient_BUS.getIngredientNameById(recipe.getIngredientId()));

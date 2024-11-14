@@ -14,6 +14,7 @@ public class GoodsReceipt_BUS {
     private static ArrayList<GoodsReceipt> arrGoodsReceipt = new ArrayList<>();
 
     public static void getLocalData() {
+        arrGoodsReceipt.clear();
         arrGoodsReceipt = GoodsReceipt_DAO.getAllGoodsReceipt();
     }
 

@@ -65,7 +65,7 @@ public class EmployeeSubGUI {
             txtPassword.setText(EmployeeGUI.getSelectedEmployee().getPassword());
             disableRole();
             cbRole.setValue(Role_BUS.getRoleByID(EmployeeGUI.getSelectedEmployee().getRole()));
-            cbGender.setValue(String.valueOf(EmployeeGUI.getSelectedEmployee().getGender()));
+            cbGender.setValue(pickGender(EmployeeGUI.getSelectedEmployee().getGender()));
         } else {
             lblTitle.setText("Thêm nhân viên");
             txtID.setText(Employee_BUS.autoID());
@@ -102,7 +102,7 @@ public class EmployeeSubGUI {
                 .firstName(txtFirstName.getText())
                 .lastName(txtLastName.getText())
                 .phoneNumber(txtPhone.getText())
-                .gender(cbGender.getValue().equals("Nam") ? Gender.MALE : Gender.FEMALE)
+                .gender(cbGender.getValue().equals("Nam") ? Gender.MALE : cbGender.getValue().equals("Nữ")? Gender.FEMALE : Gender.OTHER)
                 .username(txtUsername.getText())
                 .password(txtPassword.getText())
                 .role(cbRole.getValue().getRoleId())
@@ -110,6 +110,7 @@ public class EmployeeSubGUI {
                 .build();
 
         if (EmployeeGUI.isEdited()) {
+            System.out.println(employee.getGender());
             handleEditEmployee(employee);
         } else {
             handleAddEmployee(employee);

@@ -66,5 +66,13 @@
             <Button fx:id="btnRole" layoutX="1056.0" layoutY="15.0" maxHeight="35.0" maxWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" />
             </children>
         </Pane>
+      <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="274.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/Refresh.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
     </children>
 </AnchorPane>

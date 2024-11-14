@@ -42,6 +42,8 @@ public class ProviderGUI {
     private ImageView imgEdit;
     @FXML
     private ImageView imgDelete;
+    @FXML
+    private ImageView imgRefresh;
 
     @Getter
     @Setter
@@ -94,6 +96,11 @@ public class ProviderGUI {
             }else {
                 ValidationUtil.showErrorAlert("Vui lòng chọn nhà cung cấp cần sửa");
             }
+        });
+        imgRefresh.setOnMouseClicked(e -> {
+            Provider_BUS.getLocalData();
+            txtSearch.clear();
+            loadProvider();
         });
     }
     public void loadProvider() {

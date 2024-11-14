@@ -57,6 +57,14 @@
                         <Image url="@../../../icon/Trash.png" />
                     </image>
                 </ImageView>
+            <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="312.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/Refresh.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             </children>
         </Pane>
         <Pane layoutX="674.0" layoutY="14.0" prefHeight="807.0" prefWidth="442.0" style="-fx-background-color: FCCFD4; -fx-border-color: black; -fx-border-radius: 5px; -fx-background-radius: 5px;">

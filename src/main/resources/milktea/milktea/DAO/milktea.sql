@@ -38,9 +38,9 @@ INSERT IGNORE INTO `category` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `customer` (
   `id` varchar(10) NOT NULL,
   `point` decimal(20,0) DEFAULT NULL,
-  KEY `id` (`id`),
-  CONSTRAINT `FK_customer_person` FOREIGN KEY (`id`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- Dumping data for table milktea.customer: ~10 rows (approximately)
 INSERT IGNORE INTO `customer` (`id`, `point`) VALUES
@@ -63,9 +63,8 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `roleId` varchar(10) DEFAULT NULL,
   `status` enum('ACTIVE','INACTIVE') DEFAULT NULL,
   KEY `id` (`id`),
-  KEY `roleId` (`roleId`),
-  CONSTRAINT `FK_employee_person` FOREIGN KEY (`id`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_employee_role` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `roleId` (`roleId`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.employee: ~4 rows (approximately)
@@ -84,9 +83,7 @@ CREATE TABLE IF NOT EXISTS `goodsreceipt` (
   `total` decimal(20,0) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `providerId` (`providerId`),
-  KEY `employeeId` (`employeeId`),
-  CONSTRAINT `FK_goodsreceipt_employee` FOREIGN KEY (`employeeId`) REFERENCES `employee` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_goodsreceipt_provider` FOREIGN KEY (`providerId`) REFERENCES `provider` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `employeeId` (`employeeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.goodsreceipt: ~1 rows (approximately)
@@ -103,9 +100,7 @@ CREATE TABLE IF NOT EXISTS `goodsreceiptdetail` (
   `price` decimal(20,0) DEFAULT NULL,
   `total` decimal(20,0) DEFAULT NULL,
   KEY `goodsReceiptId` (`goodsReceiptId`),
-  KEY `ingredientId` (`ingredientId`),
-  CONSTRAINT `FK_goodsreceiptdetail_goodsreceipt` FOREIGN KEY (`goodsReceiptId`) REFERENCES `goodsreceipt` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_goodsreceiptdetail_ingredient` FOREIGN KEY (`ingredientId`) REFERENCES `ingredient` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `ingredientId` (`ingredientId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.goodsreceiptdetail: ~2 rows (approximately)
@@ -212,10 +207,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   PRIMARY KEY (`invoiceId`),
   KEY `employeeId` (`employeeId`),
   KEY `customerId` (`customerId`),
-  KEY `promotionId` (`promotionId`),
-  CONSTRAINT `FK_invoice_person` FOREIGN KEY (`employeeId`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_invoice_person_2` FOREIGN KEY (`customerId`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_invoice_promotion` FOREIGN KEY (`promotionId`) REFERENCES `promotion` (`promotionId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `promotionId` (`promotionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.invoice: ~1 rows (approximately)
@@ -230,9 +222,7 @@ CREATE TABLE IF NOT EXISTS `invoicedetail` (
   `unitPrice` decimal(20,0) DEFAULT NULL,
   `totalPrice` decimal(20,0) DEFAULT NULL,
   KEY `invoiceId` (`invoiceId`),
-  KEY `productId` (`productId`),
-  CONSTRAINT `FK_invoicedetail_invoice` FOREIGN KEY (`invoiceId`) REFERENCES `invoice` (`invoiceId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_invoicedetail_product` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `productId` (`productId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.invoicedetail: ~1 rows (approximately)
@@ -274,8 +264,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `price` decimal(20,0) DEFAULT NULL,
   `Status` enum('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
   PRIMARY KEY (`productId`),
-  KEY `categoryId` (`categoryId`),
-  CONSTRAINT `FK_product_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `categoryId` (`categoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.product: ~52 rows (approximately)
@@ -340,8 +329,7 @@ CREATE TABLE IF NOT EXISTS `promotion` (
   `discount` decimal(20,0) DEFAULT NULL,
   `minimumPrice` decimal(20,0) DEFAULT NULL,
   PRIMARY KEY (`promotionId`),
-  KEY `promotionProgramId` (`promotionProgramId`),
-  CONSTRAINT `FK_promotion_promotionprogram` FOREIGN KEY (`promotionProgramId`) REFERENCES `promotionprogram` (`promotionProgramId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `promotionProgramId` (`promotionProgramId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.promotion: ~4 rows (approximately)
@@ -437,9 +425,7 @@ CREATE TABLE IF NOT EXISTS `recipe` (
   `unit` enum('GRAM','KILOGRAM','LITER','MILLILITER') DEFAULT NULL,
   PRIMARY KEY (`productId`,`ingredientId`) USING BTREE,
   KEY `productId` (`productId`),
-  KEY `ingredientId` (`ingredientId`),
-  CONSTRAINT `FK_recipe_ingredient` FOREIGN KEY (`ingredientId`) REFERENCES `ingredient` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_recipe_product` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `ingredientId` (`ingredientId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table milktea.recipe: ~143 rows (approximately)
@@ -601,6 +587,39 @@ INSERT IGNORE INTO `role` (`roleId`, `roleName`, `access`) VALUES
 	('R01', 'Owner', 70016),
 	('R02', 'Admin', 45055),
 	('R03', 'Employee', 17023);
+
+ALTER TABLE `customer`
+    ADD CONSTRAINT `FK_customer_person` FOREIGN KEY (`id`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `employee`
+    ADD CONSTRAINT `FK_employee_person` FOREIGN KEY (`id`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `FK_employee_role` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `goodsreceipt`
+    ADD CONSTRAINT `FK_goodsreceipt_employee` FOREIGN KEY (`employeeId`) REFERENCES `employee` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `FK_goodsreceipt_provider` FOREIGN KEY (`providerId`) REFERENCES `provider` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `goodsreceiptdetail`
+    ADD CONSTRAINT `FK_goodsreceiptdetail_goodsreceipt` FOREIGN KEY (`goodsReceiptId`) REFERENCES `goodsreceipt` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `FK_goodsreceiptdetail_ingredient` FOREIGN KEY (`ingredientId`) REFERENCES `ingredient` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `invoice`
+    ADD CONSTRAINT `FK_invoice_person` FOREIGN KEY (`employeeId`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `FK_invoice_person_2` FOREIGN KEY (`customerId`) REFERENCES `person` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `FK_invoice_promotion` FOREIGN KEY (`promotionId`) REFERENCES `promotion` (`promotionId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `invoicedetail`
+    ADD CONSTRAINT `FK_invoicedetail_invoice` FOREIGN KEY (`invoiceId`) REFERENCES `invoice` (`invoiceId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `FK_invoicedetail_product` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `product`
+    ADD CONSTRAINT `FK_product_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `promotion`
+    ADD CONSTRAINT `FK_promotion_promotionprogram` FOREIGN KEY (`promotionProgramId`) REFERENCES `promotionprogram` (`promotionProgramId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `recipe`
+    ADD CONSTRAINT `FK_recipe_ingredient` FOREIGN KEY (`ingredientId`) REFERENCES `ingredient` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `FK_recipe_product` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+
+
+
+
+
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

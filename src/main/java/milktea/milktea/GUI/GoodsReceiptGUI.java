@@ -46,6 +46,8 @@ public class GoodsReceiptGUI {
     @FXML
     TableColumn<GoodsReceiptDetail, String> colGoodsReceiptDetailQuantity;
     @FXML
+    TableColumn<GoodsReceiptDetail, String> getColGoodsReceiptDetailUnit;
+    @FXML
     TableColumn<GoodsReceiptDetail, String> colGoodsReceiptDetailPrice;
     @FXML
     TableColumn<GoodsReceiptDetail, String> colGoodsReceiptDetailTotal;
@@ -240,6 +242,7 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
             return new SimpleStringProperty(String.valueOf(index));
         });
         GoodsReceiptTableCol(colGoodsReceiptDetailIngredientName, colGoodsReceiptDetailQuantity, colGoodsReceiptDetailPrice, colGoodsReceiptDetailTotal);
+        getColGoodsReceiptDetailUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tblGoodsReceiptDetail.setItems(FXCollections.observableArrayList(arrGoodsReceiptDetail));
     }
 
@@ -304,6 +307,8 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
         btnSearchGoodsReceipt.setOnAction(this::SearchGoodsReceipt);
         advancedSearch.setOnAction(this::AdvancedSearch);
         imgRefresh.setOnMouseClicked(event1 -> {
+            GoodsReceipt_BUS.getLocalData();
+            GoodsReceiptDetail_BUS.getLocalData();
             loadGoodsReceipt();
             initTableGoodsReceiptDetail();
             Clear1(new ActionEvent());
@@ -357,10 +362,7 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
     public void initTableGoodsReceiptDetail(){
         colGoodsReceiptDetailIngredientId1.setCellValueFactory(new PropertyValueFactory<>("ingredientId"));
         GoodsReceiptTableCol(colGoodsReceiptDetailIngredientName1, colGoodsReceiptDetailQuantity1, colGoodsReceiptDetailPrice1, colGoodsReceiptDetailTotal1);
-        colGoodsReceiptDetailUnit1.setCellValueFactory(cellData -> {
-            Ingredient ingredient = Ingredient_BUS.getIngredientById(cellData.getValue().getIngredientId());
-            return new SimpleStringProperty(ingredient.getUnit().name());
-        });
+        colGoodsReceiptDetailUnit1.setCellValueFactory(new PropertyValueFactory<>("unit"));
     }
 
     private void GoodsReceiptTableCol(TableColumn<GoodsReceiptDetail, String> colGoodsReceiptDetailIngredientName1, TableColumn<GoodsReceiptDetail, String> colGoodsReceiptDetailQuantity1, TableColumn<GoodsReceiptDetail, String> colGoodsReceiptDetailPrice1, TableColumn<GoodsReceiptDetail, String> colGoodsReceiptDetailTotal1) {

@@ -101,10 +101,11 @@
                               <TableView fx:id="tblGoodsReceiptDetail" layoutX="21.0" layoutY="168.0" prefHeight="451.0" prefWidth="378.0" stylesheets="@../../../css/style.css">
                                 <columns>
                                   <TableColumn fx:id="colGoodsReceiptDetailStt" prefWidth="35.0" text="STT" />
-                                  <TableColumn fx:id="colGoodsReceiptDetailIngredientName" prefWidth="115.0" text="Tên NL" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailQuantity" prefWidth="75.0" text="Số lượng" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailPrice" prefWidth="75.0" text="Đơn giá" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailTotal" prefWidth="77.0" text="Thành tiền" />
+                                  <TableColumn fx:id="colGoodsReceiptDetailIngredientName" prefWidth="75.0" text="Tên NL" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailQuantity" prefWidth="64.0" text="Số lượng" />
+                                    <TableColumn fx:id="getColGoodsReceiptDetailUnit" prefWidth="68.0" text="Đơn vị" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailPrice" prefWidth="58.0" text="Đơn giá" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailTotal" prefWidth="76.0" text="Thành tiền" />
                                 </columns>
                               </TableView>
                            </children>
@@ -136,7 +137,7 @@
                               <TextField fx:id="txtSearchGoodsReceipt" layoutX="456.0" layoutY="58.0" promptText="Nhập Mã PN/NCC/NV" />
                               <Button fx:id="btnSearchGoodsReceipt" layoutX="605.0" layoutY="58.0" mnemonicParsing="false" text="Tìm" />
                               <Button fx:id="advancedSearch" layoutX="14.0" layoutY="59.0" mnemonicParsing="false" text="Tìm kiếm nâng cao" />
-                              <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="129.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imgRefresh" fitHeight="25.0" fitWidth="25.0" layoutX="132.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../img/Refresh.png" />
                                  </image>
@@ -148,14 +149,14 @@
                         </Pane>
                         <Pane layoutX="681.0" layoutY="14.0" prefHeight="775.0" prefWidth="435.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
                            <children>
-                              <TableView fx:id="tblGoodsReceiptDetail1" layoutX="13.0" layoutY="190.0" prefHeight="519.0" prefWidth="411.0">
+                              <TableView fx:id="tblGoodsReceiptDetail1" layoutX="13.0" layoutY="190.0" prefHeight="519.0" prefWidth="411.0" stylesheets="@../../../css/style.css">
                                  <columns>
-                                    <TableColumn fx:id="colGoodsReceiptDetailIngredientId1" prefWidth="75.0" text="Mã NL" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailIngredientName1" prefWidth="82.0" text="Tên NL" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailQuantity1" prefWidth="68.0" text="Số Lượng" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailUnit1" prefWidth="60.0" text="Đơn Vị" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailPrice1" prefWidth="54.0" text="Đơn giá" />
-                                    <TableColumn fx:id="colGoodsReceiptDetailTotal1" prefWidth="71.0" text="Thành Tiền" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailIngredientId1" prefWidth="57.0" text="Mã NL" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailIngredientName1" prefWidth="85.0" text="Tên NL" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailQuantity1" prefWidth="70.0" text="Số Lượng" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailUnit1" prefWidth="63.0" text="Đơn Vị" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailPrice1" prefWidth="57.0" text="Đơn giá" />
+                                    <TableColumn fx:id="colGoodsReceiptDetailTotal1" prefWidth="78.0" text="Thành Tiền" />
                                  </columns>
                               </TableView>
                               <Label layoutX="97.0" layoutY="14.0" text="Chi Tiết Phiếu Nhập">

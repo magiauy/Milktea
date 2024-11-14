@@ -10,24 +10,8 @@ import java.util.ArrayList;
 public class Promotion_BUS {
     private static ArrayList<Promotion> arrPromotion = new ArrayList<>();
 
-    public static void addListener(){
-        ObservableList<Promotion> observableList = FXCollections.observableArrayList();
-        observableList.addAll(arrPromotion);
-        observableList.addListener((ListChangeListener<Promotion>) change -> {
-            while (change.next()){
-                if (change.wasAdded()){
-                    System.out.println("Added");
-                }
-                if (change.wasRemoved()){
-                    System.out.println("Removed");
-                }
-                if (change.wasUpdated()){
-                    System.out.println("Updated");
-                }
-            }
-        });
-    }
     public static void getLocalData(){
+        arrPromotion.clear();
         arrPromotion = Promotion_DAO.getAllPromotion();
     }
     public static ArrayList<Promotion> getAllPromotion(){

@@ -10,6 +10,7 @@ public class PromotionProgram_BUS {
     private static ArrayList<PromotionProgram> arrPromotionProgram = new ArrayList<>();
 
     public static void getLocalData(){
+        arrPromotionProgram.clear();
         arrPromotionProgram = PromotionProgram_DAO.getAllPromotionProgram();
     }
     public static ArrayList<PromotionProgram> getAllPromotionProgram(){

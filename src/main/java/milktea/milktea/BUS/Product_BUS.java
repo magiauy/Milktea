@@ -13,8 +13,9 @@ public class Product_BUS {
     private static final ArrayList<Product> arrProducts = new ArrayList<>();
     private static final HashMap<String, Product> mapProducts = new HashMap<>();
 
-    public static void getLocalProductData() {
+    public static void getLocalData() {
         arrProducts.clear();
+        mapProducts.clear();
         arrProducts.addAll(Product_DAO.getAllProduct());
         for (Product product : arrProducts) {
             mapProducts.put(product.getProductId(), product);

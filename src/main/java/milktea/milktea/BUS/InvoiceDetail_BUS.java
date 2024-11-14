@@ -11,6 +11,7 @@ public class InvoiceDetail_BUS {
     private static ArrayList<InvoiceDetail> arrInvoiceDetail = new ArrayList<>();
 
     public static void getLocalData(){
+        arrInvoiceDetail.clear();
         arrInvoiceDetail = InvoiceDetail_DAO.getAllInvoiceDetail();
     }
     public static boolean addInvoiceDetail(ArrayList<InvoiceDetail> invoiceDetails){

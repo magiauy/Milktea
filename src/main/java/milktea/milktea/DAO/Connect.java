@@ -9,6 +9,7 @@ import milktea.milktea.DTO.Gender;
 import milktea.milktea.DTO.MySQLConfig;
 import milktea.milktea.DTO.Status;
 import milktea.milktea.DTO.Unit;
+import milktea.milktea.Util.ValidationUtil;
 
 import java.io.*;
 import java.sql.*;
@@ -21,30 +22,67 @@ public class Connect {
     private static String DATABASE_USER ;
     private static String DATABASE_PASSWORD = "";
     protected static Connection connection = null;
-    private static final String filePath = "src/main/resources/connect.json";
+    private static final String filePath = "connect.json";
 
     static {
         loadConfig();
     }
 
-    public static boolean loadConfig() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            JsonNode rootNode = objectMapper.readTree(new File(filePath));
-            JsonNode mysqlNode = rootNode.path("mysql");
-            MySQLConfig config = objectMapper.treeToValue(mysqlNode, MySQLConfig.class);
-            DATABASE = config.getDatabase();
-            DATABASE_URL = "jdbc:mysql://" + config.getHost() + ":" + config.getPort() + "/";
-            DATABASE_USER = config.getUser();
-            DATABASE_PASSWORD = config.getPassword();
-            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
-            closeConnection();
-            return true;
-        } catch (IOException | SQLException e) {
-            log.error("Failed to load database configuration");
+public static boolean loadConfig() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    InputStream is = null;
+    try {
+        // Try to load the configuration from the resource path
+        is = Connect.class.getClassLoader().getResourceAsStream(filePath);
+        if (is == null) {
+            log.error("Resource not found: {}", filePath);
             return false;
         }
+        JsonNode rootNode = objectMapper.readTree(is);
+        JsonNode mysqlNode = rootNode.path("mysql");
+        MySQLConfig config = objectMapper.treeToValue(mysqlNode, MySQLConfig.class);
+        DATABASE = config.getDatabase();
+        DATABASE_URL = "jdbc:mysql://" + config.getHost() + ":" + config.getPort() + "/";
+        DATABASE_USER = config.getUser();
+        DATABASE_PASSWORD = config.getPassword();
+        connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+        closeConnection();
+        return true;
+    } catch (IOException | SQLException e) {
+        log.error("Failed to load database configuration from resource, trying external file", e);
+        try {
+            // If resource is not found or connection fails, try to load from an external file
+            File externalFile = new File(filePath);
+            if (externalFile.exists()) {
+                is = new FileInputStream(externalFile);
+                JsonNode rootNode = objectMapper.readTree(is);
+                JsonNode mysqlNode = rootNode.path("mysql");
+                MySQLConfig config = objectMapper.treeToValue(mysqlNode, MySQLConfig.class);
+                DATABASE = config.getDatabase();
+                DATABASE_URL = "jdbc:mysql://" + config.getHost() + ":" + config.getPort() + "/";
+                DATABASE_USER = config.getUser();
+                DATABASE_PASSWORD = config.getPassword();
+                connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+                closeConnection();
+                return true;
+            } else {
+                log.error("External file not found: {}", filePath);
+                return false;
+            }
+        } catch (IOException | SQLException ex) {
+            log.error("Failed to load database configuration from external file", ex);
+            return false;
+        }
+    } finally {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (IOException e) {
+                log.error("Failed to close InputStream", e);
+            }
+        }
     }
+}
 
     public static boolean checkConnection(MySQLConfig config) {
         try {
@@ -56,22 +94,26 @@ public class Connect {
     }
     public static void updateConfig(MySQLConfig newConfig) {
         ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            // Read the existing JSON file
-            JsonNode rootNode = objectMapper.readTree(new File(filePath));
+        try (InputStream is = Connect.class.getClassLoader().getResourceAsStream(filePath)) {
+            if (is == null) {
+                log.error("Resource not found: " + filePath);
+                return;
+            }
+            JsonNode rootNode = objectMapper.readTree(is);
             JsonNode mysqlNode = rootNode.path("mysql");
             DATABASE_URL = "jdbc:mysql://" + newConfig.getHost() + ":" + newConfig.getPort() + "/";
             DATABASE_USER = newConfig.getUser();
             DATABASE_PASSWORD = newConfig.getPassword();
-            // Update the fields with new values
             ((ObjectNode) mysqlNode).put("host", newConfig.getHost());
             ((ObjectNode) mysqlNode).put("port", newConfig.getPort());
             ((ObjectNode) mysqlNode).put("user", newConfig.getUser());
             ((ObjectNode) mysqlNode).put("password", newConfig.getPassword());
-            // Write the updated JSON back to the file
-            objectMapper.writeValue(new File(filePath), rootNode);
+
+            try (OutputStream os = new FileOutputStream(filePath)) {
+                objectMapper.writeValue(os, rootNode);
+            }
         } catch (IOException e) {
-            log.error("Failed to update database configuration");
+            log.error("Failed to update database configuration", e);
         }
     }
 

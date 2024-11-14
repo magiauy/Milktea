@@ -45,6 +45,8 @@ public class IngredientGUI {
     ImageView imgDelete;
     @FXML
     ImageView imgLock;
+    @FXML
+    ImageView imgRefresh;
 
     @FXML
     TextField txtSearch;
@@ -72,6 +74,7 @@ public class IngredientGUI {
                 selectedIngredient = tableMain.getSelectionModel().getSelectedItem();
                 isEditable = true;
                 openStage("Ingredient_SubGUI.fxml", () -> {
+                    isEditable = false;
                     if (IngredientSubGUI.isEdited()) {
                             ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
                             tableMain.setItems(data);
@@ -148,6 +151,13 @@ public class IngredientGUI {
                 ValidationUtil.showErrorAlert("Vui lòng chọn nguyên liệu cần khóa");
             }
         });
+        imgRefresh.setOnMouseClicked(event -> {
+            Ingredient_BUS.getLocalData();
+            txtSearch.setText("");
+            ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
+            tableMain.setItems(data);
+            tableMain.refresh();
+        });
     }
 
     public void createTable() {
@@ -158,6 +168,7 @@ public class IngredientGUI {
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
         tableMain.setItems(data);
+        tableMain.refresh();
     }
     public void hideButtonWithoutPermission(){
         int permission = Login_Controller.getAccount().getPermission();
