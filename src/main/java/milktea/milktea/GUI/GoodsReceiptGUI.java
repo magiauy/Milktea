@@ -315,6 +315,8 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
             loadGoodsReceipt();
             initTableGoodsReceiptDetail();
             Clear1(new ActionEvent());
+            ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
         });
     }
 

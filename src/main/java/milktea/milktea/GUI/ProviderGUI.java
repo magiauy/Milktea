@@ -101,6 +101,8 @@ public class ProviderGUI {
             Provider_BUS.getLocalData();
             txtSearch.clear();
             loadProvider();
+            ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
         });
     }
     public void loadProvider() {

@@ -1,63 +1,15 @@
 package milktea.milktea.Util;
 
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
+
 import lombok.NonNull;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.Objects;
+
 
 public class ValidationUtil {
 
-    public static boolean validateCustomerFields(String id, String firstName, String lastName, String phone, boolean isGenderSelected) {
-        boolean valid = true;
-        boolean alert = false;
-
-        if (id.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || !isGenderSelected) {
-            showErrorAlert("Please fill all the fields");
-            valid = false;
-            alert = true;
-        }
-
-        if (!firstName.matches("^[^\\s\\d\\W][^\\d\\W]*$")) {
-            if (!alert) {
-                showErrorAlert("FirstName must not contain number or special character");
-                valid = false;
-                alert = true;
-            }
-        }
-        if (!lastName.matches("^[^\\s\\d\\W][^\\d\\W]*$")) {
-            if (!alert) {
-                showErrorAlert("LastName must not contain number or special character");
-                alert = true;
-                valid = false;
-            }
-        }
-        if (!phone.matches("^0.*")) {
-            if (!alert) {
-                showErrorAlert("PhoneNumber must start with 0");
-                alert = true;
-                valid = false;
-            }
-        }
-        if (!phone.matches("[0-9]+")) {
-            if (!alert) {
-                showErrorAlert("PhoneNumber must be a number");
-                alert = true;
-                valid = false;
-            }
-        }
-        if (phone.length() != 10) {
-            if (!alert) {
-                showErrorAlert("Phone must have 10 digits");
-                alert = true;
-                valid = false;
-            }
-        }
-        System.out.println(valid);
-        return valid;
-    }
 
     public static void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

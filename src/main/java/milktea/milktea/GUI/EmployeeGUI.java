@@ -1,6 +1,7 @@
 package milktea.milktea.GUI;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,12 +17,11 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import milktea.milktea.BUS.Employee_BUS;
-import milktea.milktea.BUS.GoodsReceipt_BUS;
-import milktea.milktea.BUS.Invoice_BUS;
-import milktea.milktea.BUS.Role_BUS;
+import milktea.milktea.BUS.*;
 import milktea.milktea.DTO.Employee;
+import milktea.milktea.DTO.Product;
 import milktea.milktea.DTO.Role;
+import milktea.milktea.DTO.Status;
 import milktea.milktea.Util.ValidationUtil;
 
 import java.io.IOException;
@@ -65,6 +65,8 @@ public class EmployeeGUI {
     private ImageView imgDelete;
     @FXML
     private ImageView imgRefresh;
+    @FXML
+    private ImageView imgLock;
 
     @FXML
     private Button btnRole;
@@ -96,6 +98,41 @@ public class EmployeeGUI {
             Role_BUS.getLocalData();
             txtSearch.clear();
             loadTable();
+            ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
+        });
+        imgLock.setOnMouseClicked(event -> {
+            Employee employee = tableMain.getSelectionModel().getSelectedItem();
+            if (employee == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn sản phẩm cần khóa");
+                return;
+            }
+            if (employee.getId().equals(Login_Controller.getAccount().getId())) {
+                ValidationUtil.showErrorAlert("Không thể khóa tài khoản đang đăng nhập");
+                return;
+            }
+
+            Status newStatus = employee.getStatus().equals(Status.ACTIVE) ? Status.INACTIVE : Status.ACTIVE;
+            String confirmMessage = newStatus.equals(Status.INACTIVE) ? "Bạn có chắc chắn muốn khóa sản phẩm này không?" : "Bạn có chắc chắn muốn mở khóa sản phẩm này không?";
+            String lockImage = newStatus.equals(Status.INACTIVE) ?
+                    Objects.requireNonNull(getClass().getClassLoader().getResource("img/Lock.png")).toString() :
+                    Objects.requireNonNull(getClass().getClassLoader().getResource("img/Padlock.png")).toString();
+
+            if (!ValidationUtil.showConfirmAlert(confirmMessage)) return;
+            if (!Employee_BUS.updateStatus(employee.getId(), newStatus)) {
+                ValidationUtil.showInfoAlert("Khóa sản phẩm thất bại");
+                return;
+            }
+            if (!Employee_BUS.updateStatusLocal(employee.getId(), newStatus)) {
+                ValidationUtil.showInfoAlert("Khóa sản phẩm thất bại");
+                return;
+            }
+
+            employee.setStatus(newStatus);
+            imgLock.setImage(new ImageView(lockImage).getImage());
+            ObservableList<Employee> data = FXCollections.observableArrayList(Employee_BUS.getAllEmployee());
+            tableMain.setItems(data);
+            tableMain.refresh();
         });
     }
 
@@ -222,6 +259,13 @@ public class EmployeeGUI {
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        tableMain.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                imgLock.setImage(newValue.getStatus().equals(Status.ACTIVE)?
+                        new ImageView(Objects.requireNonNull(getClass().getClassLoader().getResource("img/Lock.png")).toString()).getImage()
+                        :new ImageView(Objects.requireNonNull(getClass().getClassLoader().getResource("img/Padlock.png")).toString()).getImage());
+            }
+        });
         ArrayList<Employee> arrEmployee = new ArrayList<>(Employee_BUS.getAllEmployee());
         Iterator<Employee> iterator = arrEmployee.iterator();
 
@@ -241,6 +285,7 @@ public class EmployeeGUI {
         tableMain.setItems(FXCollections.observableArrayList(arrEmployee));
         tableMain.refresh();
     }
+
     public void hideButtonWithoutPermission(){
         int permission = Login_Controller.getAccount().getPermission();
         if (!Main.checkRolePermission(permission,14)){

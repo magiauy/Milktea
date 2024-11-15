@@ -157,6 +157,8 @@ public class IngredientGUI {
             ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
             tableMain.setItems(data);
             tableMain.refresh();
+            ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
         });
     }
 

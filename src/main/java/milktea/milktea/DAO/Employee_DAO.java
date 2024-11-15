@@ -47,7 +47,7 @@ public class Employee_DAO extends Connect {
 
     public static boolean addEmployee(Employee employee) {
         boolean result = false;
-        if (openConnection("Employee")) {
+        if (openConnection()) {
             try {
                 String sql = "Insert into person values(?,?,?,?,?)";
                 String sql2 = "Insert into employee values(?,?,?,?,?)";
@@ -81,7 +81,7 @@ public class Employee_DAO extends Connect {
 
 public static boolean editEmployee(Employee employee) {
     boolean result = false;
-    if (openConnection("Employee")) {
+    if (openConnection()) {
         try {
             String sql = "Update person set firstName = ?, lastName = ?, gender = ?, phoneNumber = ? where id = ?";
             String sql2 = "Update employee set username = ?, password = ?, roleId = ?, status = ? where id = ?";
@@ -115,7 +115,7 @@ public static boolean editEmployee(Employee employee) {
 
 public static boolean updateStatus(String id, Status status) {
     boolean result = false;
-    if (openConnection("Employee")) {
+    if (openConnection()) {
         try {
             String sql = "Update employee set status = ? where id = ?";
 
@@ -140,7 +140,7 @@ public static boolean updateStatus(String id, Status status) {
 
     public static boolean deleteEmployee(String id) {
         boolean result = false;
-        if (openConnection("Employee")) {
+        if (openConnection()) {
             try {
                 String sql = "Delete from employee where id = ?";
                 String sql2 = "Delete from person where id = ?";

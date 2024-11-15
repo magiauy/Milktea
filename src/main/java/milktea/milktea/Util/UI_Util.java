@@ -26,7 +26,7 @@ public class UI_Util {
             stage.setTitle("Your Dialog Title"); // Set an appropriate title
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setOnHidden(event -> onCloseCallback.run());// Set the onCloseCallback
-
+            stage.getIcons().add(new javafx.scene.image.Image("img/logo.png"));
             stage.setScene(new Scene(anchorPane));
 
             stage.showAndWait(); // Display the stage

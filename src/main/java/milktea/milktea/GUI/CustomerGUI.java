@@ -65,6 +65,7 @@ public class CustomerGUI {
         Customer_BUS.getLocalData();
         txtSearch.clear();
         refreshTable();
+        ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
     }
 
     private void btnDelete(MouseEvent event) {

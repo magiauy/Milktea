@@ -804,6 +804,8 @@ public class InvoiceGUI {
             InvoiceDetail_BUS.getLocalData();
             loadTableInvoice();
             btnClearInvoice.fire();
+            ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
         });
     }
     public void loadTableInvoice(){

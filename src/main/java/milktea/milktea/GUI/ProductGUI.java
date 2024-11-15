@@ -85,6 +85,7 @@ public class ProductGUI {
             String search = txtSearch.getText();
             ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.searchProduct(search));
             tblProduct.setItems(data);
+
         });
         btnClear.setOnAction(this::onClear);
         hideButtonWithoutPermission();
@@ -200,6 +201,8 @@ public class ProductGUI {
             ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
             tblProduct.setItems(data);
             tblProduct.refresh();
+            ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
         });
     }
 

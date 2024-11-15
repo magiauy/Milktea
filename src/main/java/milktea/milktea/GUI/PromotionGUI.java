@@ -138,6 +138,8 @@ public class PromotionGUI {
             txtSearch.clear();
             loadPromotionProgram();
             btnClear.fire();
+            ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
         });
     }
 

@@ -108,4 +108,23 @@ public class Employee_BUS {
     public static void addEmployeeLocal(Employee employee) {
         arrEmployee.add(employee);
     }
+
+    public static boolean updateStatusLocal(String id, Status newStatus) {
+        for (Employee employee : arrEmployee) {
+            if (employee.getId().equals(id)) {
+                employee.setStatus(newStatus);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean getStatus(String text) {
+        for (Employee employee : arrEmployee) {
+            if (employee.getUsername().equals(text)) {
+                return employee.getStatus().equals(Status.ACTIVE);
+            }
+        }
+        return false;
+    }
 }

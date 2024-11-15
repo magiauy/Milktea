@@ -40,7 +40,7 @@ public class Category_DAO extends Connect{
     }
     public static boolean addCategory(Category category){
         boolean result = false;
-        if(openConnection("Category")){
+        if(openConnection()){
         try{
         String sql = "Insert into category values(?,?)";
 
@@ -63,7 +63,7 @@ public class Category_DAO extends Connect{
     }
     public static boolean editCategory(Category category){
         boolean result = false;
-        if(openConnection("Category")){
+        if(openConnection()){
         try{
         String sql = "Update category set name = ? where id = ?";
 
@@ -87,7 +87,7 @@ public class Category_DAO extends Connect{
 
     public static boolean deleteCategory(String id) {
         boolean result = false;
-        if(openConnection("Category")){
+        if(openConnection()){
             try{
                 String sql = "Delete from category where id = ?";
 

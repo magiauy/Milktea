@@ -130,6 +130,13 @@ public boolean validate() {
             alert = true;
         }
         valid = false;
+    }else if (!Employee_BUS.getStatus(txtUsername.getText())) {
+        txtUsername.getStyleClass().add("error");
+        if (!alert) {
+            ValidationUtil.showErrorAlert("Tài khoản đã bị khóa");
+            alert = true;
+        }
+        valid = false;
     }
     if (!Employee_BUS.checkLogin(txtUsername.getText(), txtPassword.getText())) {
         txtPassword.getStyleClass().add("error");
@@ -139,6 +146,8 @@ public boolean validate() {
         }
         valid = false;
     }
+
+
     return valid;
 }
 
