@@ -14,7 +14,6 @@ import milktea.milktea.Util.ValidationUtil;
 import milktea.milktea.BUS.Product_BUS;
 import javafx.application.Platform;
 
-import java.util.ArrayList;
 
 import static milktea.milktea.Util.UI_Util.openStage;
 

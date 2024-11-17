@@ -123,8 +123,27 @@ public class InvoiceGUI {
         txtEmployeeId.setText(Login_Controller.getAccount().getId());
         txtEmployeeName.setText(Login_Controller.getAccount().getLastName());
 
-        txtCustomerId.setText(Customer_BUS.getAllCustomer().getFirst().getId());
-        txtCustomerName.setText(Customer_BUS.getAllCustomer().getFirst().getLastName());
+        Customer_BUS.getAllCustomer().stream()
+            .filter(customer -> "KH000".equals(customer.getId()))
+            .findFirst()
+            .ifPresentOrElse(
+                customer -> {
+                    txtCustomerId.setText(customer.getId());
+                    txtCustomerName.setText(customer.getLastName());
+                },
+                () -> {
+                    Customer_BUS.addCustomer(Customer.builder()
+                            .id("KH000")
+                            .lastName("Vãng Lai")
+                                    .firstName("")
+                                    .point(BigDecimal.ZERO)
+                                    .phoneNumber("")
+                                    .gender(Gender.OTHER)
+                            .build());
+                     txtCustomerId.setText("KH000");
+                     txtCustomerName.setText("Vãng Lai");
+                }
+            );
 
         LocalDate currentDate = LocalDate.now();
         txtCurrentDate.setText(currentDate.toString());
@@ -208,8 +227,13 @@ public class InvoiceGUI {
         if (!ValidationUtil.isInvalidSearch(txtProductSearch)) {
             if (!txtProductSearch.getText().isEmpty()) {
                 arrProducts.clear();
-                arrProducts.addAll(Product_BUS.searchProduct(txtProductSearch.getText()));
-                productPane.setContent(createListProduct());
+                ArrayList<Product> products = new ArrayList<>(Product_BUS.searchProduct(txtProductSearch.getText()));
+                if (products.isEmpty()) {
+                    ValidationUtil.showErrorAlert("Không tìm thấy sản phẩm");
+                } else {
+                    arrProducts.addAll(products);
+                    productPane.setContent(createListProduct());
+                }
             } else {
                 arrProducts.clear();
                 arrProducts.addAll(Product_BUS.getAllProduct());
@@ -778,8 +802,13 @@ public class InvoiceGUI {
         btnSearchInvoice.setOnAction(event -> {
             if (!ValidationUtil.isInvalidSearch(txtSearchInvoice)) {
                 if (!txtSearchInvoice.getText().isEmpty()) {
-                    ObservableList<Invoice> invoices = FXCollections.observableList(Invoice_BUS.searchInvoice(txtSearchInvoice.getText()));
-                    tblInvoice.setItems(invoices);
+                    ArrayList<Invoice> invoices = new ArrayList<>(Invoice_BUS.searchInvoice(txtSearchInvoice.getText()));
+                    if (invoices.isEmpty()) {
+                        ValidationUtil.showErrorAlert("Không tìm thấy kết quả");
+                        return;
+                    }
+                    ObservableList<Invoice> data = FXCollections.observableList(invoices);
+                    tblInvoice.setItems(data);
                     tblInvoice.refresh();
                 } else {
                     loadTableInvoice();

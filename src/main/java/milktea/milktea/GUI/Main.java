@@ -140,7 +140,7 @@ public class Main {
     }
 
     private void btnStatistic(ActionEvent actionEvent) {
-        ValidationUtil.showInfoAlert("Chức năng đang phát triển");
+        loadFXML("Statistics_GUI.fxml");
     }
 
     private void btnPromotion(ActionEvent actionEvent) {

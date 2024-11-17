@@ -1,8 +1,5 @@
 package milktea.milktea.BUS;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import milktea.milktea.DAO.Promotion_DAO;
 import milktea.milktea.DTO.Promotion;
 

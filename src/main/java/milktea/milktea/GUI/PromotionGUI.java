@@ -107,12 +107,14 @@ public class PromotionGUI {
                 if (PromotionProgramSubGUI.isEdited()) {
                     loadPromotionProgram();
                     PromotionProgramSubGUI.setEdited(false);
+                    selectedPromotionProgram = null;
                 }
             });
         });
 
         imgDelete.setOnMouseClicked(event -> {
             if (selectedPromotionProgram == null) {
+                ValidationUtil.showErrorAlert("Chọn chương trình khuyến mãi cần xóa");
                 return;
             }
             if (!ValidationUtil.showConfirmAlert("Bạn có chắc chắn muốn xóa chương trình khuyến mãi này không?")) return;
@@ -162,6 +164,7 @@ public class PromotionGUI {
     }
 
     private void btnClear(ActionEvent actionEvent) {
+        selectedPromotionProgram = null;
         txtPromotionProgramName.clear();
         txtPromotionProgramStartDate.clear();
         txtPromotionProgramEndDate.clear();

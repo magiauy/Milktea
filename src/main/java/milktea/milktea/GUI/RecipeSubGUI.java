@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import milktea.milktea.BUS.Ingredient_BUS;
 import milktea.milktea.DTO.Ingredient;
-import milktea.milktea.DTO.Product;
+
 import milktea.milktea.DTO.Recipe;
 import milktea.milktea.DTO.Unit;
 import milktea.milktea.Util.ValidationUtil;

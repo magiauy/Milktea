@@ -4,14 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -19,8 +18,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.BUS.*;
 import milktea.milktea.DTO.Employee;
-import milktea.milktea.DTO.Product;
-import milktea.milktea.DTO.Role;
+
 import milktea.milktea.DTO.Status;
 import milktea.milktea.Util.ValidationUtil;
 
@@ -98,13 +96,16 @@ public class EmployeeGUI {
             Role_BUS.getLocalData();
             txtSearch.clear();
             loadTable();
+            tableMain.getSelectionModel().clearSelection();
+            selectedEmployee = null;
             ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
+
 
         });
         imgLock.setOnMouseClicked(event -> {
             Employee employee = tableMain.getSelectionModel().getSelectedItem();
             if (employee == null) {
-                ValidationUtil.showErrorAlert("Vui lòng chọn sản phẩm cần khóa");
+                ValidationUtil.showErrorAlert("Vui lòng chọn nhân viên cần khóa");
                 return;
             }
             if (employee.getId().equals(Login_Controller.getAccount().getId())) {
@@ -113,18 +114,18 @@ public class EmployeeGUI {
             }
 
             Status newStatus = employee.getStatus().equals(Status.ACTIVE) ? Status.INACTIVE : Status.ACTIVE;
-            String confirmMessage = newStatus.equals(Status.INACTIVE) ? "Bạn có chắc chắn muốn khóa sản phẩm này không?" : "Bạn có chắc chắn muốn mở khóa sản phẩm này không?";
+            String confirmMessage = newStatus.equals(Status.INACTIVE) ? "Bạn có chắc chắn muốn khóa nhân viên này không?" : "Bạn có chắc chắn muốn mở khóa nhân viên này không?";
             String lockImage = newStatus.equals(Status.INACTIVE) ?
                     Objects.requireNonNull(getClass().getClassLoader().getResource("img/Lock.png")).toString() :
                     Objects.requireNonNull(getClass().getClassLoader().getResource("img/Padlock.png")).toString();
 
             if (!ValidationUtil.showConfirmAlert(confirmMessage)) return;
             if (!Employee_BUS.updateStatus(employee.getId(), newStatus)) {
-                ValidationUtil.showInfoAlert("Khóa sản phẩm thất bại");
+                ValidationUtil.showInfoAlert("Khóa nhân viên thất bại");
                 return;
             }
             if (!Employee_BUS.updateStatusLocal(employee.getId(), newStatus)) {
-                ValidationUtil.showInfoAlert("Khóa sản phẩm thất bại");
+                ValidationUtil.showInfoAlert("Khóa nhân viên thất bại");
                 return;
             }
 
@@ -160,6 +161,10 @@ public class EmployeeGUI {
     private void btnSearch() {
         if (!Login_Controller.getAccount().getRole().equals("R01")){
             ArrayList<Employee> arrEmployee = new ArrayList<>(Employee_BUS.searchEmployee(txtSearch.getText()));
+            if (arrEmployee.isEmpty()) {
+                ValidationUtil.showErrorAlert("Không tìm thấy nhân viên");
+                return;
+            }
             arrEmployee.removeIf(employee -> employee.getRole().equals("R01"));
             if (!txtSearch.getText().isEmpty()) {
                 tableMain.setItems(FXCollections.observableArrayList(FXCollections.observableArrayList(arrEmployee)));
@@ -168,7 +173,13 @@ public class EmployeeGUI {
             }
         }else {
             if (!txtSearch.getText().isEmpty()) {
-                tableMain.setItems(FXCollections.observableArrayList(Employee_BUS.searchEmployee(txtSearch.getText())));
+                ArrayList<Employee> arrEmployee = new ArrayList<>(Employee_BUS.searchEmployee(txtSearch.getText()));
+                if (arrEmployee.isEmpty()) {
+                    ValidationUtil.showErrorAlert("Không tìm thấy nhân viên");
+                    return;
+                }
+                ObservableList<Employee> data = FXCollections.observableArrayList(arrEmployee);
+                tableMain.setItems(data);
             }else {
                 loadTable();
             }

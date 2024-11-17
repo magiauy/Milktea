@@ -107,7 +107,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
-                <Button fx:id="btnClear" layoutX="43.0" layoutY="736.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="360.0" text="Clear">
+                <Button fx:id="btnClear" layoutX="43.0" layoutY="736.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="360.0" text="Đặt lại">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font></Button>

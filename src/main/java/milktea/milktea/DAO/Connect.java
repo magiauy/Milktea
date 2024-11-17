@@ -9,7 +9,6 @@ import milktea.milktea.DTO.Gender;
 import milktea.milktea.DTO.MySQLConfig;
 import milktea.milktea.DTO.Status;
 import milktea.milktea.DTO.Unit;
-import milktea.milktea.Util.ValidationUtil;
 
 import java.io.*;
 import java.sql.*;
@@ -166,13 +165,19 @@ public static boolean loadConfig() {
             if (!checkExistDatabase()) {
                 Statement stmt = connection.createStatement();
                 stmt.executeUpdate("CREATE DATABASE " + DATABASE);
+                String sql = "SET GLOBAL max_allowed_packet = 16 * 1024 * 1024"; // 16MB
+                stmt.execute(sql);
+                closeConnection();
                 loadSQLFile("/milktea/milktea/DAO/"+DATABASE+".sql");
+                loadSQLFile("/milktea/milktea/DAO/"+DATABASE+"2.sql");
+
                 System.out.println("Created database " + DATABASE);
             }
         } catch (SQLException ignored) {
         }
     }
 public static void loadSQLFile(String filePath) {
+    openConnection();
     try {
         // Create a Statement
         Statement stmt = connection.createStatement();

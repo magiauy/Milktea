@@ -45,3 +45,7 @@
     -fx-padding: 5;
     -fx-background-color: #f0f0f0;
 }
+.grid-pane .grid-cell {
+    -fx-border-width: 0 0 2px 0; /* top right bottom left */
+    -fx-border-color: transparent transparent black transparent;
+}

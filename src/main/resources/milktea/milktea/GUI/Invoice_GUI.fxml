@@ -178,7 +178,7 @@
                   </Pane>
                   <Pane layoutX="681.0" layoutY="14.0" prefHeight="775.0" prefWidth="435.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #fccfd4;">
                      <children>
-                        <TableView fx:id="tblInvoiceDetail" layoutX="13.0" layoutY="257.0" prefHeight="452.0" prefWidth="411.0" stylesheets="@../../../css/style.css">
+                        <TableView fx:id="tblInvoiceDetail" layoutX="13.0" layoutY="257.0" prefHeight="444.0" prefWidth="411.0" stylesheets="@../../../css/style.css">
                            <columns>
                               <TableColumn fx:id="colProductId" prefWidth="75.0" text="Mã SP" />
                               <TableColumn fx:id="colQuantity" prefWidth="82.0" text="Số Lượng" />
@@ -237,7 +237,10 @@
                            </font>
                         </Label>
                         <TextField fx:id="txtInvoiceTotal" editable="false" layoutX="248.0" layoutY="221.0" />
-                        <Button fx:id="btnClearInvoice" layoutX="197.0" layoutY="722.0" mnemonicParsing="false" text="Clear" />
+                        <Button fx:id="btnClearInvoice" layoutX="13.0" layoutY="708.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="411.0" text="Đặt lại">
+                           <font>
+                              <Font name="System Bold" size="23.0" />
+                           </font></Button>
                      </children>
                   </Pane>
                </children>

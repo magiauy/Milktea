@@ -149,6 +149,10 @@ public class GoodsReceiptGUI {
 
     private void Search(ActionEvent actionEvent) {
         ArrayList<Ingredient> ingredients = new ArrayList<>(Ingredient_BUS.searchIngredient(txtSearchIngredient.getText()));
+        if (ingredients.isEmpty()) {
+            ValidationUtil.showErrorAlert("Không tìm thấy nguyên liệu");
+            return;
+        }
         ingredients.removeIf(ingredient -> ingredient.getStatus().equals(Status.INACTIVE));
         tblIngredient.setItems(FXCollections.observableArrayList(ingredients));
     }
@@ -333,7 +337,12 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
     }
 
     private void SearchGoodsReceipt(ActionEvent actionEvent) {
-        tblGoodsReceipt.setItems(FXCollections.observableArrayList(GoodsReceipt_BUS.searchGoodsReceipt(txtSearchGoodsReceipt.getText())));
+        ArrayList<GoodsReceipt> goodsReceipts = new ArrayList<>(GoodsReceipt_BUS.searchGoodsReceipt(txtSearchGoodsReceipt.getText()));
+        if (goodsReceipts.isEmpty()) {
+            ValidationUtil.showErrorAlert("Không tìm thấy phiếu nhập hàng");
+            return;
+        }
+        tblGoodsReceipt.setItems(FXCollections.observableArrayList(goodsReceipts));
     }
 
     public void Clear1(ActionEvent actionEvent) {

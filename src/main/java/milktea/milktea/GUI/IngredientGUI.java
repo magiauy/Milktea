@@ -18,6 +18,8 @@ import milktea.milktea.DTO.Ingredient;
 import milktea.milktea.DTO.Status;
 import milktea.milktea.Util.ValidationUtil;
 
+import java.util.ArrayList;
+
 import static milktea.milktea.Util.UI_Util.openStage;
 
 public class IngredientGUI {
@@ -119,7 +121,12 @@ public class IngredientGUI {
         });
         btnSearch.setOnMouseClicked(event -> {
             if (!ValidationUtil.isInvalidSearch(txtSearch)) {
-                ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.searchIngredient(txtSearch.getText()));
+                ArrayList<Ingredient> ingredients = new ArrayList<>(Ingredient_BUS.searchIngredient(txtSearch.getText()));
+                if (ingredients.isEmpty()) {
+                    ValidationUtil.showErrorAlert("Không tìm thấy nguyên liệu");
+                    return;
+                }
+                ObservableList<Ingredient> data = FXCollections.observableList(ingredients);
                 tableMain.setItems(data);
                 tableMain.refresh();
             }
@@ -157,6 +164,8 @@ public class IngredientGUI {
             ObservableList<Ingredient> data = FXCollections.observableList(Ingredient_BUS.getAllIngredient());
             tableMain.setItems(data);
             tableMain.refresh();
+            tableMain.getSelectionModel().clearSelection();
+            selectedIngredient = null;
             ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
 
         });

@@ -5,6 +5,8 @@ import milktea.milktea.DTO.Customer;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Customer_BUS {
 
@@ -47,9 +49,9 @@ public class Customer_BUS {
         if (arrCustomer.isEmpty()) {
             return "KH0001";
         }
-        String lastId = arrCustomer.getLast().getId();
-        int id = Integer.parseInt(lastId.substring(2)) + 1;
-        return "KH" + String.format("%03d", id);
+        Customer maxCustomer = Collections.max(arrCustomer, Comparator.comparing(Customer::getId));
+        int id = Integer.parseInt(maxCustomer.getId().substring(2)) + 1;
+        return "KH" + String.format("%05d", id);
     }
 
     public static void editCustomerLocal(Customer customer) {

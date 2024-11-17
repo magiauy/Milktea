@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lombok.Getter;
 import milktea.milktea.BUS.*;
@@ -83,8 +82,14 @@ public class ProductGUI {
         createRecipeTable();
         btnSearch.setOnAction(event -> {
             String search = txtSearch.getText();
-            ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.searchProduct(search));
+            ArrayList<Product> arrProduct = new ArrayList<>(Product_BUS.searchProduct(search));
+            if (arrProduct.isEmpty()) {
+                ValidationUtil.showErrorAlert("Không tìm thấy sản phẩm nào");
+                return;
+            }
+            ObservableList<Product> data = FXCollections.observableArrayList();
             tblProduct.setItems(data);
+            tblProduct.refresh();
 
         });
         btnClear.setOnAction(this::onClear);
@@ -201,6 +206,10 @@ public class ProductGUI {
             ObservableList<Product> data = FXCollections.observableArrayList(Product_BUS.getAllProduct());
             tblProduct.setItems(data);
             tblProduct.refresh();
+            txtSearch.clear();
+            tblProduct.getSelectionModel().clearSelection();
+            tblRecipe.getItems().clear();
+            selectedProduct = null;
             ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
 
         });

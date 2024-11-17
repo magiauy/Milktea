@@ -25,6 +25,16 @@ public class Product {
     }
     //Sub attributes
     private int quantity;
+    private BigDecimal total;
+
+    public Product(Product productById) {
+        this.productId = productById.getProductId();
+        this.name = productById.getName();
+        this.categoryId = productById.getCategoryId();
+        this.price = productById.getPrice();
+        this.status = productById.getStatus();
+    }
+
 
     @Override
     public String toString(){

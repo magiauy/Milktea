@@ -16,6 +16,8 @@ import milktea.milktea.BUS.Provider_BUS;
 import milktea.milktea.DTO.Provider;
 import milktea.milktea.Util.ValidationUtil;
 
+import java.util.ArrayList;
+
 import static milktea.milktea.Util.UI_Util.openStage;
 public class ProviderGUI {
     @FXML
@@ -56,7 +58,12 @@ public class ProviderGUI {
         loadProvider();
         btnSearch.setOnAction(e -> {
             if (!ValidationUtil.isInvalidSearch(txtSearch)) {
-                tableMain.setItems(FXCollections.observableArrayList(Provider_BUS.searchProvider(txtSearch.getText())));
+                ArrayList<Provider> providers = Provider_BUS.searchProvider(txtSearch.getText());
+                if (providers.isEmpty()) {
+                    ValidationUtil.showErrorAlert("Không tìm thấy kết quả");
+                    return;
+                }
+                tableMain.setItems(FXCollections.observableArrayList(providers));
                 tableMain.refresh();
             }
         });
@@ -101,6 +108,8 @@ public class ProviderGUI {
             Provider_BUS.getLocalData();
             txtSearch.clear();
             loadProvider();
+            tableMain.getSelectionModel().clearSelection();
+            selectedProvider = null;
             ValidationUtil.showInfoAlert("Làm mới dữ liệu thành công");
 
         });
