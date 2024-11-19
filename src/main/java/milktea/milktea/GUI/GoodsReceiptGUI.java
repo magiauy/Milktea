@@ -175,10 +175,17 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
 
     if (GoodsReceipt_BUS.addGoodsReceipt(goodsReceipt)) {
         if (GoodsReceiptDetail_BUS.addGoodsReceiptDetail(arrGoodsReceiptDetail)) {
-            GoodsReceiptDetail_BUS.addGoodsReceiptDetailLocal(arrGoodsReceiptDetail);
-            GoodsReceipt_BUS.addGoodsReceiptLocal(goodsReceipt);
-            ValidationUtil.showErrorAlert("Đã thêm phiếu nhập hàng thành công");
-            Clear(actionEvent);
+            if (Ingredient_BUS.updateIngredientByGRN(arrGoodsReceiptDetail)) {
+                ValidationUtil.showInfoAlert("Đã thêm phiếu nhập hàng thành công");
+                GoodsReceiptDetail_BUS.addGoodsReceiptDetailLocal(arrGoodsReceiptDetail);
+                GoodsReceipt_BUS.addGoodsReceiptLocal(goodsReceipt);
+                GoodsReceipt_BUS.printBill(arrGoodsReceiptDetail, goodsReceipt);
+                Ingredient_BUS.getLocalData();
+                Clear(actionEvent);
+            }else {
+                GoodsReceipt_BUS.deleteGoodsReceipt(goodsReceipt.getId());
+                ValidationUtil.showErrorAlert("Cập nhật nguyên liệu thất bại");
+            }
         } else {
             GoodsReceipt_BUS.deleteGoodsReceipt(goodsReceipt.getId());
             ValidationUtil.showErrorAlert("Thêm chi tiết phiếu nhập hàng thất bại");
@@ -189,10 +196,12 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
 }
 
     private void Clear(ActionEvent actionEvent) {
+        txtGoodsReceiptId.setText(GoodsReceipt_BUS.autoId());
         txtGoodsProviderId.clear();
         txtGoodsProviderName.clear();
         txtSearchIngredient.clear();
         arrGoodsReceiptDetail.clear();
+        loadIngredient();
         tblGoodsReceiptDetail.setItems(FXCollections.observableArrayList(arrGoodsReceiptDetail));
         calTotal();
     }
@@ -242,6 +251,7 @@ private void AddGoodsReceipt(ActionEvent actionEvent) {
         ArrayList<Ingredient> ingredients = new ArrayList<>(Ingredient_BUS.getAllIngredient());
         ingredients.removeIf(ingredient -> ingredient.getStatus().equals(Status.INACTIVE));
         tblIngredient.setItems(FXCollections.observableArrayList(ingredients));
+        tblIngredient.refresh();
     }
     public void loadGoodsReceiptDetail() {
         colGoodsReceiptDetailStt.setCellValueFactory(cellData -> {

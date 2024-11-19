@@ -2,12 +2,22 @@ package milktea.milktea.BUS;
 
 import milktea.milktea.DAO.GoodsReceipt_DAO;
 import milktea.milktea.DTO.GoodsReceipt;
+import milktea.milktea.DTO.GoodsReceiptDetail;
 
+import java.awt.*;
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.List;
+
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.font.FontProvider;
 
 import javafx.collections.FXCollections;
 import javafx.scene.chart.XYChart;
@@ -274,4 +284,86 @@ public class GoodsReceipt_BUS {
         }
         return result;
     }
+    public static void printBill(ArrayList<GoodsReceiptDetail> receiptDetails, GoodsReceipt goodsReceipt) {
+    try {
+        StringBuilder htmlSource = new StringBuilder();
+        htmlSource.append("<html><head><meta charset='UTF-8'>")
+                  .append("<style>")
+                  .append("@font-face {")
+                  .append("    font-family: 'CustomFont';")
+                  .append("    src: url('fonts/arial-unicode-ms.ttf') format('truetype');")
+                  .append("}")
+                  .append("body { font-family: 'CustomFont'; }")
+                  .append("table { width: 100%; border-collapse: collapse; }")
+                  .append("th, td { border: 1px solid #ddd; padding: 8px; }")
+                  .append("th { background-color: #f2f2f2; }")
+                  .append(".text-right { text-align: right; }")
+                  .append(".title { text-align: center; font-weight: bold; font-size: 24px; }")
+                  .append("</style></head><body>");
+
+        htmlSource.append("<div class='title'>PHIẾU NHẬP HÀNG</div>")
+                  .append("<hr style='border-top: 3px double #8c8b8b;'>");
+
+        htmlSource.append("<table>")
+                  .append("<tr><td>Mã phiếu nhập:</td><td>").append(goodsReceipt.getId()).append("</td>")
+                  .append("<td>Ngày lập:</td><td>").append(goodsReceipt.getDate()).append("</td></tr>")
+                  .append("<tr><td>Mã nhân viên:</td><td>").append(goodsReceipt.getEmployeeId()).append("</td>")
+                  .append("<td>Mã nhà cung cấp:</td><td>").append(goodsReceipt.getProviderId()).append("</td></tr>")
+                  .append("</table>");
+
+        htmlSource.append("<hr style='border-top: 1px solid #8c8b8b;'>");
+
+        htmlSource.append("<table>")
+                  .append("<tr>")
+                  .append("<th>Tên nguyên liệu</th>")
+                  .append("<th>Số lượng</th>")
+                  .append("<th>Đơn giá</th>")
+                  .append("<th>Thành tiền</th>")
+                  .append("</tr>");
+
+        for (GoodsReceiptDetail detail : receiptDetails) {
+            String materialName = Ingredient_BUS.getIngredientNameById(detail.getIngredientId());
+            htmlSource.append("<tr>")
+                      .append("<td>").append(materialName).append("</td>")
+                      .append("<td>").append(detail.getQuantity()).append("</td>")
+                      .append("<td>").append(detail.getPrice()).append("</td>")
+                      .append("<td>").append(detail.getTotal()).append("</td>")
+                      .append("</tr>");
+        }
+
+        htmlSource.append("</table>");
+
+        BigDecimal total = goodsReceipt.getTotal() != null ? goodsReceipt.getTotal() : BigDecimal.ZERO;
+
+        htmlSource.append("<hr style='border-top: 1px solid #8c8b8b;'>");
+        htmlSource.append("<table class='text-right'>")
+                  .append("<tr><th>Tổng tiền:</th><th>").append(total).append("</th></tr>")
+                  .append("</table>");
+
+        htmlSource.append("</body></html>");
+
+        String finalHtmlSource = htmlSource.toString();
+        File directory = new File("./PhieuNhap");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+        String pdfDest = "./PhieuNhap/" + goodsReceipt.getId() + ".pdf";
+        PdfWriter writer = new PdfWriter(pdfDest);
+
+        ConverterProperties props = new ConverterProperties();
+        props.setCharset("UTF-8");
+        // Thiết lập FontProvider và thêm font tùy chỉnh
+        FontProvider fontProvider = new DefaultFontProvider(false, false, false);
+        String fontPath = "fonts/arial-unicode-ms.ttf"; // Đường dẫn đến file font
+        fontProvider.addFont(fontPath);
+        props.setFontProvider(fontProvider);
+        HtmlConverter.convertToPdf(finalHtmlSource, writer, props);
+
+        // Mở file PDF sau khi tạo
+        Desktop.getDesktop().open(new File(pdfDest));
+    } catch (Exception e) {
+        // Thay bằng cơ chế logging của bạn nếu cần
+        System.err.println("Error while printing goods receipt: " + e.getMessage());
+    }
+}
 }

@@ -87,7 +87,7 @@ public class ProductGUI {
                 ValidationUtil.showErrorAlert("Không tìm thấy sản phẩm nào");
                 return;
             }
-            ObservableList<Product> data = FXCollections.observableArrayList();
+            ObservableList<Product> data = FXCollections.observableArrayList(arrProduct);
             tblProduct.setItems(data);
             tblProduct.refresh();
 

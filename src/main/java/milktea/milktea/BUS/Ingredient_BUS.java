@@ -1,10 +1,7 @@
 package milktea.milktea.BUS;
 
 import milktea.milktea.DAO.Ingredient_DAO;
-import milktea.milktea.DTO.Ingredient;
-import milktea.milktea.DTO.InvoiceDetail;
-import milktea.milktea.DTO.Recipe;
-import milktea.milktea.DTO.Status;
+import milktea.milktea.DTO.*;
 import milktea.milktea.Util.CalUnitUtil;
 
 import java.util.*;
@@ -102,6 +99,18 @@ public class Ingredient_BUS {
     }
     return true;
 }
+    public static boolean updateIngredientByGRN(ArrayList<GoodsReceiptDetail> arrGoodsReceipt){
+        // Iterate through invoice details and update ingredients
+        for (GoodsReceiptDetail goodsReceiptDetail : arrGoodsReceipt) {
+            Ingredient ingredient = new Ingredient(getIngredientById(goodsReceiptDetail.getIngredientId()));
+                ingredient.setQuantity(CalUnitUtil.addUnitGRNConverter(
+                        goodsReceiptDetail.getUnit(), ingredient.getUnit(), goodsReceiptDetail.getQuantity(), ingredient.getQuantity()));
+                if (!editIngredient(ingredient)) {
+                    return false;
+            }
+        }
+        return true;
+    }
     public static String autoId() {
         if (arrIngredients.isEmpty()) {
             return "I001";

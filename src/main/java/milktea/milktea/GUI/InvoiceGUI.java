@@ -337,17 +337,14 @@ public class InvoiceGUI {
                     }
 
                     if (Invoice_BUS.addInvoice(invoice) && InvoiceDetail_BUS.addInvoiceDetail(arrInvoiceDetail) && Ingredient_BUS.updateIngredient(arrInvoiceDetail)) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Thông báo");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Thêm hóa đơn thành công");
-                            alert.showAndWait();
+                            ValidationUtil.showInfoAlert("Thêm hóa đơn thành công");
                             Invoice_BUS.addInvoiceLocal(invoice);
                             InvoiceDetail_BUS.addInvoiceDetailLocal(arrInvoiceDetail);
                             earnPoint(Customer_BUS.getCustomerById(txtCustomerId.getText()));
-//                        clear(new ActionEvent());
-
-
+                            Invoice_BUS.printBill(invoiceDetail, invoice);
+                            Invoice_BUS.printCupLabels(invoiceDetail);
+                            Ingredient_BUS.getLocalData();
+                            clear(new ActionEvent());
                     } else {
                         //Remove if add invoice fail
                         Invoice_BUS.removeInvoice(invoiceId);

@@ -1,22 +1,49 @@
 package milktea.milktea.BUS;
 
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
+import com.itextpdf.io.font.PdfEncodings;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.SolidBorder;
+import com.itextpdf.layout.element.Div;
+import com.itextpdf.layout.element.LineSeparator;
+import com.itextpdf.layout.element.ListItem;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.font.FontProvider;
+import com.itextpdf.layout.property.BorderRadius;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import milktea.milktea.DAO.InvoiceDetail_DAO;
 import milktea.milktea.DAO.Invoice_DAO;
 import milktea.milktea.DTO.Invoice;
 import milktea.milktea.DTO.InvoiceDetail;
 import milktea.milktea.DTO.Product;
 import milktea.milktea.DTO.Promotion;
+import milktea.milktea.DTO.TempInvoiceDetail;
 
+import java.awt.*;
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+@Slf4j
 public class Invoice_BUS {
     private static ArrayList<Invoice> arrInvoice = new ArrayList<>();
     public static void getLocalData(){
@@ -227,7 +254,7 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
             HashMap<String, BigDecimal> revenueData = calRevenueData(startDate, endDate);
         
             // Create a list of LocalDate keys
-            List<LocalDate> sortedDates = new ArrayList<>();
+            ArrayList<LocalDate> sortedDates = new ArrayList<>();
             for (String dateStr : revenueData.keySet()) {
                 LocalDate date = LocalDate.parse(dateStr);
                 sortedDates.add(date);
@@ -246,7 +273,7 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
             int month = Integer.parseInt(search.get("month"));
             HashMap<String, BigDecimal> revenueData = calRevenueData(year, month);
             // Create a sorted list of keys
-            List<String> sortedDates = new ArrayList<>(revenueData.keySet());
+            ArrayList<String> sortedDates = new ArrayList<>(revenueData.keySet());
             sortedDates.sort(Comparator.comparingInt(Integer::parseInt));
             // Add data in sorted order
             for (String date : sortedDates) {
@@ -257,7 +284,7 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
             int year = Integer.parseInt(search.get("year"));
             HashMap<String, BigDecimal> revenueData = calRevenueData(year);
             // Create a sorted list of keys
-            List<String> sortedYears = new ArrayList<>(revenueData.keySet());
+            ArrayList<String> sortedYears = new ArrayList<>(revenueData.keySet());
             sortedYears.sort(Comparator.comparingInt(Integer::parseInt));
             // Add data in sorted order
                     for (String month : sortedYears) {
@@ -339,4 +366,230 @@ public static ArrayList<Invoice> advancedSearchInvoice(HashMap<String, String> s
         }
         return data;
     }
+public static void printBill(ArrayList<TempInvoiceDetail> tempInvoiceDetails, Invoice invoice) {
+    try {
+        StringBuilder htmlSource = new StringBuilder();
+        htmlSource.append("<html><head><meta charset='UTF-8'>")
+                  .append("<style>")
+                  .append("@font-face {")
+                  .append("    font-family: 'CustomFont';")
+                  .append("    src: url('fonts/arial-unicode-ms.ttf') format('truetype');")
+                  .append("}")
+                  .append("body { font-family: 'CustomFont'; }")
+                  .append("table { width: 100%; border-collapse: collapse; }")
+                  .append("th, td { border: 1px solid #ddd; padding: 8px; }")
+                  .append("th { background-color: #f2f2f2; }")
+                  .append(".text-right { text-align: right; }")
+                  .append(".title { text-align: center; font-weight: bold; font-size: 24px; }")
+                  .append("</style></head><body>");
+
+        htmlSource.append("<div class='title'>HOÁ ĐƠN BÁN HÀNG</div>")
+                  .append("<hr style='border-top: 3px double #8c8b8b;'>");
+
+        htmlSource.append("<table>")
+                  .append("<tr><td>Mã hoá đơn:</td><td>").append(invoice.getInvoiceId()).append("</td>")
+                  .append("<td>Ngày lập:</td><td>").append(invoice.getIssueDate()).append("</td></tr>")
+                  .append("<tr><td>Mã nhân viên:</td><td>").append(invoice.getEmployeeId()).append("</td>")
+                  .append("<td>Mã khách hàng:</td><td>").append(invoice.getCustomerId()).append("</td></tr>")
+                  .append("</table>");
+
+        htmlSource.append("<hr style='border-top: 1px solid #8c8b8b;'>");
+
+        htmlSource.append("<table>")
+                  .append("<tr>")
+                  .append("<th>Tên sản phẩm</th>")
+                  .append("<th>Số lượng</th>")
+                  .append("<th>Đơn giá</th>")
+                  .append("<th>Thành tiền</th>")
+                  .append("</tr>");
+
+        for (TempInvoiceDetail tempDetail : tempInvoiceDetails) {
+            InvoiceDetail invoiceDetail = tempDetail.getInvoiceDetail();
+            String productName = Product_BUS.getProductById(invoiceDetail.getProductId()).getName();
+
+            htmlSource.append("<tr>")
+                      .append("<td>").append(productName).append("</td>")
+                      .append("<td>").append(invoiceDetail.getQuantity()).append("</td>")
+                      .append("<td>").append(invoiceDetail.getUnitPrice()).append("</td>")
+                      .append("<td>").append(invoiceDetail.getTotalPrice()).append("</td>")
+                      .append("</tr>");
+
+            // Hiển thị thông tin Đường, Đá, Ghi chú nếu có
+            if ((tempDetail.getSugar() >= 0 || tempDetail.getIce() >= 0) ||
+                (tempDetail.getNote() != null && !tempDetail.getNote().isEmpty())) {
+                htmlSource.append("<tr>")
+                          .append("<td colspan='4' style='padding-left: 20px;'>+ ");
+
+                if (tempDetail.getSugar() >= 0) {
+                    htmlSource.append("Đường: ").append(tempDetail.getSugar()).append("% ");
+                }
+                if (tempDetail.getIce() >= 0) {
+                    htmlSource.append("Đá: ").append(tempDetail.getIce()).append("% ");
+                }
+                if (tempDetail.getNote() != null && !tempDetail.getNote().isEmpty()) {
+                    htmlSource.append("Ghi chú: ").append(tempDetail.getNote());
+                }
+                htmlSource.append("</td></tr>");
+            }
+
+            // Hiển thị Topping nếu có
+            if (tempDetail.getTopping() != null && !tempDetail.getTopping().isEmpty()) {
+                for (HashMap.Entry<String, Integer> entry : tempDetail.getTopping().entrySet()) {
+                    String toppingName = Product_BUS.getProductById(entry.getKey()).getName();
+                    Integer toppingQuantity = entry.getValue();
+
+                    htmlSource.append("<tr>")
+                              .append("<td style='padding-left: 20px;'>+ ").append(toppingName).append("</td>")
+                              .append("<td>").append(toppingQuantity).append("</td>")
+                              .append("<td>").append(Product_BUS.getProductById(entry.getKey()).getPrice()).append("</td>")
+                              .append("<td>").append(Product_BUS.getProductById(entry.getKey()).getPrice().multiply(BigDecimal.valueOf(toppingQuantity))).append("</td>")
+                              .append("</tr>");
+                }
+            }
+        }
+
+        htmlSource.append("</table>");
+
+        BigDecimal discount = invoice.getDiscount() != null ? invoice.getDiscount() : BigDecimal.ZERO;
+        BigDecimal subTotal = invoice.getTotal().subtract(discount);
+
+        htmlSource.append("<hr style='border-top: 1px solid #8c8b8b;'>");
+        htmlSource.append("<table class='text-right'>")
+                  .append("<tr><td>Tạm tính:</td><td>").append(subTotal).append("</td></tr>")
+                  .append("<tr><td>Giảm giá:</td><td>").append(discount).append("</td></tr>")
+                  .append("<tr><th>Tổng tiền:</th><th>").append(invoice.getTotal()).append("</th></tr>")
+                  .append("</table>");
+
+        htmlSource.append("</body></html>");
+
+        String finalHtmlSource = htmlSource.toString();
+        File directory = new File("./HoaDon");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String pdfDest = "./HoaDon/" + invoice.getInvoiceId() + ".pdf";
+        PdfWriter writer = new PdfWriter(pdfDest);
+
+        ConverterProperties props = new ConverterProperties();
+        props.setCharset("UTF-8");
+
+        // Thiết lập FontProvider và thêm font tùy chỉnh
+        FontProvider fontProvider = new DefaultFontProvider(false, false, false);
+        String fontPath = "fonts/arial-unicode-ms.ttf"; // Đường dẫn đến file font
+        fontProvider.addFont(fontPath);
+        props.setFontProvider(fontProvider);
+
+        HtmlConverter.convertToPdf(finalHtmlSource, writer, props);
+        Desktop.getDesktop().open(new java.io.File(pdfDest));
+    } catch (Exception e) {
+        log.error("Error while printing bill: {}", e.getMessage());
+    }
+}
+     public static void printCupLabels(ArrayList<TempInvoiceDetail> tempInvoiceDetails) {
+        try {
+            // Define the destination PDF file
+            String dest = "CupLabels.pdf";
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            Document document = new Document(pdfDoc, PageSize.A6); // Adjust page size as needed
+
+            // Set uniform margins for all labels
+            document.setMargins(10, 10, 10, 10);
+
+            // Load a font that supports Vietnamese characters
+            String fontPath = "fonts/arial-unicode-ms.ttf"; // Update the path to your font file
+            PdfFont unicodeFont = PdfFontFactory.createFont(fontPath, PdfEncodings.IDENTITY_H, true);
+
+            for (TempInvoiceDetail tempDetail : tempInvoiceDetails) {
+                // Start a new page for each label
+                pdfDoc.addNewPage(PageSize.A6); // Adjust to desired label size
+
+                // Create a Div to act as a container with border
+                Div labelContainer = new Div()
+                        .setBorder(new SolidBorder(ColorConstants.BLACK, 1)) // 1pt black border\
+                        .setBorderRadius(new BorderRadius(5))
+                        .setPadding(5)
+                        .setMargin(5)
+                        .setWidth(UnitValue.createPercentValue(100))
+                        .setHeight(UnitValue.createPercentValue(100));
+
+
+                // Add product name
+                String productNameStr = Objects.requireNonNull(
+                        Product_BUS.getProductById(tempDetail.getInvoiceDetail().getProductId()))
+                        .getName();
+                Paragraph productName = new Paragraph(productNameStr)
+                        .setFont(unicodeFont)
+                        .setFontSize(14)
+                        .setBold()
+                        .setTextAlignment(TextAlignment.CENTER);
+                labelContainer.add(productName);
+
+                // Separator line
+                labelContainer.add(new LineSeparator(new SolidLine()).setMarginTop(5).setMarginBottom(5));
+
+                // Sugar and Ice details
+                String sugarIceStr = "Đường: " + tempDetail.getSugar() + "%     " +
+                        "Đá: " + tempDetail.getIce() + "%";
+                Paragraph sugarIce = new Paragraph(sugarIceStr)
+                        .setFont(unicodeFont)
+                        .setFontSize(12)
+                        .setTextAlignment(TextAlignment.CENTER);
+                labelContainer.add(sugarIce);
+
+                // Toppings
+                if (tempDetail.getTopping() != null && !tempDetail.getTopping().isEmpty()) {
+                    // Topping title
+                    Paragraph toppingTitle = new Paragraph("Topping:")
+                            .setFont(unicodeFont)
+                            .setBold()
+                            .setFontSize(12)
+                            .setTextAlignment(TextAlignment.LEFT);
+                    labelContainer.add(toppingTitle);
+
+                    // Toppings list
+                    com.itextpdf.layout.element.List toppingList = new com.itextpdf.layout.element.List()
+                            .setSymbolIndent(12)
+                            .setListSymbol("•")
+                            .setFont(unicodeFont)
+                            .setFontSize(12)
+                            .setMarginLeft(20);
+
+                    for (HashMap.Entry<String, Integer> entry : tempDetail.getTopping().entrySet()) {
+                        toppingList.add(new ListItem(Objects.requireNonNull(Product_BUS.getProductById(entry.getKey())).getName() + " x " + entry.getValue()));
+                    }
+                    labelContainer.add(toppingList);
+                }
+
+                // Separator line
+                labelContainer.add(new LineSeparator(new SolidLine()).setMarginTop(5).setMarginBottom(5));
+
+                // Note
+                if (tempDetail.getNote() != null && !tempDetail.getNote().isEmpty()) {
+                    String noteStr = "Ghi chú: " + tempDetail.getNote();
+                    Paragraph note = new Paragraph(noteStr)
+                            .setFont(unicodeFont)
+                            .setFontSize(12)
+                            .setTextAlignment(TextAlignment.LEFT);
+                    labelContainer.add(note);
+
+                    // Optional: Another separator after note
+                    labelContainer.add(new LineSeparator(new SolidLine()).setMarginTop(5).setMarginBottom(5));
+                }
+
+                // Add the container to the document
+                document.add(labelContainer);
+            }
+
+            document.close();
+
+            // Open the generated PDF automatically
+            Desktop.getDesktop().open(new File(dest));
+
+        } catch (Exception e) {
+            // Replace with your logging mechanism
+             log.error("Error while printing cup labels: {}", e.getMessage());
+        }
+    }
+
 }
