@@ -1,0 +1,56 @@
+/* chart.css */
+
+/* Tùy chỉnh màu sắc biểu đồ */
+.default-color0.chart-series-line {
+    -fx-stroke: #4CAF50; /* Màu xanh lá cho chuỗi dữ liệu 0 */
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #FF9800; /* Màu cam cho chuỗi dữ liệu 1 */
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #2196F3; /* Màu xanh dương cho cột biểu đồ 0 */
+}
+
+.default-color1.chart-bar {
+    -fx-bar-fill: #F44336; /* Màu đỏ cho cột biểu đồ 1 */
+}
+
+/* Tùy chỉnh chú thích (legend) */
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+}
+
+/* Tùy chỉnh tiêu đề biểu đồ */
+.chart-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Tùy chỉnh nhãn trục */
+.axis-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Tùy chỉnh nhãn đánh dấu trục */
+.axis-tick-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555555;
+}
+
+
+/* Tùy chỉnh các điểm dữ liệu */
+.chart-line-symbol {
+    -fx-background-radius: 5px;
+    -fx-background-color: white, #4CAF50;
+    -fx-background-insets: 0, 2;
+}
+
+/* Thêm hiệu ứng đổ bóng cho biểu đồ */
+.chart {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0.5, 0, 0);
+}

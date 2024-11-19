@@ -3,12 +3,12 @@ package milktea.milktea.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import milktea.milktea.BUS.GoodsReceiptDetail_BUS;
 import milktea.milktea.BUS.GoodsReceipt_BUS;
 import milktea.milktea.BUS.InvoiceDetail_BUS;
@@ -18,22 +18,15 @@ import milktea.milktea.Util.ValidationUtil;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
 
 public class StatisticsGUI {
     @FXML
-    private BarChart<String,Number> revenueChart;
+    private BarChart<String, Number> revenueChart;
     @FXML
-    private LineChart<String,Number> profitChart;
+    private LineChart<String, Number> profitChart;
     @FXML
-    private BarChart<String,Number> capitalChart;
-
-
-
+    private BarChart<String, Number> capitalChart;
 
     @FXML
     private ComboBox<String> yearComboBox;
@@ -84,16 +77,15 @@ public class StatisticsGUI {
     private ImageView imgRefresh2;
 
     @FXML
-            private Label lbRevenue;
+    private Label lbRevenue;
     @FXML
-            private Label lbCapital;
+    private Label lbCapital;
     @FXML
-            private Label lbProfit;
+    private Label lbProfit;
     @FXML
-            private Label lbDiscount;
+    private Label lbDiscount;
 
-
-    HashMap<String,String> search = new HashMap<>();
+    private final HashMap<String, String> search = new HashMap<>();
 
     public void initialize() {
         setUpStatisticsRevenueChart();
@@ -103,7 +95,7 @@ public class StatisticsGUI {
             refresh();
             initStatistic();
         });
-        
+
         setUpStatisticsCapitalChart();
         initStatistic1();
         statisticButton1.setOnAction(event -> capitalizeButtonClicked());
@@ -119,11 +111,10 @@ public class StatisticsGUI {
             refresh();
             initStatistic2();
         });
-
     }
 
-    public void statisticButtonClicked(){
-        if (ValidationUtil.isEmptyDp(startDatePicker,"Ngày bắt đầu") || ValidationUtil.isEmptyDp(endDatePicker,"Ngày kết thúc")){
+    public void statisticButtonClicked() {
+        if (ValidationUtil.isEmptyDp(startDatePicker, "Ngày bắt đầu") || ValidationUtil.isEmptyDp(endDatePicker, "Ngày kết thúc")) {
             return;
         }
         LocalDate start = startDatePicker.getValue();
@@ -131,35 +122,28 @@ public class StatisticsGUI {
         if (!ValidationUtil.isValidDateRange(start, end)) {
             return;
         }
-        // Không được vượt quá 31 ngày
         if (ChronoUnit.DAYS.between(start, end) > 31) {
             ValidationUtil.showErrorAlert("Khoảng thời gian không được vượt quá 31 ngày");
-
             return;
         }
         search.clear();
-        search.put("startDate",start.toString());
-        search.put("endDate",end.toString());
+        search.put("startDate", start.toString());
+        search.put("endDate", end.toString());
         revenueChart.getData().clear();
         revenueChart.setData(Invoice_BUS.getRevenueData(search));
         revenueChart.setAnimated(false);
-        revenueChart.setStyle("-fx-font-size: 16px;");
         revenueChart.setTitle("Doanh thu từ " + start + " đến " + end);
-        revenueChart.getXAxis().setLabel("Thời gian");
-        revenueChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        revenueChart.getXAxis().setTickLabelFont(Font.font(12));
-
-        // Set font size for Y axis label and tick labels
-        revenueChart.getYAxis().setLabel("Doanh thu");
-        revenueChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        revenueChart.getYAxis().setTickLabelFont(Font.font(12));
-
+        configureChart(revenueChart, "Thời gian", "Doanh thu");
     }
+
     public void setUpStatisticsRevenueChart() {
-        // TODO
         yearComboBox.getItems().addAll(Invoice_BUS.getYearAvailable());
         yearComboBox.getSelectionModel().selectFirst();
-        monthComboBox.getItems().addAll("1","2","3","4","5","6","7","8","9","10","11","12");
+        monthComboBox.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+
+        // Thêm CSS vào biểu đồ
+        revenueChart.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/chart.css")).toExternalForm());
+
         yearComboBox.setOnAction(event -> {
             if (!yearComboBox.getValue().isEmpty()) {
                 search.clear();
@@ -168,16 +152,8 @@ public class StatisticsGUI {
                 revenueChart.getData().clear();
                 revenueChart.setData(Invoice_BUS.getRevenueData(search));
                 revenueChart.setAnimated(false);
-                revenueChart.setStyle("-fx-font-size: 16px;");
                 revenueChart.setTitle("Doanh thu năm " + yearComboBox.getValue());
-                revenueChart.getXAxis().setLabel("Tháng");
-                revenueChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                revenueChart.getXAxis().setTickLabelFont(Font.font(12));
-
-                // Set font size for Y axis label and tick labels
-                revenueChart.getYAxis().setLabel("Doanh thu");
-                revenueChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                revenueChart.getYAxis().setTickLabelFont(Font.font(12));
+                configureChart(revenueChart, "Tháng", "Doanh thu");
             }
         });
         monthComboBox.setOnAction(event -> {
@@ -188,45 +164,29 @@ public class StatisticsGUI {
                 revenueChart.getData().clear();
                 revenueChart.setData(Invoice_BUS.getRevenueData(search));
                 revenueChart.setAnimated(false);
-                revenueChart.setStyle("-fx-font-size: 16px;");
                 revenueChart.setTitle("Doanh thu tháng " + monthComboBox.getValue() + " năm " + yearComboBox.getValue());
-                revenueChart.getXAxis().setLabel("Ngày");
-                revenueChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-
-                revenueChart.getXAxis().setTickLabelFont(Font.font(12));
-
-                // Set font size for Y axis label and tick labels
-                revenueChart.getYAxis().setLabel("Doanh thu");
-                revenueChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                revenueChart.getYAxis().setTickLabelFont(Font.font(12));
+                configureChart(revenueChart, "Ngày", "Doanh thu");
             }
         });
-
     }
-    public void initStatistic(){
+
+    public void initStatistic() {
         revenueChart.getData().clear();
         search.clear();
         monthComboBox.getSelectionModel().clearSelection();
         startDatePicker.setValue(null);
         endDatePicker.setValue(null);
-        yearComboBox.getSelectionModel().select(LocalDate.now().getYear()+"");
-        search.put("year", LocalDate.now().getYear()+"");
+        yearComboBox.getSelectionModel().select(LocalDate.now().getYear() + "");
+        search.put("year", LocalDate.now().getYear() + "");
         revenueChart.setData(Invoice_BUS.getRevenueData(search));
         revenueChart.setAnimated(false);
-        revenueChart.setTitle("Doanh thu năm 2024");
-        revenueChart.setStyle("-fx-font-size: 16px;");
-        revenueChart.getXAxis().setLabel("Thời gian");
-        revenueChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        revenueChart.getXAxis().setTickLabelFont(Font.font(12));
-
-        // Set font size for Y axis label and tick labels
-        revenueChart.getYAxis().setLabel("Doanh thu");
-        revenueChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        revenueChart.getYAxis().setTickLabelFont(Font.font(12));
+        revenueChart.setTitle("Doanh thu năm " + LocalDate.now().getYear());
+        configureChart(revenueChart, "Thời gian", "Doanh thu");
     }
 
-    public void capitalizeButtonClicked(){
-        if (ValidationUtil.isEmptyDp(startDatePicker1,"Ngày bắt đầu") || ValidationUtil.isEmptyDp(endDatePicker1,"Ngày kết thúc")){
+
+    public void capitalizeButtonClicked() {
+        if (ValidationUtil.isEmptyDp(startDatePicker1, "Ngày bắt đầu") || ValidationUtil.isEmptyDp(endDatePicker1, "Ngày kết thúc")) {
             return;
         }
         LocalDate start = startDatePicker1.getValue();
@@ -234,34 +194,29 @@ public class StatisticsGUI {
         if (!ValidationUtil.isValidDateRange(start, end)) {
             return;
         }
-        // Không được vượt quá 31 ngày
         if (ChronoUnit.DAYS.between(start, end) > 31) {
             ValidationUtil.showErrorAlert("Khoảng thời gian không được vượt quá 31 ngày");
-
             return;
         }
         search.clear();
-        search.put("startDate",start.toString());
-        search.put("endDate",end.toString());
+        search.put("startDate", start.toString());
+        search.put("endDate", end.toString());
         capitalChart.getData().clear();
         capitalChart.setData(GoodsReceipt_BUS.getCapitalData(search));
         capitalChart.setAnimated(false);
-        capitalChart.setStyle("-fx-font-size: 16px;");
         capitalChart.setTitle("Vốn từ " + start + " đến " + end);
-        capitalChart.getXAxis().setLabel("Thời gian");
-        capitalChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        capitalChart.getXAxis().setTickLabelFont(Font.font(12));
-
-        // Set font size for Y axis label and tick labels
-        capitalChart.getYAxis().setLabel("Vốn");
-        capitalChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        capitalChart.getYAxis().setTickLabelFont(Font.font(12));
+        configureChart(capitalChart, "Thời gian", "Vốn");
 
     }
-    public void setUpStatisticsCapitalChart(){
+
+    public void setUpStatisticsCapitalChart() {
         yearComboBox1.getItems().addAll(GoodsReceipt_BUS.getYearAvailable());
         yearComboBox1.getSelectionModel().selectFirst();
-        monthComboBox1.getItems().addAll("1","2","3","4","5","6","7","8","9","10","11","12");
+        monthComboBox1.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+
+        // Thêm CSS vào biểu đồ
+        capitalChart.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/chart.css")).toExternalForm());
+
         yearComboBox1.setOnAction(event -> {
             if (!yearComboBox1.getValue().isEmpty()) {
                 search.clear();
@@ -270,16 +225,8 @@ public class StatisticsGUI {
                 capitalChart.getData().clear();
                 capitalChart.setData(GoodsReceipt_BUS.getCapitalData(search));
                 capitalChart.setAnimated(false);
-                capitalChart.setStyle("-fx-font-size: 16px;");
                 capitalChart.setTitle("Vốn năm " + yearComboBox1.getValue());
-                capitalChart.getXAxis().setLabel("Tháng");
-                capitalChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                capitalChart.getXAxis().setTickLabelFont(Font.font(12));
-
-                // Set font size for Y axis label and tick labels
-                capitalChart.getYAxis().setLabel("Vốn");
-                capitalChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                capitalChart.getYAxis().setTickLabelFont(Font.font(12));
+                configureChart(capitalChart, "Tháng", "Vốn");
             }
         });
 
@@ -291,86 +238,68 @@ public class StatisticsGUI {
                 capitalChart.getData().clear();
                 capitalChart.setData(GoodsReceipt_BUS.getCapitalData(search));
                 capitalChart.setAnimated(false);
-                capitalChart.setStyle("-fx-font-size: 16px;");
                 capitalChart.setTitle("Vốn tháng " + monthComboBox1.getValue() + " năm " + yearComboBox1.getValue());
-                capitalChart.getXAxis().setLabel("Ngày");
-                capitalChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-
-                capitalChart.getXAxis().setTickLabelFont(Font.font(12));
-
-                // Set font size for Y axis label and tick labels
-                capitalChart.getYAxis().setLabel("Vốn");
-                capitalChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                capitalChart.getYAxis().setTickLabelFont(Font.font(12));
+                configureChart(capitalChart, "Ngày", "Vốn");
             }
         });
-
     }
-    public void initStatistic1(){
+
+    public void initStatistic1() {
         capitalChart.getData().clear();
         search.clear();
         monthComboBox1.getSelectionModel().clearSelection();
         startDatePicker1.setValue(null);
         endDatePicker1.setValue(null);
-        yearComboBox1.getSelectionModel().select(LocalDate.now().getYear()+"");
-        search.put("year", LocalDate.now().getYear()+"");
+        yearComboBox1.getSelectionModel().select(LocalDate.now().getYear() + "");
+        search.put("year", LocalDate.now().getYear() + "");
         capitalChart.setData(GoodsReceipt_BUS.getCapitalData(search));
         capitalChart.setAnimated(false);
-        capitalChart.setTitle("Vốn năm 2024");
-        capitalChart.setStyle("-fx-font-size: 16px;");
-        capitalChart.getXAxis().setLabel("Thời gian");
-        capitalChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        capitalChart.getXAxis().setTickLabelFont(Font.font(12));
-
-        // Set font size for Y axis label and tick labels
-        capitalChart.getYAxis().setLabel("Vốn");
-        capitalChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        capitalChart.getYAxis().setTickLabelFont(Font.font(12));
+        capitalChart.setTitle("Vốn năm " + LocalDate.now().getYear());
+        configureChart(capitalChart, "Thời gian", "Vốn");
     }
 
-    public void initStatistic2(){
+    public void profitButtonClicked() {
+        if (ValidationUtil.isEmptyDp(startDatePicker2, "Ngày bắt đầu") || ValidationUtil.isEmptyDp(endDatePicker2, "Ngày kết thúc")) {
+            return;
+        }
+        LocalDate start = startDatePicker2.getValue();
+        LocalDate end = endDatePicker2.getValue();
+        if (!ValidationUtil.isValidDateRange(start, end)) {
+            return;
+        }
+        if (ChronoUnit.DAYS.between(start, end) > 31) {
+            ValidationUtil.showErrorAlert("Khoảng thời gian không được vượt quá 31 ngày");
+            return;
+        }
         search.clear();
-        monthComboBox2.getSelectionModel().clearSelection();
-        startDatePicker2.setValue(null);
-        endDatePicker2.setValue(null);
-        yearComboBox2.getSelectionModel().select(LocalDate.now().getYear()+"");
-        search.put("year", LocalDate.now().getYear()+"");
+        search.put("startDate", start.toString());
+        search.put("endDate", end.toString());
+        profitChart.getData().clear();
         ObservableList<XYChart.Series<String, Number>> combinedData = FXCollections.observableArrayList();
         combinedData.addAll(Invoice_BUS.getRevenueData(search));
         combinedData.addAll(GoodsReceipt_BUS.getCapitalData(search));
         profitChart.setData(combinedData);
         profitChart.setAnimated(false);
-        profitChart.setTitle("Doanh thu và vốn năm 2024");
-        profitChart.setStyle("-fx-font-size: 16px;");
-        profitChart.getXAxis().setLabel("Thời gian");
-        profitChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        profitChart.getXAxis().setTickLabelFont(Font.font(12));
-        lbRevenue.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").toString()));
-        lbCapital.setText(priceFormat(GoodsReceipt_BUS.CapitalInfo(search).get("total").toString()));
-        lbDiscount.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("discount").toString()));
-        lbProfit.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").subtract(GoodsReceipt_BUS.CapitalInfo(search).get("total")).subtract(Invoice_BUS.RevenueInfo(search).get("discount")).toString()));
-        lbRevenue.textAlignmentProperty().set(javafx.scene.text.TextAlignment.RIGHT);
-        lbCapital.textAlignmentProperty().set(javafx.scene.text.TextAlignment.RIGHT);
-        lbDiscount.textAlignmentProperty().set(javafx.scene.text.TextAlignment.RIGHT);
-        lbProfit.textAlignmentProperty().set(javafx.scene.text.TextAlignment.RIGHT);
-    }
-
-    public String priceFormat(String price) {
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        return decimalFormat.format(Double.parseDouble(price));
+        profitChart.setTitle("Doanh thu và vốn từ " + start + " đến " + end);
+        configureChart(profitChart, "Thời gian", "Giá trị");
+        updateLabels();
     }
 
     public void setUpProfitChart() {
-        // TODO
         Set<String> years = new HashSet<>();
         years.addAll(Invoice_BUS.getYearAvailable());
         years.addAll(GoodsReceipt_BUS.getYearAvailable());
 
-        List<String> uniqueYears = years.stream().sorted().toList();
+        List<String> uniqueYears = new ArrayList<>(years);
+        Collections.sort(uniqueYears);
 
         yearComboBox2.getItems().addAll(uniqueYears);
         yearComboBox2.getSelectionModel().selectFirst();
-        monthComboBox2.getItems().addAll("1","2","3","4","5","6","7","8","9","10","11","12");
+        monthComboBox2.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+
+        // Thêm CSS vào biểu đồ
+        profitChart.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/chart.css")).toExternalForm());
+
         yearComboBox2.setOnAction(event -> {
             if (!yearComboBox2.getValue().isEmpty()) {
                 search.clear();
@@ -382,21 +311,9 @@ public class StatisticsGUI {
                 combinedData.addAll(GoodsReceipt_BUS.getCapitalData(search));
                 profitChart.setData(combinedData);
                 profitChart.setAnimated(false);
-                profitChart.setStyle("-fx-font-size: 16px;");
                 profitChart.setTitle("Doanh thu và vốn năm " + yearComboBox2.getValue());
-                profitChart.getXAxis().setLabel("Tháng");
-                profitChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                profitChart.getXAxis().setTickLabelFont(Font.font(12));
-
-                // Set font size for Y axis label and tick labels
-                profitChart.getYAxis().setLabel("Doanh thu và vốn");
-                profitChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                profitChart.getYAxis().setTickLabelFont(Font.font(12));
-
-                lbRevenue.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").toString()));
-                lbCapital.setText(priceFormat(GoodsReceipt_BUS.CapitalInfo(search).get("total").toString()));
-                lbDiscount.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("discount").toString()));
-                lbProfit.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").subtract(GoodsReceipt_BUS.CapitalInfo(search).get("total")).subtract(Invoice_BUS.RevenueInfo(search).get("discount")).toString()));
+                configureChart(profitChart, "Tháng", "Giá trị");
+                updateLabels();
             }
         });
 
@@ -411,68 +328,63 @@ public class StatisticsGUI {
                 combinedData.addAll(GoodsReceipt_BUS.getCapitalData(search));
                 profitChart.setData(combinedData);
                 profitChart.setAnimated(false);
-                profitChart.setStyle("-fx-font-size: 16px;");
                 profitChart.setTitle("Doanh thu và vốn tháng " + monthComboBox2.getValue() + " năm " + yearComboBox2.getValue());
-                profitChart.getXAxis().setLabel("Ngày");
-                profitChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                profitChart.getXAxis().setTickLabelFont(Font.font(12));
-
-                // Set font size for Y axis label and tick labels
-                profitChart.getYAxis().setLabel("Doanh thu và vốn");
-                profitChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-                profitChart.getYAxis().setTickLabelFont(Font.font(12));
-
-                lbRevenue.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").toString()));
-                lbCapital.setText(priceFormat(GoodsReceipt_BUS.CapitalInfo(search).get("total").toString()));
-                lbDiscount.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("discount").toString()));
-                lbProfit.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").subtract(GoodsReceipt_BUS.CapitalInfo(search).get("total")).subtract(Invoice_BUS.RevenueInfo(search).get("discount")).toString()));
+                configureChart(profitChart, "Ngày", "Giá trị");
+                updateLabels();
             }
         });
     }
-    public void profitButtonClicked(){
-        if (ValidationUtil.isEmptyDp(startDatePicker2,"Ngày bắt đầu") || ValidationUtil.isEmptyDp(endDatePicker2,"Ngày kết thúc")){
-            return;
-        }
-        LocalDate start = startDatePicker2.getValue();
-        LocalDate end = endDatePicker2.getValue();
-        if (!ValidationUtil.isValidDateRange(start, end)) {
-            return;
-        }
-        // Không được vượt quá 31 ngày
-        if (ChronoUnit.DAYS.between(start, end) > 31) {
-            ValidationUtil.showErrorAlert("Khoảng thời gian không được vượt quá 31 ngày");
 
-            return;
-        }
+    public void initStatistic2() {
         search.clear();
-        search.put("startDate",start.toString());
-        search.put("endDate",end.toString());
-        profitChart.getData().clear();
+        monthComboBox2.getSelectionModel().clearSelection();
+        startDatePicker2.setValue(null);
+        endDatePicker2.setValue(null);
+        yearComboBox2.getSelectionModel().select(LocalDate.now().getYear() + "");
+        search.put("year", LocalDate.now().getYear() + "");
         ObservableList<XYChart.Series<String, Number>> combinedData = FXCollections.observableArrayList();
         combinedData.addAll(Invoice_BUS.getRevenueData(search));
         combinedData.addAll(GoodsReceipt_BUS.getCapitalData(search));
         profitChart.setData(combinedData);
         profitChart.setAnimated(false);
-        profitChart.setStyle("-fx-font-size: 16px;");
-        profitChart.setTitle("Doanh thu và vốn từ " + start + " đến " + end);
-        profitChart.getXAxis().setLabel("Thời gian");
-        profitChart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        profitChart.getXAxis().setTickLabelFont(Font.font(12));
+        profitChart.setTitle("Doanh thu và vốn năm " + LocalDate.now().getYear());
+        configureChart(profitChart, "Thời gian", "Giá trị");
+        updateLabels();
+    }
 
-        // Set font size for Y axis label and tick labels
-        profitChart.getYAxis().setLabel("Doanh thu và vốn");
-        profitChart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
-        profitChart.getYAxis().setTickLabelFont(Font.font(12));
+    private void configureChart(XYChart<String, Number> chart, String xAxisLabel, String yAxisLabel) {
+        chart.setStyle("-fx-font-size: 16px;");
+        chart.getXAxis().setLabel(xAxisLabel);
+        chart.getXAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
+        chart.getXAxis().setTickLabelFont(Font.font(12));
 
+        chart.getYAxis().setLabel(yAxisLabel);
+        chart.getYAxis().lookup(".axis-label").setStyle("-fx-font-size: 14px;");
+        chart.getYAxis().setTickLabelFont(Font.font(12));
+    }
+
+    private void updateLabels() {
         lbRevenue.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").toString()));
         lbCapital.setText(priceFormat(GoodsReceipt_BUS.CapitalInfo(search).get("total").toString()));
         lbDiscount.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("discount").toString()));
-        lbProfit.setText(priceFormat(Invoice_BUS.RevenueInfo(search).get("total").subtract(GoodsReceipt_BUS.CapitalInfo(search).get("total")).subtract(Invoice_BUS.RevenueInfo(search).get("discount")).toString()));
-
-
+        lbProfit.setText(priceFormat(
+            Invoice_BUS.RevenueInfo(search).get("total")
+            .subtract(GoodsReceipt_BUS.CapitalInfo(search).get("total"))
+            .subtract(Invoice_BUS.RevenueInfo(search).get("discount"))
+            .toString()
+        ));
+        lbRevenue.setTextAlignment(TextAlignment.RIGHT);
+        lbCapital.setTextAlignment(TextAlignment.RIGHT);
+        lbDiscount.setTextAlignment(TextAlignment.RIGHT);
+        lbProfit.setTextAlignment(TextAlignment.RIGHT);
     }
-    
-    public void refresh(){
+
+    public String priceFormat(String price) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(Double.parseDouble(price));
+    }
+
+    public void refresh() {
         Invoice_BUS.getLocalData();
         InvoiceDetail_BUS.getLocalData();
         GoodsReceipt_BUS.getLocalData();
