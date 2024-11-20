@@ -187,6 +187,12 @@ public class ValidationUtil {
             showErrorAlert("Ngày bắt đầu phải trước ngày kết thúc");
             return false;
         }
+        //EndDate không được quá tháng hiện tại
+        if (endDate.isAfter(LocalDate.now())){
+            showErrorAlert("Bạn đang du hành về tương lai à?");
+            return false;
+        }
+
         return true;
     }
 
