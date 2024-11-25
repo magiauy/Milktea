@@ -157,6 +157,8 @@ public class ProductSubGUI {
         });
         btnSave.setOnAction(event -> {
             if (ValidationUtil.isEmpty(txtProductName, txtPrice)) return;
+            if (ValidationUtil.isInValidChar("Tên sản phẩm",txtProductName)) return;
+            if (ValidationUtil.isEmptyComboBox(cbCategory)) return;
             if (ValidationUtil.isNotPrice(txtPrice)) return;
             ArrayList<Recipe> tempArrRecipe = new ArrayList<>(arrCurrentRecipe);
             tempArrRecipe.addAll(addRecipe);

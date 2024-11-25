@@ -126,6 +126,9 @@ public class ProductGUI {
                 tblRecipe.refresh();
                 ProductSubGUI.setProduct(null);
                 ProductSubGUI.setArrCurrentRecipe(null);
+                ProductSubGUI.setRemovedRecipe(null);
+                ProductSubGUI.setAddRecipe(null);
+
                 ProductSubGUI.setEdited(false);
             });
         });
@@ -138,6 +141,8 @@ public class ProductGUI {
                         tblProduct.refresh();
                         ProductSubGUI.setProduct(null);
                         ProductSubGUI.setArrCurrentRecipe(null);
+                        ProductSubGUI.setRemovedRecipe(null);
+                        ProductSubGUI.setAddRecipe(null);
                         ProductSubGUI.setEdited(false);
                     }
                 }
