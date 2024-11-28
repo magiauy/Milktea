@@ -114,6 +114,7 @@ public class InvoiceGUI {
     @Getter
     @Setter
     private static String globalListFlag = null;
+    private boolean isPromotionAdded = false;
     public void initialize() {
         hideTabWithoutPermission();
         selectedProduct = null;
@@ -322,16 +323,25 @@ public class InvoiceGUI {
                     if (!stackedTopping.isEmpty()) {
                         createDetail(stackedTopping, arrInvoiceDetail);
                     }
+                    BigDecimal tempTotal = invoiceDetail.stream().map(entry -> entry.getInvoiceDetail().getTotalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
+                    BigDecimal totalTopping = invoiceDetail.stream().map(entry -> {
+                        if (entry.getTopping() != null) {
+                            return entry.getTopping().entrySet().stream().map(topping -> Objects.requireNonNull(Product_BUS.getProductById(topping.getKey())).getPrice().multiply(BigDecimal.valueOf(topping.getValue()))).reduce(BigDecimal.ZERO, BigDecimal::add);
+                        } else {
+                            return BigDecimal.ZERO;
+                        }
+                    }).reduce(BigDecimal.ZERO, BigDecimal::add);
+                    BigDecimal total2 = tempTotal.add(totalTopping);
                     Invoice invoice = Invoice.builder()
                             .invoiceId(invoiceId)
                             .issueDate(LocalDate.now())
                             .customerId(txtCustomerId.getText())
                             .employeeId(txtEmployeeId.getText())
                             .promotionId(txtPromotion.getText())
-                            .total(total)
+                            .total(total2)
                             .build();
-                    if (discount.compareTo(total) > 0) {
-                        invoice.setDiscount(total);
+                    if (discount.compareTo(total2) > 0) {
+                        invoice.setDiscount(total2);
                     } else {
                         invoice.setDiscount(discount);
                     }
@@ -340,10 +350,11 @@ public class InvoiceGUI {
                             ValidationUtil.showInfoAlert("Thêm hóa đơn thành công");
                             Invoice_BUS.addInvoiceLocal(invoice);
                             InvoiceDetail_BUS.addInvoiceDetailLocal(arrInvoiceDetail);
-                            earnPoint(Customer_BUS.getCustomerById(txtCustomerId.getText()));
+                            earnPoint(new Customer(Customer_BUS.getCustomerById(txtCustomerId.getText())));
                             Invoice_BUS.printBill(invoiceDetail, invoice);
                             Invoice_BUS.printCupLabels(invoiceDetail);
                             Ingredient_BUS.getLocalData();
+                            Customer_BUS.getLocalData();
                             clear(new ActionEvent());
                     } else {
                         //Remove if add invoice fail
@@ -634,7 +645,7 @@ public class InvoiceGUI {
     }
 
     public void checkPointCustomer(){
-        if (txtCustomerId.getText().equals(Customer_BUS.getAllCustomer().getFirst().getId())){
+        if (txtCustomerId.getText().equals("KH000")) {
             txtCurrentPoint.setText("0");
             txtCurrentPoint.setDisable(true);
             chbPoint.setDisable(true);
@@ -693,7 +704,14 @@ public class InvoiceGUI {
         if (flagDiscountType == 1) {
             discountByPoint = discountByPoint.add(valueBigDecimal);
         } else {
-            discountByPromotion = discountByPromotion.add(valueBigDecimal);
+            if (!isPromotionAdded) {
+                discountByPromotion = discountByPromotion.add(valueBigDecimal);
+                isPromotionAdded = true;
+            }
+            else {
+                discountByPromotion = BigDecimal.ZERO;
+                discountByPromotion = discountByPromotion.add(valueBigDecimal);
+            }
         }
     } else {
         if (flagDiscountType == 1) {
@@ -706,24 +724,35 @@ public class InvoiceGUI {
     discount = discountByPoint.add(discountByPromotion);
     txtDiscount.setText(discount.setScale(0, RoundingMode.HALF_UP).toString());
 }
-    public void earnPoint(Customer customer) {
-        if (chbPoint.isSelected()) {
-            System.out.println(discount.compareTo(total) > 0);
-            if (discount.compareTo(total) > 0) {
-                BigDecimal remainingPoint = discount.subtract(total).subtract(discountByPromotion);
-                BigDecimal newPoint = total.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
-                customer.setPoint(newPoint.add(remainingPoint));
+        public void earnPoint(Customer customer) {
+            BigDecimal tempTotal = invoiceDetail.stream().map(entry -> entry.getInvoiceDetail().getTotalPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal totalTopping = invoiceDetail.stream().map(entry -> {
+                if (entry.getTopping() != null) {
+                    return entry.getTopping().entrySet().stream().map(topping -> Objects.requireNonNull(Product_BUS.getProductById(topping.getKey())).getPrice().multiply(BigDecimal.valueOf(topping.getValue()))).reduce(BigDecimal.ZERO, BigDecimal::add);
+                } else {
+                    return BigDecimal.ZERO;
+                }
+            }).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal total2 = tempTotal.add(totalTopping);
+            BigDecimal newPoint = total2.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
+
+            System.out.println("newPoint: " + newPoint);
+            System.out.println("Total: " + total2);
+            System.out.println("customer.getPoint(): " + customer.getPoint());
+            if (chbPoint.isSelected()) {
+                if (discount.compareTo(total2) > 0) {
+                    BigDecimal remainingPoint = discount.subtract(total2).subtract(discountByPromotion);
+                    System.out.println("remainingPoint: " + remainingPoint);
+                    customer.setPoint(newPoint.add(remainingPoint));
+                } else {
+                    customer.setPoint(newPoint);
+                }
             } else {
-                BigDecimal newPoint = total.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
-                customer.setPoint(newPoint);
+                customer.setPoint(customer.getPoint().add(newPoint));
             }
-        }else {
-            BigDecimal newPoint = total.multiply(BigDecimal.valueOf(0.05)).setScale(0, RoundingMode.HALF_UP);
-            customer.setPoint(customer.getPoint().add(newPoint));
+            Customer_BUS.editCustomer(customer);
+            Customer_BUS.editCustomerLocal(customer);
         }
-        Customer_BUS.editCustomer(customer);
-        Customer_BUS.editCustomerLocal(customer);
-    }
 
     @FXML
     TableView<Invoice> tblInvoice;

@@ -59,7 +59,9 @@ public class Employee_BUS {
     public static ArrayList<Employee> searchEmployee(String text) {
         ArrayList<Employee> arrSearch = new ArrayList<>();
         for (Employee employee : arrEmployee) {
-            if (employee.getId().equals(text) || employee.getFirstName().equals(text) || employee.getLastName().equals(text) || employee.getPhoneNumber().equals(text)) {
+            String fullName = employee.getFirstName() + " " + employee.getLastName();
+            if (employee.getId().equals(text) || employee.getFirstName().equals(text) || employee.getLastName().equals(text) || employee.getPhoneNumber().equals(text)
+            ||fullName.equals(text)) {
                 arrSearch.add(employee);
             }
         }

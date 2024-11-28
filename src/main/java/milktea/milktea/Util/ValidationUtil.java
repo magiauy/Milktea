@@ -49,6 +49,15 @@ public class ValidationUtil {
         }
         return false;
     }
+
+    public static boolean isNegativeNumber(String key ,@NonNull TextField textField) {
+        if (Double.parseDouble(textField.getText()) < 0) {
+            showErrorAlert(key + " không thể âm");
+            textField.requestFocus();
+            return true;
+        }
+        return false;
+    }
     public static boolean isInValidChar(String key, @NonNull TextField textField) {
         if (!textField.getText().matches("^[\\p{L}\\s]+$")) {
             showErrorAlert(key + " không được chứa số hoặc ký tự đặc biệt");

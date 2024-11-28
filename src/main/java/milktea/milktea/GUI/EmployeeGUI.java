@@ -79,6 +79,7 @@ public class EmployeeGUI {
     private static Employee selectedEmployee = new Employee();
     @FXML
     private void initialize() {
+        selectedEmployee = null;
         loadTable();
         btnSearch.setOnAction(event -> btnSearch());
         imgDelete.setOnMouseClicked(event -> imgDelete());

@@ -10,4 +10,9 @@ import java.math.BigDecimal;
 @ToString(callSuper = true)
 public class Customer extends Person {
     private BigDecimal point; // Point
+
+    public Customer(Customer customer) {
+        super(customer);
+        this.point = customer.point;
+    }
 }

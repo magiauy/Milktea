@@ -51,8 +51,8 @@ public class GoodReceiptSubGUI {
             txtPrice.setText(String.valueOf(GoodsReceiptGUI.getGoodsReceiptDetail().getPrice()));
         }
         btnSave.setOnAction(event -> {
-            if (ValidationUtil.isEmpty(txtQuantity, txtPrice) || ValidationUtil.isNotPrice(txtPrice) || !ValidationUtil.isFloat(txtQuantity)) return;
-
+            if (ValidationUtil.isEmpty(txtQuantity, txtPrice) || ValidationUtil.isNotPrice(txtPrice)) return;
+            if (ValidationUtil.isNegativeNumber("Số lượng", txtQuantity) || ValidationUtil.isNegativeNumber("Giá", txtPrice)) return;
             if (!GoodsReceiptGUI.isEditable()) {
                 GoodsReceiptGUI.setGoodsReceiptDetail(new GoodsReceiptDetail());
             }

@@ -101,6 +101,8 @@ public class PromotionProgramSubGUI {
             dpEndDate.setValue(promotionProgram.getEndDate());
             currentPromotions = new ArrayList<>(Promotion_BUS.getPromotionsByID(promotionProgram.getPromotionProgramId()));
             tblPromotion.setItems(FXCollections.observableList(currentPromotions));
+            dpStartDate.setDisable(!dpStartDate.getValue().isBefore(LocalDate.now()));
+
         } else {
             lblTitle.setText("Thêm khuyến mãi");
             promotionProgram = new PromotionProgram();
@@ -187,9 +189,11 @@ public class PromotionProgramSubGUI {
             ValidationUtil.showErrorAlert("Ngày bắt đầu không thể sau ngày kết thúc");
             return;
         }
-        if (dpStartDate.getValue().isBefore(LocalDate.now())){
-            ValidationUtil.showErrorAlert("Ngày bắt đầu không thể trước ngày hiện tại");
-            return;
+        if (!PromotionGUI.isEditable()){
+            if (dpStartDate.getValue().isBefore(LocalDate.now())) {
+                ValidationUtil.showErrorAlert("Ngày bắt đầu không thể trước ngày hiện tại");
+                return;
+            }
         }
         if (ValidationUtil.isInValidChar(textFieldInfo,txtName)) return;
         ArrayList<Promotion> promotions = new ArrayList<>(currentPromotions);

@@ -455,9 +455,9 @@ public static void printBill(ArrayList<TempInvoiceDetail> tempInvoiceDetails, In
 
         htmlSource.append("<hr style='border-top: 1px solid #8c8b8b;'>");
         htmlSource.append("<table class='text-right'>")
-                  .append("<tr><td>Tạm tính:</td><td>").append(subTotal).append("</td></tr>")
+                  .append("<tr><td>Tạm tính:</td><td>").append(invoice.getTotal()).append("</td></tr>")
                   .append("<tr><td>Giảm giá:</td><td>").append(discount).append("</td></tr>")
-                  .append("<tr><th>Tổng tiền:</th><th>").append(invoice.getTotal()).append("</th></tr>")
+                  .append("<tr><th>Tổng tiền:</th><th>").append(subTotal).append("</th></tr>")
                   .append("</table>");
 
         htmlSource.append("</body></html>");
@@ -475,7 +475,7 @@ public static void printBill(ArrayList<TempInvoiceDetail> tempInvoiceDetails, In
 
         // Thiết lập FontProvider và thêm font tùy chỉnh
         FontProvider fontProvider = new DefaultFontProvider(false, false, false);
-        String fontPath = "fonts/arial-unicode-ms.ttf"; // Đường dẫn đến file font
+        String fontPath = "./fonts/arial-unicode-ms.ttf"; // Đường dẫn đến file font
         fontProvider.addFont(fontPath);
         props.setFontProvider(fontProvider);
 
@@ -497,7 +497,7 @@ public static void printBill(ArrayList<TempInvoiceDetail> tempInvoiceDetails, In
             document.setMargins(10, 10, 10, 10);
 
             // Load a font that supports Vietnamese characters
-            String fontPath = "fonts/arial-unicode-ms.ttf"; // Update the path to your font file
+            String fontPath = "./fonts/arial-unicode-ms.ttf"; // Relative path to your font file
             PdfFont unicodeFont = PdfFontFactory.createFont(fontPath, PdfEncodings.IDENTITY_H, true);
 
             for (TempInvoiceDetail tempDetail : tempInvoiceDetails) {

@@ -78,6 +78,7 @@ public class ProductGUI {
     private static Product selectedProduct = null;
 
     public void initialize() {
+        selectedProduct = null;
         createProductTable();
         createRecipeTable();
         btnSearch.setOnAction(event -> {

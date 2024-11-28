@@ -18,4 +18,11 @@ public abstract class Person {
     private Gender gender; // Giới tính
     private String phoneNumber; // Số điện thoại
 
+    public Person(Person person) {
+        this.id = person.id;
+        this.firstName = person.firstName;
+        this.lastName = person.lastName;
+        this.gender = person.gender;
+        this.phoneNumber = person.phoneNumber;
+    }
 }

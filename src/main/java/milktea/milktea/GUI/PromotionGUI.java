@@ -88,6 +88,8 @@ public class PromotionGUI {
                 if (PromotionProgramSubGUI.isEdited()) {
                     loadPromotionProgram();
                     PromotionProgramSubGUI.setEdited(false);
+                    tblPromotionProgram.getSelectionModel().clearSelection();
+
                 }
             });
         });
@@ -108,6 +110,7 @@ public class PromotionGUI {
                     loadPromotionProgram();
                     PromotionProgramSubGUI.setEdited(false);
                     selectedPromotionProgram = null;
+                    tblPromotionProgram.getSelectionModel().clearSelection();
                 }
             });
         });
@@ -131,6 +134,8 @@ public class PromotionGUI {
             PromotionProgram_BUS.removePromotionProgramLocal(selectedPromotionProgram.getPromotionProgramId());
             btnClear.fire();
             loadPromotionProgram();
+            tblPromotionProgram.getSelectionModel().clearSelection();
+            ValidationUtil.showInfoAlert("Xóa chương trình khuyến mãi thành công");
         });
         btnClear.setOnAction(this::btnClear);
         btnSearch.setOnAction(this::btnSearch);

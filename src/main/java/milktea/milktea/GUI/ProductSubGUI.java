@@ -160,6 +160,9 @@ public class ProductSubGUI {
             if (ValidationUtil.isInValidChar("Tên sản phẩm",txtProductName)) return;
             if (ValidationUtil.isEmptyComboBox(cbCategory)) return;
             if (ValidationUtil.isNotPrice(txtPrice)) return;
+            if (ValidationUtil.isFirstCharNotSpace("Tên sản phẩm",txtProductName)) return;
+            if (ValidationUtil.isNegativeNumber("Giá", txtPrice)) return;
+
             ArrayList<Recipe> tempArrRecipe = new ArrayList<>(arrCurrentRecipe);
             tempArrRecipe.addAll(addRecipe);
             tempArrRecipe.removeAll(removedRecipe);

@@ -56,11 +56,14 @@ public class Customer_BUS {
 
     public static void editCustomerLocal(Customer customer) {
         for (Customer c : arrCustomer) {
+            System.out.println(c.getId()+"|"+customer.getId());
             if (c.getId().equals(customer.getId())) {
                 c.setFirstName(customer.getFirstName());
                 c.setLastName(customer.getLastName());
                 c.setGender(customer.getGender());
                 c.setPhoneNumber(customer.getPhoneNumber());
+                System.out.println("Edit success");
+                break;
             }
         }
     }
@@ -84,7 +87,10 @@ public class Customer_BUS {
     public static ArrayList<Customer> searchCustomer(String search) {
         ArrayList<Customer> arr = new ArrayList<>();
         for (Customer customer : arrCustomer) {
-            if (customer.getId().contains(search) || customer.getFirstName().contains(search) || customer.getLastName().contains(search) || customer.getPhoneNumber().contains(search)) {
+            String fullName = customer.getFirstName() + " " + customer.getLastName();
+            if (customer.getId().contains(search) || customer.getFirstName().contains(search) ||
+                    customer.getLastName().contains(search) || customer.getPhoneNumber().contains(search) ||
+                    fullName.contains(search)) {
                 arr.add(customer);
             }
         }

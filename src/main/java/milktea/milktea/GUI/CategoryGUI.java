@@ -44,6 +44,7 @@ public class CategoryGUI {
     private static Category selectedCategory;
     @FXML
     public void initialize() {
+        selectedCategory = null;
         Platform.runLater(() -> {
             Stage stage = (Stage) btnCancel.getScene().getWindow();
             stage.setTitle("Quản lý loại sản phẩm");

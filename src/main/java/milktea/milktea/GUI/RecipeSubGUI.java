@@ -55,18 +55,25 @@ public class RecipeSubGUI {
             lblTitle.setText("Thêm Công thức");
         }
         btnSave.setOnAction(event -> {
-            if(!ValidationUtil.isEmptyComboBox(cbIngredient,cbUnit)){
-                if (!ValidationUtil.isEmpty(txtQuantity)) {
-                    recipe.setProductId(ProductSubGUI.getProductID());
-                    recipe.setIngredientId(cbIngredient.getValue().getId());
-                    recipe.setQuantity(Float.parseFloat(txtQuantity.getText()));
-                    recipe.setUnit(Unit.valueOf(cbUnit.getValue()));
-                    recipe.setIngredientName(cbIngredient.getValue().getName());
-                    Stage stage = (Stage) btnSave.getScene().getWindow();
-                    isEdited = true;
-                    stage.close();
-                }
+            if (ValidationUtil.isEmpty(txtQuantity)) return;
+            if (ValidationUtil.isNotPrice(txtQuantity)) return;
+            if (ValidationUtil.isNegativeNumber("Số lượng", txtQuantity)) return;
+            if (cbIngredient.getValue() == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn nguyên liệu");
+                return;
             }
+            if (cbUnit.getValue() == null) {
+                ValidationUtil.showErrorAlert("Vui lòng chọn đơn vị");
+                return;
+            }
+            recipe.setProductId(ProductSubGUI.getProductID());
+            recipe.setIngredientId(cbIngredient.getValue().getId());
+            recipe.setQuantity(Float.parseFloat(txtQuantity.getText()));
+            recipe.setUnit(Unit.valueOf(cbUnit.getValue()));
+            recipe.setIngredientName(cbIngredient.getValue().getName());
+            Stage stage = (Stage) btnSave.getScene().getWindow();
+            isEdited = true;
+            stage.close();
         });
     }
 

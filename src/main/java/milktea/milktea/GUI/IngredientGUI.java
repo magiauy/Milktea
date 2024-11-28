@@ -62,6 +62,7 @@ public class IngredientGUI {
     private static Ingredient selectedIngredient;
 
     public void initialize() {
+        selectedIngredient = null;
         hideButtonWithoutPermission();
         createTable();
         imgAdd.setOnMouseClicked(event -> openStage("Ingredient_SubGUI.fxml", () -> {

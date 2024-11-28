@@ -56,20 +56,15 @@ public class PromotionSubGUI {
             if (ValidationUtil.isNotPrice(txtDiscount, txtMinimumPrice)) return;
             if (ValidationUtil.isFirstCharNotSpace("Mã Khuyến mãi",txtID)) return;
             if (ValidationUtil.isInvalidSearch("Mã Khuyến mãi",txtID)) return;
+            if (ValidationUtil.isNegativeNumber("Giảm giá", txtDiscount)) return;
+            if (ValidationUtil.isNegativeNumber("Giá tối thiểu", txtMinimumPrice)) return;
             ArrayList<Promotion> promotions = new ArrayList<>(PromotionProgramSubGUI.getCurrentPromotions());
             promotions.addAll(PromotionProgramSubGUI.getAddedPromotions());
             promotions.removeAll(PromotionProgramSubGUI.getRemovedPromotions());
             promotions.addAll(new ArrayList<>(Promotion_BUS.getAllPromotion()));
 
 
-            if (PromotionProgramSubGUI.isEditable()) {
-                int currentIndex = promotions.indexOf(promotion);
-                if (promotions.stream().anyMatch(p -> promotions.indexOf(p) != currentIndex && p.getPromotionId().equals(txtID.getText()))) {
-                    ValidationUtil.showErrorAlert("Mã Khuyến Mãi đã tồn tại");
-                    return;
-                }
-
-            } else {
+            if (!PromotionProgramSubGUI.isEditable()) {
                 if (promotions.stream().anyMatch(p -> p.getPromotionId().equals(txtID.getText()))) {
                     ValidationUtil.showErrorAlert("Mã Khuyến Mãi đã tồn tại");
                     return;

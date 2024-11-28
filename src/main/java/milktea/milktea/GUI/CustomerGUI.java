@@ -51,6 +51,7 @@ public class CustomerGUI {
     public static Customer selectedCustomer = null;
     public static boolean isEditable = false;
     public void initialize() {
+        selectedCustomer = null;
         btnAdd.setOnMouseClicked(this::btnAdd);
         btnEdit.setOnMouseClicked(this::btnEdit);
         btnSearch.setOnAction(this::btnSearch);
