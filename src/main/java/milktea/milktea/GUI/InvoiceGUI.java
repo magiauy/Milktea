@@ -841,19 +841,17 @@ public class InvoiceGUI {
                 }
             }
         });
-        btnAdvanceSearchInvoice.setOnAction(event -> {
-            openStage("AdvancedSearchInvoice_SubGUI.fxml",() -> {
-                if (AdvancedSearchInvoiceSubGUI.getArrInvoice() != null) {
-                    if (AdvancedSearchInvoiceSubGUI.isDone()) {
-                        ObservableList<Invoice> invoices = FXCollections.observableList(AdvancedSearchInvoiceSubGUI.getArrInvoice());
-                        tblInvoice.setItems(invoices);
-                        tblInvoice.refresh();
-                        AdvancedSearchInvoiceSubGUI.setDone(false);
-                        AdvancedSearchInvoiceSubGUI.setArrInvoice(null);
-                    }
+        btnAdvanceSearchInvoice.setOnAction(event -> openStage("AdvancedSearchInvoice_SubGUI.fxml",() -> {
+            if (AdvancedSearchInvoiceSubGUI.getArrInvoice() != null) {
+                if (AdvancedSearchInvoiceSubGUI.isDone()) {
+                    ObservableList<Invoice> invoices = FXCollections.observableList(AdvancedSearchInvoiceSubGUI.getArrInvoice());
+                    tblInvoice.setItems(invoices);
+                    tblInvoice.refresh();
+                    AdvancedSearchInvoiceSubGUI.setDone(false);
+                    AdvancedSearchInvoiceSubGUI.setArrInvoice(null);
                 }
-            });
-        });
+            }
+        }));
         imgRefresh.setOnMouseClicked(event -> {
             Invoice_BUS.getLocalData();
             InvoiceDetail_BUS.getLocalData();

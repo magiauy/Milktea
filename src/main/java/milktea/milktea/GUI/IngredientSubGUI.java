@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -26,7 +27,8 @@ public class IngredientSubGUI {
     TextField txtQuantity;
     @FXML
     Button btnSave;
-
+    @FXML
+    Label lblTitle;
     @Getter
     @Setter
     private static boolean isEdited = false;
@@ -43,13 +45,13 @@ public class IngredientSubGUI {
         cbUnit.getItems().addAll(Unit.values());
         if (!IngredientGUI.isEditable()){
             ingredient = new Ingredient();
-            System.out.println("Add Ingredient");
+            lblTitle.setText("Thêm nguyên liệu");
             txtId.setText(Ingredient_BUS.autoId());
             txtQuantity.setText("0");
             txtQuantity.setDisable(true);
         }else{
-            System.out.println("Edit Ingredient");
             ingredient = new Ingredient(IngredientGUI.getSelectedIngredient());
+            lblTitle.setText("Sửa nguyên liệu");
             txtId.setText(ingredient.getId());
             txtName.setText(ingredient.getName());
             cbUnit.setValue(ingredient.getUnit());

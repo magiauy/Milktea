@@ -123,7 +123,7 @@ public boolean validate() {
         }
         valid = false;
     }
-    if (!Employee_BUS.checkInvalidUsername(txtUsername.getText())) {
+    if (!Employee_BUS.checkAvailableUsername(txtUsername.getText())) {
         txtUsername.getStyleClass().add("error");
         if (!alert) {
         ValidationUtil.showErrorAlert("Username không hợp lệ");

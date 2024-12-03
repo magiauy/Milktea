@@ -29,7 +29,7 @@ public class Employee_BUS {
         return Employee_DAO.updateStatus(id,status);
     }
 
-    public static boolean checkInvalidUsername(String username) {
+    public static boolean checkAvailableUsername(String username) {
         for (Employee employee : arrEmployee) {
             if (employee.getUsername().equals(username)) {
                 return true;
